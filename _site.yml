@@ -1,0 +1,13 @@
+name: "website"
+navbar:
+  title: "Boiled Data"
+  left:
+    - text: "Health"
+      href: Covid_19_Germany202105.html
+  right: 
+    - icon: fa-envelope fa-lg
+      href: mailto:<boiled.data@gmail.com>
+output:
+  html_document:
+    theme: readable
+#output_dir: "."
