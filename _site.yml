@@ -4,6 +4,8 @@ navbar:
   left:
     - text: "Health"
       href: Covid_19_Germany202105.html
+    - text: "Scale"
+      href: Scale.html
   right: 
     - icon: fa-envelope fa-lg
       href: mailto:<boiled.data@gmail.com>
