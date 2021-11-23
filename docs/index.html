@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>From Data Towards Information</title>
+
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Frontpage</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="Covid_19_Germany202105.html">Mortality 2020: Germany</a>
+</li>
+<li>
+  <a href="Scale.html">Scale</a>
+</li>
+<li>
+  <a href="Backpain.html">Health Trends</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:&lt;boiled.data@gmail.com&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">From Data Towards Information</h1>
+<h4 class="date">31 08 2021</h4>
+
+</div>
+
+
+<pre class="r"><code>#Preliminaries:
+knitr::opts_chunk$set( message=FALSE, warning=FALSE) #echo = FALSE,
+
+rm(list=ls())
+library(readxl)
+library(tidyverse)
+library(viridis)</code></pre>
+<div id="situation" class="section level2">
+<h2>Situation</h2>
+<p>Most people know Winston Churchill’s famous quote “I only believe in statistics that I doctored myself.” Nowadays, as the amount and availability of information is increasing tremendously every day, correlates of this statement become more and more apparent. The ability to properly derive conclusions from data is both key and obstacle for decision makers such as politicians, businesses and ordinary people. This trend is reinforced as social media competes heavily for our attention with pictures, facts and stories, and our resources for verification are usually very limited. Good news is that it can certainly be possible to come up with more evidence based decisions, especially as data availability, software and hardware issues become less problem than ever before. But how to separate wheat from chaff? One step on the path, in addition to <a href="https://wakingup.com/">stay calm</a> will certainly be proper data literacy and transparency.</p>
+</div>
+<div id="help" class="section level2">
+<h2>Help</h2>
+<p>Good reads on how (not) to do statistical analysis are for example provided by <span class="citation">Reinhart (2015)</span> or <span class="citation">Spiegelhalter (2019)</span>, whereas <span class="citation">Kahneman (2011)</span> discusses cognitive challenges in decision making, for example people’s immanent inability to digest probabilistic information. Analytical tools such as statistics software <a href="https://www.r-project.org/">R</a> allow powerful data analysis and, in conjunction with the <a href="https://rmarkdown.rstudio.com/">R-markdown</a> framework, to present results together with the used code. Platforms like <a href="https://www.r-bloggers.com/">R-Bloggers</a> facilitate developments in reproducible data analysis. Such possibilities, in parallel with adequate habits of communication (eg. <span class="citation">Watzlawick (2018)</span>) enable cultivating sound (public) discussion of data driven decision making. Being able to do the work provides you with a range of skills from exploring and <a href="https://www.r-graph-gallery.com/">summarizing data structures</a>, over predicting likely outcomes for new instances (eg. <span class="citation">Kuhn and Johnson (2013)</span>), to assessing causal relationships (eg. <span class="citation">Pearl (2019)</span>).</p>
+</div>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<p>As a start, let’s see how to transcend data into information with just a few lines of code: Data is provided by the <a href="https://worldhappiness.report/ed/2021/">worldhappiness report 2021</a>. The publisher collects and summarizes data on individual “self stated” happiness across a lot of countries. We read the data</p>
+<pre class="r fold-show"><code>#data from https://worldhappiness.report/ed/2021/
+data_in &lt;- read_excel(&quot;DataPanelWHR2021C2.xls&quot;)
+
+#show data: 
+head(data_in)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Country name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Life Ladder"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Log GDP per capita"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Social support"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Healthy life expectancy at birth"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Freedom to make life choices"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Generosity"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Perceptions of corruption"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Positive affect"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["Negative affect"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"2008","3":"3.723590","4":"7.370100","5":"0.4506623","6":"50.80","7":"0.7181143","8":"0.16763999","9":"0.8816863","10":"0.5176372","11":"0.2581955"},{"1":"Afghanistan","2":"2009","3":"4.401778","4":"7.539972","5":"0.5523084","6":"51.20","7":"0.6788964","8":"0.19009919","9":"0.8500354","10":"0.5839256","11":"0.2370924"},{"1":"Afghanistan","2":"2010","3":"4.758381","4":"7.646709","5":"0.5390752","6":"51.60","7":"0.6001272","8":"0.12058964","9":"0.7067661","10":"0.6182655","11":"0.2753238"},{"1":"Afghanistan","2":"2011","3":"3.831719","4":"7.619532","5":"0.5211036","6":"51.92","7":"0.4959014","8":"0.16242748","9":"0.7311085","10":"0.6113873","11":"0.2671747"},{"1":"Afghanistan","2":"2012","3":"3.782938","4":"7.705479","5":"0.5206367","6":"52.24","7":"0.5309350","8":"0.23603241","9":"0.7756198","10":"0.7103847","11":"0.2679191"},{"1":"Afghanistan","2":"2013","3":"3.572100","4":"7.725029","5":"0.4835519","6":"52.56","7":"0.5779554","8":"0.06114766","9":"0.8232041","10":"0.6205848","11":"0.2733281"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>and manipulate it using the popular <a href="https://www.tidyverse.org/">R-tidyverse</a> framework in order to allow a regional as well as the developmental perspective on perceived happiness across the world. The resulting graph is inspired by <span class="citation">Healy (2018)</span>. We select data from 2010 to 2020 and add the constraint that a country must be observable at least during 5 years. The resulting graph, a map of the world’s happiness across space and time, is sorted with regard a country’s average happiness:</p>
+<pre class="r"><code>data_in %&gt;%
+  filter(year %in% c(2010:2020)) %&gt;% #look at data from 2010 to 2020
+  group_by(`Country name`) %&gt;%
+  summarize(happiness_mean=mean(`Life Ladder`), n=n()) %&gt;% #mean happiness by country
+  filter(n&gt;=5) %&gt;% #minimum 5 observations per country
+  mutate(rank=rank(-happiness_mean))  %&gt;% #create country specific happiness rank
+  inner_join(data_in, by=(&quot;Country name&quot;))  %&gt;% #combine with yearly data
+  mutate(year=as.factor(year), `Country name`=fct_reorder(factor(`Country name`), -rank)) %&gt;% #order countries
+  filter(year %in% c(2010:2020)) %&gt;%
+  ggplot(aes(y=`Country name`, x=year,  fill=`Life Ladder`)) + #create graph
+  scale_fill_viridis(option=&quot;inferno&quot;) +
+  geom_tile(colour=&quot;white&quot;) +
+theme_minimal(base_size = 8) +
+  theme(axis.text.x = element_text(angle = 45, hjust=1)) +
+  labs(title=&quot;Hierarchy and development of happiness&quot;, fill=&quot;Happiness score&quot;,
+       y=&quot;Country&quot;, x=&quot;Year&quot;)  </code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Not very unexpectedly, the nordic countries are at the top of the list, whereas African and Oriental countries are at the bottom. We see that average happiness is a relatively stable phenomenon, overall. Among others, the most happy country, Denmark, also had an decrease in average happiness in 2020. Was this due to the Covid-19 pandemic? Interestingly, in the same year average happiness increased in Germany compared to 2019. Did Germans had a good time working from home, or does this finding suggest that ones perceived happiness is evaluated also relative to other countries? (In Germany the impact of Covid-19 was less severe than in other countries from an epidemiological point of view.) For our map of happiness another lesson can probably be learned from real maps: White spaces, ie. unknown territory or missing observations in the language of data science, are often very interesting, and worth exploring. Generally, a lot of whites spaces can be seen in 2020, the Covid-19 year, in which there were lots of barriers for data collection. Also, white spaces in Syria from 2016 onwards probably can tell us a lot. Looking at Afghanistan, second last country at the bottom of the list before Rwanda, we see that after a relatively good year in 2010, happiness decreased steadily afterwards. Looking at extreme values seems to be a potentially fruitful enterprise, when one is interested in increasing welfare of nations. An important question is about the most effective options how countries can achieve better outcomes. Ideally, one would look for internal or external factors that play a crucial role in people’s happiness and build policies around it. Hopefully, analytical skills are used properly in this context, enhancing economic prosperity and freedom of mankind, allowing people to flourish, and to live a healthy and happy life.</p>
+</div>
+<div id="literature" class="section level2 unnumbered">
+<h2 class="unnumbered">Literature</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-healy2018visualizing" class="csl-entry">
+Healy, Kieran. 2018. <span>“Visualizing the Baby Boom.”</span> <em>Socius</em> 4: 2378023118777324.
+</div>
+<div id="ref-kahneman2011thinking" class="csl-entry">
+Kahneman, Daniel. 2011. <em>Thinking, Fast and Slow</em>. Macmillan.
+</div>
+<div id="ref-kuhn2013applied" class="csl-entry">
+Kuhn, Max, and Kjell Johnson. 2013. <em>Applied Predictive Modeling</em>. Vol. 26. Springer.
+</div>
+<div id="ref-pearl2019new" class="csl-entry">
+Pearl, Judea. 2019. <span>“The New Science of Cause and Effect, with Reflections on Data Science and Artificial Intelligence.”</span> In <em>2019 IEEE International Conference on Big Data (Big Data)</em>, 4–4. IEEE.
+</div>
+<div id="ref-reinhart2015statistics" class="csl-entry">
+Reinhart, Alex. 2015. <em>Statistics Done Wrong: The Woefully Complete Guide</em>. No starch press.
+</div>
+<div id="ref-spiegelhalter2019art" class="csl-entry">
+Spiegelhalter, David. 2019. <em>The Art of Statistics: Learning from Data</em>. Penguin UK.
+</div>
+<div id="ref-watzlawick2018wirklich" class="csl-entry">
+Watzlawick, Paul. 2018. <em>Wie Wirklich Ist Die Wirklichkeit?: Wahn, t<span>ä</span>uschung, Verstehen</em>. Piper ebooks.
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

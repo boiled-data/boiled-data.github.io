@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Germany: Mortality in Times of Covid-19</title>
+
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Frontpage</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="Covid_19_Germany202105.html">Mortality 2020: Germany</a>
+</li>
+<li>
+  <a href="Scale.html">Scale</a>
+</li>
+<li>
+  <a href="Backpain.html">Health Trends</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="mailto:&lt;boiled.data@gmail.com&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Germany: Mortality in Times of Covid-19</h1>
+<h4 class="date">24 10 2021 (first version 25 11 2020)</h4>
+
+</div>
+
+
+<pre class="r"><code>#Preliminaries:
+
+knitr::opts_chunk$set( message=FALSE, warning=FALSE) #echo = FALSE,
+
+rm(list=ls())
+
+library(tidyr)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(gridExtra)
+library(grid)
+library(colorRamps)
+library(lubridate)
+
+theme_set(theme_light())</code></pre>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Since year 2019/2020 mankind has to deal with the communicable disease Covid 19. People across many countries and societies as a whole are affected from both an epidemiological and economic point of view. Data on mortality was regularly published across media, also to justify rigorous policy interventions. However, the numbers were rarely well explained. Hence, we close this gap by using public data from official statistics in order to visualize the mortality in Germany over time, also accounting for changes in the population structure. Following reproducible research paradigm, code is embedded within the document.</p>
+</div>
+<div id="absolute-mortality" class="section level2">
+<h2>Absolute Mortality</h2>
+<p>Figure 1 shows a simple relationship of total Covid 19 (C) and mortality (M) cases. If such a dependency holds then a simple comparison between then mortality in year 2020 with the preceding years may reveal the effect of Covid 19.</p>
+<p><img src="Covid_19_Germany202105_files/figure-html/unnamed-chunk-1-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Figure 2 shows the mortality up to end of year 2020 in contrast to the mean-, minimum-, and maximum- mortality of the 4 preceding years.</p>
+<pre class="r"><code>#read data
+#source: https://www-genesis.destatis.de/
+pop &lt;- read_csv(&quot;Bevoelkerung_destatis.csv&quot;)
+
+#source: https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Sterbefaelle-Lebenserwartung/Tabellen/sonderauswertung-sterbefaelle.html?nn=209016
+deaths &lt;- read_csv2(&quot;sonderauswertung_sterbefaelle_BL_Tage202105.csv&quot;)
+
+pop_tab &lt;- pop %&gt;%
+  gather(`31.12.2015`, `31.12.2016`,`31.12.2017`,`31.12.2018`,`31.12.2019`,
+         key=&quot;end_of_year&quot;, value=population) %&gt;%
+  mutate(Year=as.integer(substr(end_of_year,7,10))+1)
+
+
+deaths_tab &lt;- deaths %&gt;%
+      filter(Jahr&lt;2021) %&gt;%
+      gather(`01.01.`:`31.12.`,
+             key=day_month, value=deaths)  %&gt;%
+    mutate(day=dmy(paste0(day_month, Jahr)), deaths=as.integer(deaths)) %&gt;%
+      select(`Nr.`, Jahr, Bundesland, day_month, deaths, day) %&gt;%
+    filter(!is.na(deaths)) #drop NA&#39;s for 29th February
+    
+#bring population with mortality together on regional level.
+pop_death &lt;-  deaths_tab %&gt;%
+             group_by(Jahr, Bundesland) %&gt;%
+             summarise(Tage=n(), deaths=sum(deaths)) %&gt;%
+            inner_join(pop_tab, by=c(&quot;Jahr&quot;=&quot;Year&quot;, &quot;Bundesland&quot;=&quot;Bundesland&quot;)) %&gt;%
+            select(Bundesland, Jahr, deaths, population)
+
+#aggregate on year-level:
+data_year &lt;- pop_death %&gt;%
+            group_by(Jahr) %&gt;%
+            summarise(n=n(), death_tot=sum(deaths), pop_tot=sum(population)) %&gt;%
+            mutate(death_rel=death_tot/pop_tot*1000)
+ 
+
+#plot 1 absolute and 2 relative mortality (per capita)
+
+#1 plot absolute and cumulative values over time
+##aggregate on weekly level
+#then compare 2020 with mean, min, max in the same week in the years before 2020
+
+pop_year &lt;- pop_death %&gt;%
+  group_by(Jahr) %&gt;%
+  summarise(n=n(), population=sum(population)) 
+
+pop_death_time &lt;-  deaths_tab %&gt;%
+  group_by(Jahr, week=week(day)) %&gt;%
+  summarise(Regionen=n_distinct(Bundesland), deaths=sum(deaths), days_in_week=n_distinct(day)) %&gt;%
+  filter(days_in_week==7) %&gt;%
+  group_by(Jahr) %&gt;%
+  arrange(week) %&gt;%
+  mutate(deaths_cum=cumsum(deaths))  %&gt;%
+  arrange(Jahr, week) %&gt;% 
+  inner_join(pop_year, by=&quot;Jahr&quot;) %&gt;% ##add population data
+  mutate(deaths_rel=deaths/population, deaths_cum_rel=deaths_cum/population)
+  
+pop_death_time_2020 &lt;- pop_death_time %&gt;%
+                        filter(Jahr==2020)
+
+pop_death_time_base &lt;- pop_death_time %&gt;%
+                        filter(Jahr&lt;2020) %&gt;%
+                        group_by(week) %&gt;%
+                        summarise(mean_deaths=mean(deaths), min_deaths=min(deaths), max_deaths=max(deaths), mean_deaths_cum=mean(deaths_cum), min_deaths_cum=min(deaths_cum), max_deaths_cum=max(deaths_cum), mean_deaths_rel=mean(deaths_rel), min_deaths_rel=min(deaths_rel), max_deaths_rel=max(deaths_rel)                                  , mean_deaths_cum_rel=mean(deaths_cum_rel), min_deaths_cum_rel=min(deaths_cum_rel), max_deaths_cum_rel=max(deaths_cum_rel))
+
+
+#plot total values over time:
+pop_death_time_comp &lt;- pop_death_time_2020 %&gt;%
+              inner_join(pop_death_time_base, by=&quot;week&quot;) %&gt;%
+              gather(`deaths`, `min_deaths`, `max_deaths`, `mean_deaths`,
+                     key=&quot;compare&quot;, value=&quot;deceased&quot;) %&gt;%
+              mutate(legend=ifelse(compare==&quot;deaths&quot;, &quot;year 2020&quot;
+                            , ifelse(compare==&quot;min_deaths&quot;, &quot;min.2016-2019&quot;
+                            , ifelse(compare==&quot;max_deaths&quot;, &quot;max.2016-2019&quot;
+                                     , &quot;mean.2016-2019&quot;)))) 
+              
+              
+b2g &lt;- blue2green(3) 
+col &lt;- c(&quot;year 2020&quot;=&quot;red&quot;, &quot;max.2016-2019&quot;=b2g[1], &quot;mean.2016-2019&quot;=b2g[2], &quot;min.2016-2019&quot;=b2g[3])
+
+#plot absolute mortality
+p1 &lt;- ggplot(pop_death_time_comp, aes(x=week, y=deceased/1000, group=legend, color=legend)) +
+  geom_line() +
+  scale_color_manual(values=col) +
+  labs(title = &quot;Absolute mortality&quot;) +
+  theme(legend.position = c(0.55, 0.8))
+
+#repeat for cumulative values
+pop_death_time_comp_cum &lt;- pop_death_time_2020 %&gt;%
+  inner_join(pop_death_time_base, by=&quot;week&quot;) %&gt;%
+  gather(`deaths_cum`, `min_deaths_cum`, `max_deaths_cum`, `mean_deaths_cum`,
+         key=&quot;compare&quot;, value=&quot;deceased&quot;) %&gt;%
+  mutate(legend=ifelse(compare==&quot;deaths_cum&quot;, &quot;year 2020&quot;
+                       , ifelse(compare==&quot;min_deaths_cum&quot;, &quot;min.2016-2019&quot;
+                                , ifelse(compare==&quot;max_deaths_cum&quot;, &quot;max.2016-2019&quot;
+                                         , &quot;mean.2016-2019&quot;))))
+
+#plot cumulative mortality
+p2 &lt;- ggplot(pop_death_time_comp_cum, aes(x=week, y=deceased/1000, group=legend, color=legend)) +
+  geom_line() +
+  scale_color_manual(values=col) +
+  labs(title = &quot;Cumulative mortality&quot;) +
+  theme(legend.position = c(0.25, 0.8))
+
+#combine 2 plots next to each other
+title1=textGrob(&quot;Figure 2:Weekly mortality in Germany&quot;, gp=gpar(fontface=&quot;bold&quot;))
+grid.arrange(p1,  p2, ncol=2, top=title1)</code></pre>
+<p><img src="Covid_19_Germany202105_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>When interpreting this figure we have to acknowledge that in 2018 there was a very high mortality due to a very severe influenza season in the first quarter. We see for 2020 three peaks of relatively high mortality in week 15, around week 32, and from week 42 onward. The first and the last peak was correlated with strong policy interventions (“lockdown”). We also see that the cumulative mortality in 2020 was relatively high, at the end of the year even maximum mortality of year 2018 was surpassed. <!-- which was used to justify the interventions. --></p>
+<!--Our findings are in line with @zur2020sonderauswertung, who argued that absolute mortality in 2020 will probably not be higher than that of year 2018. -->
+</div>
+<div id="mortality-per-capita" class="section level2">
+<h2>Mortality per capita</h2>
+<p>However these total number can provide wrong evidence about the mortality, if the population changes between the years: If the population number (P) increases we would expect that more people die (see Figure 3), also in absence of Covid 19.</p>
+<p><img src="Covid_19_Germany202105_files/figure-html/unnamed-chunk-3-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Hence, we have to account for population changes. Figure 4 shows the data from above but uses the population of the beginning of each year in order to calculate number of deceased per capita.</p>
+<pre class="r"><code>#2 Calculate Mortality per capita (population at the beginning of year): 
+
+pop_death_time_comp_rel &lt;- pop_death_time_2020 %&gt;%
+  inner_join(pop_death_time_base, by=&quot;week&quot;) %&gt;%
+  gather(`deaths_rel`, `min_deaths_rel`, `max_deaths_rel`, `mean_deaths_rel`,
+         key=&quot;compare&quot;, value=&quot;deceased&quot;) %&gt;%
+  mutate(legend=ifelse(compare==&quot;deaths_rel&quot;, &quot;year 2020&quot;
+                       , ifelse(compare==&quot;min_deaths_rel&quot;, &quot;min.2016-2019&quot;
+                                , ifelse(compare==&quot;max_deaths_rel&quot;, &quot;max.2016-2019&quot;
+                                         , &quot;mean.2016-2019&quot;))))
+
+b2g &lt;- blue2green(3) 
+col &lt;- c(&quot;year 2020&quot;=&quot;red&quot;, &quot;max.2016-2019&quot;=b2g[1], &quot;mean.2016-2019&quot;=b2g[2], &quot;min.2016-2019&quot;=b2g[3])
+
+#plot absolute mortality
+p3 &lt;- ggplot(pop_death_time_comp_rel, aes(x=week, y=deceased*100000, group=legend, color=legend)) +
+  geom_line() +
+  scale_color_manual(values=col) +
+  labs(title = &quot;Absolute mortality&quot;, y=&quot;deceased per capita * 100.000&quot;) +
+  theme(legend.position = c(0.55, 0.8))
+
+#repeat for cumulative values
+pop_death_time_comp_cum_rel &lt;- pop_death_time_2020 %&gt;%
+  inner_join(pop_death_time_base, by=&quot;week&quot;) %&gt;%
+  gather(`deaths_cum_rel`, `min_deaths_cum_rel`, `max_deaths_cum_rel`, `mean_deaths_cum_rel`,
+         key=&quot;compare&quot;, value=&quot;deceased&quot;) %&gt;%
+  mutate(legend=ifelse(compare==&quot;deaths_cum_rel&quot;, &quot;year 2020&quot;
+                       , ifelse(compare==&quot;min_deaths_cum_rel&quot;, &quot;min.2016-2019&quot;
+                                , ifelse(compare==&quot;max_deaths_cum_rel&quot;, &quot;max.2016-2019&quot;
+                                         , &quot;mean.2016-2019&quot;))))
+
+#plot cumulative mortality
+p4 &lt;- ggplot(pop_death_time_comp_cum_rel, aes(x=week, y=deceased*100000, group=legend, color=legend)) +
+  geom_line() +
+  scale_color_manual(values=col) +
+  labs(title = &quot;Cumulative mortality&quot;, y=&quot;deceased per capita * 100.000&quot;) +
+  theme(legend.position = c(0.25, 0.8))
+
+#combine 2 plots next to each other
+title2=textGrob(&quot;Figure 4: Weekly mortality per capita in Germany&quot; , gp=gpar(fontface=&quot;bold&quot;))
+grid.arrange(p3,  p4, ncol=2, top=title2)</code></pre>
+<p><img src="Covid_19_Germany202105_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>We find that changes of the number of citizens did not alter the found pattern from above. In the end of 2020 overall mortality increased strongly, probably driven by Covid 19. However, other potential relevant variables are not included into to the analysis. If the relationship between Covid-19 cases and mortality is confounded by the important variable age (see Figure 5) we need to account for changes in the age structure over the years in our analysis.</p>
+<p><img src="Covid_19_Germany202105_files/figure-html/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>After accounting for changes in the age structure <span class="citation">Ragnitz (2021)</span> overall did not find an increased mortality for the year 2020 in Germany. However, the author argued that this was due to an decreased mortality during 2020 summer. These findings are supported by <a href="https://staff.math.su.se/hoehle/blog/2021/03/01/mortadj.html">Theory meets practice…</a> where also an analysis of age-specific mortality for Germany can be found. However, since data on mortality is still preliminary, it is not clear how their conclusions change, after further data updates. It would be interesting to see the impact of Covid-19 on mortality if other important confounders are taken into account, also from an international perspective. So far, empirical evidence from other countries <a href="https://kieranhealy.org/blog/archives/2021/10/21/excess-deaths-in-2020/">(eg. the US)</a> suggests that other countries were more severely hit by the Covid-19 pandemic than Germany. The future may tell where this was due to better policies or whether other factors played a major role.</p>
+<p>Take care and stay healthy! :)</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-ragnitz2021corona" class="csl-entry">
+Ragnitz, Joachim. 2021. <span>“Corona-Pandemie, <span>Ü</span>bersterblichkeit Und Der Lockdown Der Wirtschaft.”</span> <em>Ifo Dresden Berichtet</em> 28 (01): 14–21.
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
