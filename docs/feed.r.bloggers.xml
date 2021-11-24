@@ -1,4 +1,3 @@
-<code>
 ---
 layout: null
 ---
@@ -30,4 +29,3 @@ layout: null
         {% endfor %}
     </channel>
 </rss>
-</code>
