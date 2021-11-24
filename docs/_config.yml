@@ -1,2 +1,4 @@
+markdown: kramdown
+theme: null
 plugins:
   - jekyll-feed
