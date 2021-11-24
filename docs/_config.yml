@@ -1,2 +1,6 @@
 plugins:
   - jekyll-feed
+
+title: Your blog title
+description: Your blog description
+author: Your name or favorite handle
