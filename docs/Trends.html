@@ -266,7 +266,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">Frontpage</a>
+      <a class="navbar-brand" href="index.html">Start</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -277,7 +277,7 @@ $(document).ready(function () {
   <a href="Scale.html">Scale</a>
 </li>
 <li>
-  <a href="Backpain.html">Health Trends</a>
+  <a href="Trends.html">Trends</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -353,7 +353,7 @@ trends$interest_over_time %&gt;%
   theme_minimal() +
   scale_colour_viridis_d(option=&quot;viridis&quot;) +
   labs(y=&quot;relative amount of queries&quot;, x=&quot;year&quot;, title=&quot;Figure 1: Queries for back pain over time&quot;)</code></pre>
-<p><img src="Backpain_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="Trends_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>We see that the relative number of queries are increasing steadily over time, ie there is a positive time trend. In order to better understand the data structure let’s decompose, trend, seasonality and error (using just complete 12 year periods):</p>
 <pre class="r"><code>#create time series:
 ts_in &lt;- trends$interest_over_time %&gt;%
@@ -367,10 +367,10 @@ back_ts &lt;- ts(ts_in, start = c(2016, 1),   frequency = 12)
 dcp &lt;- mstl(back_ts, s.window=&quot;periodic&quot;)
 autoplot(dcp) +
   labs(title=&quot;Figure 2: Multiple seasonal decomposition of back pain queries&quot;)</code></pre>
-<p><img src="Backpain_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="Trends_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>A monthly seasonal pattern can be seen which we should keep in mind when analyzing the relation of the pandemic with back pain. Due to the time structure of our data also autocorrelation is a potential issue we should we aware of.</p>
 <pre class="r"><code>ggPacf(back_ts, main=&quot;Figure 3: Partial autocorrelation plot (back pain queries)&quot;)</code></pre>
-<p><img src="Backpain_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="Trends_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>A strong partial autocorrelation with the first monthly lag can be seen which should be taken into account as well. Let us put together what we have learned so far, in order to assess whether the Covid-19 period is statistically associated with Google-queries for back pain. We do so by fitting an interrupted times series model, assuming a counterfactual situation by imposing a linear time trend in our model. We also add dummy variables for each month to capture the seasonality of queries for back pain, as discussed above. The dependent variable ‘hits’ reflects the relative amount of queries for backpain over time, and is considered in logarithmic form. Concerning out treatment variable it is very likely that it takes some time after reduced exercise induces bodily problems. Hence we use a categorical treatment variable, capturing first 6 months, 7-12 months or &gt; 12 months after the start of Germany’s first lockdown (2020-3-16). The time range before reflects our control group. The autocorrelated residuals are accounted for by using Newey-West standard errors.</p>
 <pre class="r"><code>data_impact &lt;- trends$interest_over_time %&gt;%
   arrange(date) %&gt;%
