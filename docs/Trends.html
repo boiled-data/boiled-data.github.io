@@ -10,7 +10,6 @@
 
 
 
-<meta name="date" content="2021-10-16" />
 
 <title>Trends in Back Pain</title>
 
@@ -311,7 +310,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Trends in Back Pain</h1>
-<h4 class="date">16 Oct 2021</h4>
+<h4 class="date">20 Mar 2022 (first version 16 Oct 2021)</h4>
 
 </div>
 
@@ -337,9 +336,9 @@ theme_set(theme_light())</code></pre>
 <div id="data-analysis" class="section level2">
 <h2>Data Analysis</h2>
 <p>Let’s figure out the relative amount internet users were looking for back pain related keywords from 2016 onwards. We look at queries from Germany, and assume that the back pain synonyms ‘Rückenschmerzen,’ ‘Rücken Schmerzen,’ ‘Rückenschmerz,’ ‘Rücken Schmerz,’ reflect overall interest in this topic, as a proxy for the associated burden of disease over time. Data is provided on a monthly level.</p>
-<pre class="r"><code>#trends &lt;- gtrends(keyword = c(&quot;Schmerz Rücken + Rückenschmerz + Schmerzen Rücken + Rückenschmerzen&quot;), time = &#39;2016-01-01 2021-09-30&#39;, geo=&quot;DE&quot;)
-#write_rds(trends, &quot;trends_ruecken20211009.rds&quot;)
-trends &lt;- read_rds(&quot;trends_ruecken20211009.rds&quot;)
+<pre class="r"><code>#trends &lt;- gtrends(keyword = c(&quot;Schmerz Rücken + Rückenschmerz + Schmerzen Rücken + Rückenschmerzen&quot;), time = #&#39;2016-01-01 2022-02-28&#39;, geo=&quot;DE&quot;)
+#write_rds(trends, &quot;trends_ruecken20220320.rds&quot;)
+trends &lt;- read_rds(&quot;trends_ruecken20220320.rds&quot;)
 
 #transform important variables 
 trends$interest_over_time  &lt;- trends$interest_over_time %&gt;%
@@ -371,16 +370,19 @@ autoplot(dcp) +
 <p>A monthly seasonal pattern can be seen which we should keep in mind when analyzing the relation of the pandemic with back pain. Due to the time structure of our data also autocorrelation is a potential issue we should we aware of.</p>
 <pre class="r"><code>ggPacf(back_ts, main=&quot;Figure 3: Partial autocorrelation plot (back pain queries)&quot;)</code></pre>
 <p><img src="Trends_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>A strong partial autocorrelation with the first monthly lag can be seen which should be taken into account as well. Let us put together what we have learned so far, in order to assess whether the Covid-19 period is statistically associated with Google-queries for back pain. We do so by fitting an interrupted times series model, assuming a counterfactual situation by imposing a linear time trend in our model. We also add dummy variables for each month to capture the seasonality of queries for back pain, as discussed above. The dependent variable ‘hits’ reflects the relative amount of queries for backpain over time, and is considered in logarithmic form. Concerning out treatment variable it is very likely that it takes some time after reduced exercise induces bodily problems. Hence we use a categorical treatment variable, capturing first 6 months, 7-12 months or &gt; 12 months after the start of Germany’s first lockdown (2020-3-16). The time range before reflects our control group. The autocorrelated residuals are accounted for by using Newey-West standard errors.</p>
+<p>A strong partial autocorrelation with the first monthly lag can be seen which should be taken into account as well. Let us put together what we have learned so far, in order to assess whether the Covid-19 period is statistically associated with Google-queries for back pain. We do so by applying segmented regression analysis <span class="citation">(Jebb et al. 2015)</span> assuming an interrupted linear time trend in our model. Dummy variables for each month are added to our specification in order to capture the seasonality of queries for back pain, as discussed above. The dependent variable ‘hits’ reflects the relative amount of queries for backpain over time, and is considered in logarithmic form. Our treatment the lockdown policies start in Germany at 2020-3-16. Hence, we test for a level change at the beginning of treatment by adding a dummy variable to the specification. In addition, as we also like to test for a changed time trend, we add a second time trend starting at the beginning of treatment. The autocorrelated residuals are accounted for by using Newey-West standard errors.</p>
 <pre class="r"><code>data_impact &lt;- trends$interest_over_time %&gt;%
   arrange(date) %&gt;%
-  mutate(trend=row_number()-1, covid=case_when(date&gt;=(as.Date(&#39;2020-03-16&#39;)+365) ~ &quot;12months&quot;, date&gt;=(as.Date(&#39;2020-03-16&#39;)+365/2) ~ &quot;6months&quot;,  date&gt;=&#39;2020-03-16&#39; ~ &quot;0months&quot; , TRUE ~ &quot;before&quot;), covid=factor(covid, levels=(c(&quot;before&quot;, &quot;0months&quot;, &quot;6months&quot;, &quot;12months&quot;))), month=as.factor(month(date)), hits_l1=lag(hits)) 
+  mutate(trend=row_number()-1, month=as.factor(month(date)), hits_l1=lag(hits),     
+         covid=if_else(date&gt;=as.Date(&#39;2020-03-16&#39;), 1, 0),
+         min_trend2=min(if_else(covid==1, row_number(), NA_integer_), na.rm=TRUE)-1
+         , trend2=ifelse(covid==1, row_number()-min_trend2, 0))
 
-lm_out &lt;- lm(log(hits) ~ trend +month  + covid , data=data_impact)
+lm_out &lt;- lm(log(hits) ~ trend + month  + covid + trend2, data=data_impact)
 
-ipct_out &lt;- round(exp(lm_out$coefficients[&quot;covid12months&quot;])*100-100, 0)
+ipct_out &lt;- round(exp(lm_out$coefficients[&quot;trend2&quot;])*100-100, 3)
 
-summ(lm_out, vcov=NeweyWest(lm_out, lag=1, prewhite=FALSE, adjust=TRUE), digits = 3) </code></pre>
+summ(lm_out, vcov=NeweyWest(lm_out, lag=11, prewhite=TRUE, adjust=TRUE), digits = 3) </code></pre>
 <table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <tbody>
 <tr>
@@ -388,7 +390,7 @@ summ(lm_out, vcov=NeweyWest(lm_out, lag=1, prewhite=FALSE, adjust=TRUE), digits 
 Observations
 </td>
 <td style="text-align:right;">
-69
+74
 </td>
 </tr>
 <tr>
@@ -413,10 +415,10 @@ OLS linear regression
 <tbody>
 <tr>
 <td style="text-align:left;font-weight: bold;">
-F(15,53)
+F(14,59)
 </td>
 <td style="text-align:right;">
-8.462
+25.538
 </td>
 </tr>
 <tr>
@@ -424,7 +426,7 @@ F(15,53)
 R²
 </td>
 <td style="text-align:right;">
-0.705
+0.858
 </td>
 </tr>
 <tr>
@@ -432,7 +434,7 @@ R²
 Adj. R²
 </td>
 <td style="text-align:right;">
-0.622
+0.825
 </td>
 </tr>
 </tbody>
@@ -462,13 +464,13 @@ p
 (Intercept)
 </td>
 <td style="text-align:right;">
-4.382
+4.344
 </td>
 <td style="text-align:right;">
-0.037
+0.018
 </td>
 <td style="text-align:right;">
-117.354
+238.349
 </td>
 <td style="text-align:right;">
 0.000
@@ -479,13 +481,13 @@ p
 trend
 </td>
 <td style="text-align:right;">
-0.002
-</td>
-<td style="text-align:right;">
 0.001
 </td>
 <td style="text-align:right;">
-3.179
+0.000
+</td>
+<td style="text-align:right;">
+3.241
 </td>
 <td style="text-align:right;">
 0.002
@@ -496,16 +498,16 @@ trend
 month2
 </td>
 <td style="text-align:right;">
--0.029
+-0.039
 </td>
 <td style="text-align:right;">
-0.031
+0.027
 </td>
 <td style="text-align:right;">
--0.956
+-1.459
 </td>
 <td style="text-align:right;">
-0.343
+0.150
 </td>
 </tr>
 <tr>
@@ -513,16 +515,16 @@ month2
 month3
 </td>
 <td style="text-align:right;">
--0.042
+-0.055
 </td>
 <td style="text-align:right;">
-0.045
+0.023
 </td>
 <td style="text-align:right;">
--0.930
+-2.349
 </td>
 <td style="text-align:right;">
-0.357
+0.022
 </td>
 </tr>
 <tr>
@@ -530,16 +532,16 @@ month3
 month4
 </td>
 <td style="text-align:right;">
--0.104
+-0.114
 </td>
 <td style="text-align:right;">
-0.042
+0.023
 </td>
 <td style="text-align:right;">
--2.493
+-5.069
 </td>
 <td style="text-align:right;">
-0.016
+0.000
 </td>
 </tr>
 <tr>
@@ -547,16 +549,16 @@ month4
 month5
 </td>
 <td style="text-align:right;">
--0.109
+-0.111
 </td>
 <td style="text-align:right;">
-0.036
+0.021
 </td>
 <td style="text-align:right;">
--3.043
+-5.386
 </td>
 <td style="text-align:right;">
-0.004
+0.000
 </td>
 </tr>
 <tr>
@@ -564,13 +566,13 @@ month5
 month6
 </td>
 <td style="text-align:right;">
--0.161
+-0.169
 </td>
 <td style="text-align:right;">
-0.036
+0.022
 </td>
 <td style="text-align:right;">
--4.518
+-7.641
 </td>
 <td style="text-align:right;">
 0.000
@@ -581,13 +583,13 @@ month6
 month7
 </td>
 <td style="text-align:right;">
--0.139
+-0.137
 </td>
 <td style="text-align:right;">
-0.037
+0.016
 </td>
 <td style="text-align:right;">
--3.806
+-8.490
 </td>
 <td style="text-align:right;">
 0.000
@@ -598,16 +600,16 @@ month7
 month8
 </td>
 <td style="text-align:right;">
--0.096
+-0.098
 </td>
 <td style="text-align:right;">
-0.039
+0.025
 </td>
 <td style="text-align:right;">
--2.423
+-3.968
 </td>
 <td style="text-align:right;">
-0.019
+0.000
 </td>
 </tr>
 <tr>
@@ -615,16 +617,16 @@ month8
 month9
 </td>
 <td style="text-align:right;">
--0.081
+-0.077
 </td>
 <td style="text-align:right;">
-0.035
+0.018
 </td>
 <td style="text-align:right;">
--2.311
+-4.384
 </td>
 <td style="text-align:right;">
-0.025
+0.000
 </td>
 </tr>
 <tr>
@@ -632,16 +634,16 @@ month9
 month10
 </td>
 <td style="text-align:right;">
--0.010
+-0.043
 </td>
 <td style="text-align:right;">
-0.030
+0.015
 </td>
 <td style="text-align:right;">
--0.348
+-2.959
 </td>
 <td style="text-align:right;">
-0.729
+0.004
 </td>
 </tr>
 <tr>
@@ -649,16 +651,16 @@ month10
 month11
 </td>
 <td style="text-align:right;">
--0.029
+-0.063
 </td>
 <td style="text-align:right;">
-0.038
+0.021
 </td>
 <td style="text-align:right;">
--0.754
+-2.948
 </td>
 <td style="text-align:right;">
-0.454
+0.005
 </td>
 </tr>
 <tr>
@@ -666,67 +668,50 @@ month11
 month12
 </td>
 <td style="text-align:right;">
--0.099
+-0.078
 </td>
 <td style="text-align:right;">
-0.037
+0.014
 </td>
 <td style="text-align:right;">
--2.649
+-5.509
 </td>
 <td style="text-align:right;">
-0.011
+0.000
 </td>
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
-covid0months
+covid
 </td>
 <td style="text-align:right;">
-0.023
+0.024
 </td>
 <td style="text-align:right;">
-0.027
+0.014
 </td>
 <td style="text-align:right;">
-0.860
+1.699
 </td>
 <td style="text-align:right;">
-0.394
+0.095
 </td>
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
-covid6months
+trend2
 </td>
 <td style="text-align:right;">
-0.029
+0.005
 </td>
 <td style="text-align:right;">
-0.033
+0.001
 </td>
 <td style="text-align:right;">
-0.879
+4.519
 </td>
 <td style="text-align:right;">
-0.383
-</td>
-</tr>
-<tr>
-<td style="text-align:left;font-weight: bold;">
-covid12months
-</td>
-<td style="text-align:right;">
-0.089
-</td>
-<td style="text-align:right;">
-0.039
-</td>
-<td style="text-align:right;">
-2.266
-</td>
-<td style="text-align:right;">
-0.028
+0.000
 </td>
 </tr>
 </tbody>
@@ -738,11 +723,11 @@ covid12months
 </tr>
 </tfoot>
 </table>
-<p>Our regression shows that the Covid-19 time period, is indeed associated with a higher share of queries for back pain, given a linear time trend and month-flags. Compared to the baseline we find an steady increase of relative queries from the beginning of the lockdown onward. However, it can be seen that the impact is just statistically significant after the first 12 months (around <code>9</code> percent). So we have learned that although people were saved concerning a Covid-19 infection, there seem to be negative external effects on other health outcomes (in addition to the psychological and economic burden).</p>
+<p>Our regression shows that the Covid-19 time period is indeed associated with a higher share of queries for back pain, given a linear time trend and month-flags. However, although positive, the level change after treatment lacks statistical significance. Instead, compared to baseline, we find an steady increase of relative queries from the beginning of lockdown onward. From this point queries increased around <code>0.493</code> percent each month. This suggests that although people were saved concerning a Covid-19 infection, there seem to be negative external effects on other health outcomes in Germany (in addition to the psychological and economic burden).</p>
 </div>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
-<p>Overall we have found a substantial increase in the relative interest in back pain based on online queries using Google Trends. What can be done? From a policy perspective it is clear that there need to be enough supply of health care provision in order for sufficient treatment, mitigate pain and avoidance of chronic disease. Another important aspect of such treatment often is self awareness of a person with back pain, to successfully figure out what he or she needs and when and what exercise to do. Here, in addition to professional help, internet can help to fast access information in order to relieve ones pain, given high quality information is provided.</p>
+<p>Overall we have found a substantial increase in the relative interest in back pain based on online queries using Google Trends. What can be done? From a policy perspective it is clear that there need to be enough supply of health care provision in order for sufficient treatment, mitigate pain and avoidance of chronic disease. Another important aspect of such treatment often is self awareness of a person with back pain, to successfully figure out what he or she needs and when and what exercise to do. Here, in addition to professional help, internet can probably help to easily access information in order to relieve pain, given high quality information is provided.</p>
 <p>One thing we have to keep in mind, is that Google Trends reflects the importance of queries, relative to all queries at a point in time at a specific location. It is obvious that the overall internet queries increased strongly in 2020. However, it is hard to imagine a scenario, how an increased internet usage would systematically bias above findings.</p>
 </div>
 <div id="references" class="section level2 unnumbered">
@@ -756,6 +741,9 @@ Ciaffi, Jacopo, Riccardo Meliconi, Maria Paola Landini, Luana Mancarella, Veroni
 </div>
 <div id="ref-hoerger2020impact" class="csl-entry">
 Hoerger, Michael, Sarah Alonzi, Laura M Perry, Hallie M Voss, Sanjana Easwar, and James I Gerhart. 2020. <span>“Impact of the COVID-19 Pandemic on Mental Health: Real-Time Surveillance Using Google Trends.”</span> <em>Psychological Trauma: Theory, Research, Practice, and Policy</em> 12 (6): 567.
+</div>
+<div id="ref-jebb2015time" class="csl-entry">
+Jebb, Andrew T, Louis Tay, Wei Wang, and Qiming Huang. 2015. <span>“Time Series Analysis for Psychological Research: Examining and Forecasting Change.”</span> <em>Frontiers in Psychology</em> 6: 727.
 </div>
 <div id="ref-knipe2020mapping" class="csl-entry">
 Knipe, Duleeka, Hannah Evans, Amanda Marchant, David Gunnell, and Ann John. 2020. <span>“Mapping Population Mental Health Concerns Related to COVID-19 and the Consequences of Physical Distancing: A Google Trends Analysis.”</span> <em>Wellcome Open Research</em> 5.
