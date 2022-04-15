@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Trends in Back Pain</title>
+
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Start</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="Covid_19_Germany.html">Mortality 20/21: Germany</a>
+</li>
+<li>
+  <a href="Scale.html">Scale</a>
+</li>
+<li>
+  <a href="Trends.html">Trends</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="feed.xml">
+    <span class="fa fa-rss"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="mailto:&lt;boiled.data@gmail.com&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Trends in Back Pain</h1>
+<h4 class="date">15 Apr 2022 (first version 16 Oct 2021)</h4>
+
+</div>
+
+
+<pre class="r"><code>#Preliminaries:
+knitr::opts_chunk$set(message=FALSE, warning=FALSE)
+
+rm(list=ls())
+
+library(tidyverse)
+library(lubridate)
+library(viridis)
+library(gtrendsR)
+library(forecast)
+library(jtools)
+library(sandwich)
+
+theme_set(theme_light())</code></pre>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Back pain is a common issue across the globe, increasing due to an ageing population and little physical exercise (the latter is usually considered a good ingredient to improve the situation). However, from 2020 onward, exercise decreased strongly due to policies to mitigate the COVID-19 pandemic. Hence, a natural question is whether political lockdown had a negative influence on the prevalence of back pain. One potential mechanism could be higher number of people working from home. But how to detect changes in back pain over time? One way to approach this is to use <a href="https://trends.google.de/trends">Google Trends</a>, as it provides quasi instant access to aggregated queries from Google users. <span class="citation">Hoerger et al. (2020)</span>, <span class="citation">Knipe et al. (2020)</span> and <span class="citation">Brodeur et al. (2021)</span> use Google Trends to assess the impact of the pandemic on mental health/well being. <span class="citation">Szilagyi et al. (2021)</span> compare queries for back pain, before and after the pandemic. Seasonality of back pain in Italy was analyzed by <span class="citation">Ciaffi et al. (2021)</span>. But can health issues really be traced back to the COVID-19 pandemic, and how?</p>
+</div>
+<div id="data-analysis" class="section level2">
+<h2>Data Analysis</h2>
+<p>Let’s figure out the relative amount internet users were looking for back pain related keywords from 2016 onward. We focus on queries from Germany, and assume that the back pain synonyms ‘Rückenschmerzen,’ ‘Rücken Schmerzen,’ ‘Rückenschmerz,’ ‘Rücken Schmerz,’ reflect overall interest in this topic, as a proxy for the associated burden of disease over time. Data is provided on a monthly level.</p>
+<pre class="r"><code>#trends &lt;- gtrends(keyword = c(&quot;Schmerz Rücken + Rückenschmerz + Schmerzen Rücken + Rückenschmerzen&quot;), time = #&#39;2016-01-01 2022-03-31&#39;, geo=&quot;DE&quot;)
+#write_rds(trends, &quot;trends_ruecken20220415.rds&quot;)
+trends &lt;- read_rds(&quot;trends_ruecken20220415.rds&quot;)
+
+#transform important variables 
+trends$interest_over_time  &lt;- trends$interest_over_time %&gt;%
+        mutate(date=as.Date(date))
+
+#Visualize Backpain over time
+trends$interest_over_time %&gt;%
+  ggplot() +
+  geom_line(aes(x=date, y=hits),  color = &quot;darkred&quot;) +
+  geom_smooth(aes(x=date, y=hits)) +
+  theme_minimal() +
+  scale_colour_viridis_d(option=&quot;viridis&quot;) +
+  labs(y=&quot;relative amount of queries&quot;, x=&quot;year&quot;, title=&quot;Figure 1: Queries for back pain over time&quot;)</code></pre>
+<p><img src="Trends_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>We see in Figure 1 that the relative number of queries is increasing steadily over time, ie there is a positive time trend. In order to better understand the data structure let’s decompose, trend, seasonality and error (using just complete 12 year periods):</p>
+<pre class="r"><code>#create time series:
+ts_in &lt;- trends$interest_over_time %&gt;%
+  filter(date&gt;= &#39;2016-01-01&#39; &amp; date&lt;= &#39;2020-12-31&#39;) %&gt;%
+  mutate(Jahr=year(date)) %&gt;%
+  select(hits) %&gt;% 
+  pull()
+
+back_ts &lt;- ts(ts_in, start = c(2016, 1),   frequency = 12) 
+
+dcp &lt;- mstl(back_ts, s.window=&quot;periodic&quot;)
+autoplot(dcp) +
+  labs(title=&quot;Figure 2: Multiple seasonal decomposition of back pain queries&quot;)</code></pre>
+<p><img src="Trends_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>A monthly seasonal pattern can be seen which we should keep in mind when analyzing the relation of the pandemic with back pain. Due to the time structure of our data also autocorrelation is a potential issue we should we aware of.</p>
+<pre class="r"><code>ggPacf(back_ts, main=&quot;Figure 3: Partial autocorrelation plot (back pain queries)&quot;)</code></pre>
+<p><img src="Trends_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>A strong partial autocorrelation with monthly lags can be seen which should be taken into account as well. Let us put together what we have learned so far, in order to assess whether the COVID-19 period is statistically associated with Google-queries for back pain: We do so by applying <em>segmented regression analysis</em> <span class="citation">(e.g. Wagner et al. 2002; Jebb et al. 2015)</span> assuming an interrupted linear time trend in our model. The dependent variable <span class="math inline">\(hits_t\)</span> reflects the relative amount of queries for back pain over months <span class="math inline">\(t\)</span>, and is considered in logarithmic form. Explanatory variable <span class="math inline">\(time_t\)</span> is added to account for an assumed (partly <em>counterfactual</em>) linear time trend. Since lockdown policies began in Germany at 2020-3-16, we test for a level change at the beginning of treatment by adding a dummy variable <span class="math inline">\(P_t\)</span> to the specification. As the back pain-trend may change during the lockdown, we add another time variable <span class="math inline">\(time\:since\:treatment_t\)</span> to the specification – capturing time since treatment, zero before. This leads to the following regression:</p>
+<center>
+<p><span class="math inline">\(log(hits_t) = \beta_0 + \beta_1\,time_t + \beta_2\,P_t + \beta_3\:time\,since\:treatment_t + \epsilon_t\)</span></p>
+</center>
+<p>Finally, dummy variables for each month are added to our specification in order to capture the seasonality of queries for back pain, as discussed above. The autocorrelated residuals are accounted for by using Newey-West standard errors.</p>
+<pre class="r"><code>data_impact &lt;- trends$interest_over_time %&gt;%
+  arrange(date) %&gt;%
+  mutate(time=row_number()-1, month=as.factor(month(date)), hits_l1=lag(hits),     
+         policy=if_else(date&gt;=as.Date(&#39;2020-03-16&#39;), 1, 0),
+         min_time_2=min(if_else(policy==1, row_number(), NA_integer_), na.rm=TRUE)-1
+         , time_2=ifelse(policy==1, row_number()-min_time_2, 0))
+
+lm_out &lt;- lm(log(hits) ~ time + month  + policy + time_2, data=data_impact)
+
+ipct_out &lt;- round(exp(lm_out$coefficients[&quot;time_2&quot;])*100-100, 3)
+
+summ(lm_out, vcov=NeweyWest(lm_out, lag=8, prewhite=TRUE, adjust=TRUE), digits = 3) </code></pre>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Observations
+</td>
+<td style="text-align:right;">
+75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Dependent variable
+</td>
+<td style="text-align:right;">
+log(hits)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Type
+</td>
+<td style="text-align:right;">
+OLS linear regression
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+F(14,60)
+</td>
+<td style="text-align:right;">
+26.204
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+R²
+</td>
+<td style="text-align:right;">
+0.859
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Adj. R²
+</td>
+<td style="text-align:right;">
+0.827
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Est.
+</th>
+<th style="text-align:right;">
+S.E.
+</th>
+<th style="text-align:right;">
+t val.
+</th>
+<th style="text-align:right;">
+p
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+4.344
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+<td style="text-align:right;">
+240.725
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+time
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+<td style="text-align:right;">
+2.833
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+month2
+</td>
+<td style="text-align:right;">
+-0.035
+</td>
+<td style="text-align:right;">
+0.025
+</td>
+<td style="text-align:right;">
+-1.418
+</td>
+<td style="text-align:right;">
+0.161
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+month3
+</td>
+<td style="text-align:right;">
+-0.054
+</td>
+<td style="text-align:right;">
+0.021
+</td>
+<td style="text-align:right;">
+-2.567
+</td>
+<td style="text-align:right;">
+0.013
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+month4
+</td>
+<td style="text-align:right;">
+-0.106
+</td>
+<td style="text-align:right;">
+0.021
+</td>
+<td style="text-align:right;">
+-5.059
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+month5
+</td>
+<td style="text-align:right;">
+-0.109
+</td>
+<td style="text-align:right;">
+0.022
+</td>
+<td style="text-align:right;">
+-4.969
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+month6
+</td>
+<td style="text-align:right;">
+-0.174
+</td>
+<td style="text-align:right;">
+0.023
+</td>
+<td style="text-align:right;">
+-7.454
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+month7
+</td>
+<td style="text-align:right;">
+-0.135
+</td>
+<td style="text-align:right;">
+0.017
+</td>
+<td style="text-align:right;">
+-7.927
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+month8
+</td>
+<td style="text-align:right;">
+-0.096
+</td>
+<td style="text-align:right;">
+0.024
+</td>
+<td style="text-align:right;">
+-3.987
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+month9
+</td>
+<td style="text-align:right;">
+-0.073
+</td>
+<td style="text-align:right;">
+0.019
+</td>
+<td style="text-align:right;">
+-3.899
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+month10
+</td>
+<td style="text-align:right;">
+-0.039
+</td>
+<td style="text-align:right;">
+0.015
+</td>
+<td style="text-align:right;">
+-2.563
+</td>
+<td style="text-align:right;">
+0.013
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+month11
+</td>
+<td style="text-align:right;">
+-0.061
+</td>
+<td style="text-align:right;">
+0.021
+</td>
+<td style="text-align:right;">
+-2.857
+</td>
+<td style="text-align:right;">
+0.006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+month12
+</td>
+<td style="text-align:right;">
+-0.075
+</td>
+<td style="text-align:right;">
+0.014
+</td>
+<td style="text-align:right;">
+-5.513
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+policy
+</td>
+<td style="text-align:right;">
+0.025
+</td>
+<td style="text-align:right;">
+0.014
+</td>
+<td style="text-align:right;">
+1.828
+</td>
+<td style="text-align:right;">
+0.073
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+time_2
+</td>
+<td style="text-align:right;">
+0.005
+</td>
+<td style="text-align:right;">
+0.001
+</td>
+<td style="text-align:right;">
+4.011
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> Standard errors: User-specified
+</td>
+</tr>
+</tfoot>
+</table>
+<p>Our regression shows that the COVID-19 time period is indeed associated with a higher share of queries for back pain, given a linear time trend and month-flags. However, although positive, the level change after treatment lacks statistical significance (p&gt;0.05). Instead, compared to baseline, we find a steady increase of relative queries from the beginning of lockdown onward. From this point queries increased around <span class="math inline">\((e^{\hat{\beta}_3}-1)\cdot100=\)</span><code>0.518</code> percent each month – in addition to the assumed counterfactual time trend <span class="math inline">\(\beta_1\)</span>. This suggests that although people were saved concerning a COVID-19 infection, there seem to be a negative external effect on other health outcomes in Germany (in addition to the psychological and economic burden).</p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Overall we have found a substantial increase in the relative interest in back pain based on online queries using Google Trends. What can be done? From a policy perspective it is clear that there need to be enough supply of health care provision in order for sufficient treatment, mitigate pain and avoidance of chronic disease. Another important aspect of back pain-treatment often is a person’s self awareness, to successfully figure out what he or she needs and when and what exercise to do. Here, in addition to professional help, <a href="https://letmegooglethat.com/?q=back+pain+help">digital services</a> can support to easily access information and provide tools in order to relieve pain – given high quality information is provided.</p>
+<p>One thing we have to keep in mind, is that Google Trends reflects the importance of queries, relative to all queries at a point in time at a specific location. It is obvious that the overall internet queries increased strongly in 2020. So our results from above suggest that back pain queries increased even more strongly.</p>
+<p>Generally, we can imagine that process data from internet companies allow to address a lot interesting questions. Indeed, <span class="citation">Stephens-Davidowitz (2018)</span> argues that people’s thoughts/motivations are much more honestly reflected in their internet searches, as compared to answering survey questions.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-brodeur2021covid" class="csl-entry">
+Brodeur, Abel, Andrew E Clark, Sarah Fleche, and Nattavudh Powdthavee. 2021. <span>“COVID-19, Lockdowns and Well-Being: Evidence from Google Trends.”</span> <em>Journal of Public Economics</em> 193: 104346.
+</div>
+<div id="ref-ciaffi2021seasonality" class="csl-entry">
+Ciaffi, Jacopo, Riccardo Meliconi, Maria Paola Landini, Luana Mancarella, Veronica Brusi, Cesare Faldini, and Francesco Ursini. 2021. <span>“Seasonality of Back Pain in Italy: An Infodemiology Study.”</span> <em>International Journal of Environmental Research and Public Health</em> 18 (3): 1325.
+</div>
+<div id="ref-hoerger2020impact" class="csl-entry">
+Hoerger, Michael, Sarah Alonzi, Laura M Perry, Hallie M Voss, Sanjana Easwar, and James I Gerhart. 2020. <span>“Impact of the COVID-19 Pandemic on Mental Health: Real-Time Surveillance Using Google Trends.”</span> <em>Psychological Trauma: Theory, Research, Practice, and Policy</em> 12 (6): 567.
+</div>
+<div id="ref-p2" class="csl-entry">
+Hyndman, Rob, George Athanasopoulos, Christoph Bergmeir, Gabriel Caceres, Leanne Chhay, Mitchell O’Hara-Wild, Fotios Petropoulos, Slava Razbash, Earo Wang, and Farah Yasmeen. 2021. <em><span class="nocase">forecast</span>: Forecasting Functions for Time Series and Linear Models</em>. <a href="https://pkg.robjhyndman.com/forecast/">https://pkg.robjhyndman.com/forecast/</a>.
+</div>
+<div id="ref-jebb2015time" class="csl-entry">
+Jebb, Andrew T, Louis Tay, Wei Wang, and Qiming Huang. 2015. <span>“Time Series Analysis for Psychological Research: Examining and Forecasting Change.”</span> <em>Frontiers in Psychology</em> 6: 727.
+</div>
+<div id="ref-knipe2020mapping" class="csl-entry">
+Knipe, Duleeka, Hannah Evans, Amanda Marchant, David Gunnell, and Ann John. 2020. <span>“Mapping Population Mental Health Concerns Related to COVID-19 and the Consequences of Physical Distancing: A Google Trends Analysis.”</span> <em>Wellcome Open Research</em> 5.
+</div>
+<div id="ref-p3" class="csl-entry">
+Long, Jacob A. 2020. <em>Jtools: Analysis and Presentation of Social Scientific Data</em>. <a href="https://cran.r-project.org/package=jtools">https://cran.r-project.org/package=jtools</a>.
+</div>
+<div id="ref-p1" class="csl-entry">
+Massicotte, Philippe, and Dirk Eddelbuettel. 2021. <em>gtrendsR: Perform and Display Google Trends Queries</em>. <a href="https://CRAN.R-project.org/package=gtrendsR">https://CRAN.R-project.org/package=gtrendsR</a>.
+</div>
+<div id="ref-stephens2018everybody" class="csl-entry">
+Stephens-Davidowitz, Seth. 2018. <em>Everybody Lies: What the Internet Can Tell Us about Who We Really Are</em>. Bloomsbury Publishing.
+</div>
+<div id="ref-szilagyi2021google" class="csl-entry">
+Szilagyi, Istvan-Szilard, Torsten Ullrich, Kordula Lang-Illievich, Christoph Klivinyi, Gregor Alexander Schittek, Holger Simonis, and Helmar Bornemann-Cimenti. 2021. <span>“Google Trends for Pain Search Terms in the World’s Most Populated Regions Before and After the First Recorded COVID-19 Case: Infodemiological Study.”</span> <em>Journal of Medical Internet Research</em> 23 (4): e27214.
+</div>
+<div id="ref-wagner2002segmented" class="csl-entry">
+Wagner, Anita K, Stephen B Soumerai, Fang Zhang, and Dennis Ross-Degnan. 2002. <span>“Segmented Regression Analysis of Interrupted Time Series Studies in Medication Use Research.”</span> <em>Journal of Clinical Pharmacy and Therapeutics</em> 27 (4): 299–309.
+</div>
+<div id="ref-p4" class="csl-entry">
+Zeileis, Achim, Susanne Köll, and Nathaniel Graham. 2020. <span>“Various Versatile Variances: An Object-Oriented Implementation of Clustered Covariances in <span>R</span>.”</span> <em>Journal of Statistical Software</em> 95 (1): 1–36. <a href="https://doi.org/10.18637/jss.v095.i01">https://doi.org/10.18637/jss.v095.i01</a>.
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
