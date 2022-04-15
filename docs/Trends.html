@@ -335,7 +335,7 @@ theme_set(theme_light())</code></pre>
 </div>
 <div id="data-analysis" class="section level2">
 <h2>Data Analysis</h2>
-<p>Let’s figure out the relative amount internet users were looking for back pain related keywords from 2016 onwards. We focus on queries from Germany, and assume that the back pain synonyms ‘Rückenschmerzen,’ ‘Rücken Schmerzen,’ ‘Rückenschmerz,’ ‘Rücken Schmerz,’ reflect overall interest in this topic, as a proxy for the associated burden of disease over time. Data is provided on a monthly level.</p>
+<p>Let’s figure out the relative amount internet users were looking for back pain related keywords from 2016 onward. We focus on queries from Germany, and assume that the back pain synonyms ‘Rückenschmerzen,’ ‘Rücken Schmerzen,’ ‘Rückenschmerz,’ ‘Rücken Schmerz,’ reflect overall interest in this topic, as a proxy for the associated burden of disease over time. Data is provided on a monthly level.</p>
 <pre class="r"><code>#trends &lt;- gtrends(keyword = c(&quot;Schmerz Rücken + Rückenschmerz + Schmerzen Rücken + Rückenschmerzen&quot;), time = #&#39;2016-01-01 2022-03-31&#39;, geo=&quot;DE&quot;)
 #write_rds(trends, &quot;trends_ruecken20220415.rds&quot;)
 trends &lt;- read_rds(&quot;trends_ruecken20220415.rds&quot;)
@@ -727,7 +727,7 @@ time_2
 </tr>
 </tfoot>
 </table>
-<p>Our regression shows that the COVID-19 time period is indeed associated with a higher share of queries for back pain, given a linear time trend and month-flags. However, although positive, the level change after treatment lacks statistical significance (p&gt;0.05). Instead, compared to baseline, we find a steady increase of relative queries from the beginning of lockdown onward. From this point queries increased around <span class="math inline">\((e^{\hat{\beta}_3}-1)\cdot100=\)</span><code>0.518</code> percent each month – in addition to the assumed counterfactual time trend <span class="math inline">\(\beta_1\)</span>. This suggests that although people were saved concerning a COVID-19 infection, there seem to be a negative external effects on other health outcomes in Germany (in addition to the psychological and economic burden).</p>
+<p>Our regression shows that the COVID-19 time period is indeed associated with a higher share of queries for back pain, given a linear time trend and month-flags. However, although positive, the level change after treatment lacks statistical significance (p&gt;0.05). Instead, compared to baseline, we find a steady increase of relative queries from the beginning of lockdown onward. From this point queries increased around <span class="math inline">\((e^{\hat{\beta}_3}-1)\cdot100=\)</span><code>0.518</code> percent each month – in addition to the assumed counterfactual time trend <span class="math inline">\(\beta_1\)</span>. This suggests that although people were saved concerning a COVID-19 infection, there seem to be a negative external effect on other health outcomes in Germany (in addition to the psychological and economic burden).</p>
 </div>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
