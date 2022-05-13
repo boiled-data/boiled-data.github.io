@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Herodotus’ Histories</title>
+
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Start</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="Covid_19_Germany.html">Mortality 20/21: Germany</a>
+</li>
+<li>
+  <a href="Scale.html">Scale</a>
+</li>
+<li>
+  <a href="Trends.html">Trends</a>
+</li>
+<li>
+  <a href="Histories.html">Histories</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="feed.xml">
+    <span class="fa fa-rss"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="mailto:&lt;boiled.data@gmail.com&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Herodotus’ Histories</h1>
+<h4 class="date">13 May 2022 (Draft)</h4>
+
+</div>
+
+
+<p><img src="p0_hist_wordcloud.png" style="width:80.0%" /></p>
+<pre class="r"><code>#Preliminaries:
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, eval = FALSE) #set eval = TRUE when run first
+
+rm(list=ls())
+
+library(tidyverse)
+library(tidytext)
+library(gutenbergr)
+library(ggwordcloud)
+library(topicmodels) 
+library(ldatuning)
+library(ggsci)
+
+theme_set(theme_light())</code></pre>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p><em>Herodotus</em> (484 – 425 BC), the first known author doing systematic investigation of historical events, is famous for his important work on the Greco-Persian wars: <em>Histories</em>, originally meaning ‘critical inquiry,’ can be regarded foundational to the Western historian tradition. The text is so profound that it accompanied the well known journalist and author Ryszard Kapuściński on his journeys across the globe. The book is on my reading list for some time.</p>
+<p>However, probably due to its old age the book is not very easy to digest. How can we use data science to have a first impression of the books’ content? Fortunately, text mining tools are available for natural language processing that can help us doing the job. Interesting sources concerning text mining in R are eg. <a href="https://slcladal.github.io/index.html">LADAL</a> and <a href="https://content-analysis-with-r.com/index.html">Automated Content Analysis with R</a>. Data scientists interested in history may find <a href="https://programminghistorian.org/">Programming Historian</a> quite illuminating. But now let us play a little bit with the text using <a href="https://www.tidytextmining.com">tidytext</a>.</p>
+</div>
+<div id="word-count" class="section level2">
+<h2>Word Count</h2>
+<p>One first way to look at the ‘Histories’ is by using the number of words. What are the most prevalent words in the book, after excluding stop word (ie. irrelevant words)?</p>
+<pre class="r"><code>#Download data:
+#gutenberg_metadata
+#gutenberg_works(str_detect(title, &quot;Herodotus&quot;))
+#hist_in &lt;- gutenberg_download(c(2707, 2456))
+#saveRDS(hist_in, &quot;hist_gut.rds&quot;)
+hist_in &lt;- readRDS(&quot;hist_gut.rds&quot;)
+
+#preparation: add chapter-information to data:
+hist_df &lt;- hist_in %&gt;%
+  arrange(desc(gutenberg_id)) %&gt;%
+  mutate(chapter=case_when(str_sub(text, 1, 5)==&quot;BOOK &quot; ~ str_sub(text, 1, 9), 
+                           str_sub(text, 1, 8)==&quot;NOTES TO&quot; ~ str_sub(text, 1, 8))) %&gt;%
+  fill(chapter) %&gt;%
+  filter(str_sub(chapter, 1, 4)==&#39;BOOK&#39;) %&gt;% #removing footnotes
+  mutate(line=row_number(), chapter=if_else(str_sub(chapter, 9,9)==&#39;T&#39;, str_sub(chapter, 1,7), chapter),
+         chapter=as_factor(chapter))
+
+#tidy + clean data: exclude stop words + numbers
+hist_tidy &lt;- hist_df %&gt;%
+  unnest_tokens(word, text) %&gt;% # -&gt; tidy data
+  anti_join(stop_words) %&gt;% # exclude stop words
+  filter(is.na(as.numeric(word))) %&gt;% # exclude numbers
+  filter(!word %in% c(&quot;thou&quot;, &quot;thee&quot;, &quot;thy&quot;, &quot;ye&quot;)) #drop very frequent old words not detected by stop_words
+
+#create wordcloud (as shown above):
+set.seed(42)
+hist_wordcloud &lt;- hist_tidy %&gt;%
+  group_by(word) %&gt;%
+  summarize(num=n(), .groups=&quot;drop&quot;) %&gt;%
+  arrange(desc(num)) %&gt;%
+  slice(1:100) %&gt;%
+  mutate(angle = 90 * sample(c(0, 1), n(), replace = TRUE, prob = c(80, 20))) %&gt;%
+  ggplot(aes(label = word, size=num, angle=angle)) +
+  geom_text_wordcloud(shape=&quot;square&quot;) + #, ylim=c(0,1), xlim=c(0.25, 0.85)
+  theme_minimal() +
+  scale_size_area(max_size = 15)
+ggsave(hist_wordcloud, file=&quot;p0_hist_wordcloud.png&quot;) # import plot via markdown
+
+
+#plot word count as bar char:
+p1_hist_tidy &lt;- hist_tidy %&gt;%
+  count(word, sort = TRUE) %&gt;%
+  filter(n &gt; 300) %&gt;%
+  mutate(word = reorder(word, n)) %&gt;%
+  ggplot(aes(n, word)) +
+  geom_col( fill=&#39;darkgreen&#39;) +
+  labs(y = &#39;word&#39;, x=&#39;number occurrences&#39;)
+ggsave(p1_hist_tidy, file=&quot;p1_hist_tidy.png&quot;)  # import via markdown</code></pre>
+<p><img src="p1_hist_tidy.png" style="width:70.0%" /></p>
+<p>We see that <em>time</em>, <em>land</em>, <em>son</em> and <em>king</em> are on the top of the list followed by the main cultural players of the story – the <em>Persians</em> and the greek, represented by <em>Hellenes</em> and <em>Athenians</em>.</p>
+<p>A more sophisticated approach of revealing representative document words, is to focus on important words that are most distinctive to the book’s 9 chapters. We do this by weighting the term frequency (tf) with the inverse document frequency (idf).</p>
+<pre class="r"><code>hist_tf_idf &lt;- hist_df %&gt;%
+  unnest_tokens(word, text) %&gt;%
+  group_by(chapter, word) %&gt;%
+  summarize(n=n()) %&gt;% 
+  bind_tf_idf(word, chapter, n) %&gt;% #calculate inverse document frequency
+  arrange(desc(tf_idf))
+
+p2_hist_tf_idf &lt;- hist_tf_idf %&gt;%
+  group_by(chapter) %&gt;%
+  slice_max(tf_idf, n = 10) %&gt;%
+  ungroup() %&gt;%
+  mutate(tf_idf=tf_idf*100, word=reorder_within(word, tf_idf, chapter)) %&gt;% 
+  ggplot(aes(x=tf_idf, y=word, fill = chapter)) + 
+  geom_col(show.legend = FALSE) +
+  scale_y_reordered() + #override ggplot default
+  facet_wrap(~chapter, ncol = 3, scales = &quot;free&quot;) +
+  scale_fill_simpsons() +
+  labs(x = &quot;term frequency (in %) * inverse document frequency&quot;, y = &#39;words&#39;) 
+
+ggsave(p2_hist_tf_idf, file=&quot;p2_hist_tf_idf.png&quot;) </code></pre>
+<p><img src="p2_hist_tf_idf.png" style="width:70.0%" /></p>
+<p>These most distinctive words per chapter show a strong emphasis on geographical and biographical details, as expected in historical literature. For example, the second book deals to large extent with egypt, which can easily seen by the top keywords.</p>
+</div>
+<div id="topic-modeling" class="section level2">
+<h2>Topic Modeling</h2>
+<p>How can we access content of the book in a more meaningful way by using abstract topics? We do so by applying <em>topic modeling</em>, a statistical framework for unsupervided classification that discovers topics occurring in a collection of documents (here: chapters). We use Latent Dirichlet Allocation (LDA), a typical approach for topic modeling, in order to automatically find both associations between words and the topics, and associations between topics and the books’ nine chapters. Although the number of topics are a priori unknown and serve as an input for the algorithm, there are different approaches to automatically determine the optimal number of topics. So let us first figure out the relevant topic number.</p>
+<pre class="r"><code>#prepare data fro LDA
+hist_dtm &lt;- hist_tidy  %&gt;%
+  count(chapter, word) %&gt;%
+  cast_dtm(term=word, document=chapter, value=n)
+
+
+ldatuning.metriken &lt;- FindTopicsNumber(hist_dtm, topics = seq(from = 2, to = 15, by = 1), metrics = c(&quot;Griffiths2004&quot;, &quot;CaoJuan2009&quot;, &quot;Arun2010&quot;, &quot;Deveaud2014&quot;), method = &quot;Gibbs&quot;, control = list(seed = 42), mc.cores = 2)
+
+#What is the optimal number of topics to consider? Well, there are different ways to approach this problem, by maximizing dissimilarity between topics.
+
+#Plot metrics:
+
+png(&quot;p3_top_num.png&quot;)
+FindTopicsNumber_plot(ldatuning.metriken) 
+dev.off()</code></pre>
+<p><img src="p3_top_num.png" style="width:50.0%" /></p>
+<p>Given criteria above we choose 8 as the number of topics in <em>Histories</em> and use them as the input for our final LDA. The result will allow us to extract the most distinctive words for each of the generated topics.</p>
+<pre class="r"><code>#LDA with 8 topics:
+hist_lda &lt;- LDA(hist_dtm, k = 8, control = list(seed = 42), method=&quot;Gibbs&quot;) 
+
+#word topic association (beta):
+topic_word &lt;- tidy(hist_lda, matrix = &quot;beta&quot;)
+
+#visualize topics with top-10 word-probabilities per chapter
+p4_topic_word &lt;- topic_word %&gt;%
+  group_by(topic) %&gt;%
+  slice_max(beta, n = 10) %&gt;%
+  ungroup() %&gt;%
+  mutate(term=reorder_within(term, beta, topic)) %&gt;% 
+  ggplot(aes(x=beta, y=term,   fill = topic)) + 
+  geom_col(show.legend = FALSE) +
+  scale_y_reordered() + 
+  scale_fill_material(&quot;deep-orange&quot;) + #cyan
+  facet_wrap(~topic, ncol = 2, scales = &quot;free&quot;) +
+  labs(x = &quot;beta (term frequency)&quot;, y = &quot;term&quot;)
+
+ggsave(p4_topic_word, file=&quot;p4_topic_word.png&quot;) </code></pre>
+<p><img src="p4_topic_word.png" style="width:70.0%" /></p>
+<p>One approach to understand the 8 topics is to look at their most important words. We can see that topic 7 contains words such as ‘son,’ ‘time,’ ‘king’ – words that are also most prevalent overall as shown above. How do the 8 topics are distributed over the nine chapters?</p>
+<pre class="r"><code>#Association between Documents &amp; Themen: (gamma)
+doc_topic &lt;- tidy(hist_lda, matrix = &quot;gamma&quot;) %&gt;% 
+  mutate(document=as_factor(document))
+
+#visualize the assiciation between topics and chapter:
+p5_doc_topic &lt;- doc_topic %&gt;%
+  ggplot(aes(y=as.factor(topic), x=document,  fill=gamma)) + 
+  scale_fill_material(&quot;blue-grey&quot;) +
+  geom_tile(colour=&quot;white&quot;) +
+  theme_minimal(base_size = 8) +
+  labs(title=&quot;Relationship between chapters and topics&quot;, fill=&quot;gamma&quot;, y=&quot;topic&quot;, x=&quot;chapter&quot;)  
+
+ggsave(p5_doc_topic, file=&quot;p5_doc_topic.png&quot;) </code></pre>
+<p><img src="p5_doc_topic.png" style="width:70.0%" /></p>
+<p>A visual inspection suggests all chapters are a mixture of topic 4 and 7 + some individual component. Whereas topic 7 captures ideas of ancestry, topic 4 also contains words that are associated with religion. We also see that the chapters 1-4 and 5-9 seem to consist of 2 clusters. Probably there is some overlap in the content of these chapters.</p>
+<p>So far, we have used tools to figure out what the <em>Histories</em> are about. According to <span class="citation">Kapuściński (2007)</span> the main theme of <em>Histories</em> can be described in the form of following 3 rules, which governed antiquity, in comparison with the modern world:</p>
+<ol style="list-style-type: decimal">
+<li>The law of vengeance applies.</li>
+<li>Human’s happiness is not permanent.</li>
+<li>No one can escape fate, even not a god.</li>
+</ol>
+<p>From today’s perspective these rules, especially 1+2, seem very fatalistic, but they governed peoples life with cycles of crime and punishment over a long period of time. If you know how to derive such an interpretation with text mining methods, please let me know.</p>
+<p>One last aspect worth discussing is the fact that Herodotus had a Hellenian background. Was his description of the Persian-Greek conflict culturally biased and how can data analytics support detecting this?</p>
+</div>
+<div id="sentiment-analysis" class="section level2">
+<h2>Sentiment Analysis</h2>
+<p>In order to tackle this question we use a sentiment word lexicon in which words are classified as positively or negatively. Are the terms ‘Persian,’ ‘Greek’ and ‘Athenian’ to the same extent associated with positive/negative words in <em>Histories</em>?</p>
+<p>As a first step we generate <em>bi-grams</em>, and extract neighboring words of the terms <em>Persia</em>, <em>Greek</em>, <em>Athen</em>, reflecting different cultures. Then these neighboring words are matched with the sentiment lexicon and the number of sentiments are summed up for each of the 3 cultures.</p>
+<pre class="r"><code>#remove stop words before calculating bi-grams:
+bg_herod &lt;- hist_df %&gt;%
+  unnest_tokens(word, text) %&gt;% 
+  anti_join(stop_words) %&gt;% # exclude stop words stop_words
+  filter(is.na(as.numeric(word))) %&gt;% # exclude numbers
+  filter(!word %in% c(&quot;thou&quot;, &quot;thee&quot;)) %&gt;% #drop very frequent old words not detected by stop_words
+  group_by(chapter, line) %&gt;% #undo unnest words
+  summarize(text = str_c(word, collapse = &quot; &quot;)) %&gt;%
+  ungroup() %&gt;%
+  unnest_tokens(bigram, text, token = &quot;ngrams&quot;, n = 2)  %&gt;% #nest n-grams
+  count(bigram, sort = TRUE) 
+
+#Which words are associated with the persian, greek or the athenian culture?
+#dominate positive or negative sentiments?
+
+#function to create bi-grams containing specific values:
+cult_fct &lt;- function(x) {
+
+y &lt;- bg_herod %&gt;%
+  filter(str_detect(bigram, x)) %&gt;% #bi-grams containing &quot;persian&quot;
+  separate(bigram, c(&quot;word1&quot;, &quot;word2&quot;), sep = &quot; &quot;) %&gt;%
+  mutate(culture=x, word1 = if_else(!str_detect(word1, x), word1, NA_character_ ),
+         word2 = if_else(!str_detect(word2, x), word2, NA_character_ )) %&gt;%
+  unite(word1, word2, col=bigram, na.rm = TRUE) %&gt;%
+  filter(bigram!=&#39;&#39;)
+
+return(y)
+
+}
+
+
+comp &lt;- c(&#39;persia&#39;, &#39;hellen&#39;, &#39;athen&#39;)
+
+#run function  
+comp_cult &lt;- comp %&gt;%
+  map(cult_fct) %&gt;%
+  bind_rows() 
+ 
+
+#sentiment analysis:
+sent_bing &lt;- get_sentiments(&quot;bing&quot;) 
+
+p6_comp_cult &lt;- comp_cult %&gt;%
+  mutate(word=bigram) %&gt;%
+  inner_join(sent_bing, by=&quot;word&quot;) %&gt;% 
+  group_by(culture, sentiment) %&gt;%
+  summarize(n=sum(n)) %&gt;%
+  ggplot(aes(x=n, y=culture ,  fill = sentiment)) + 
+  geom_bar(stat=&quot;identity&quot;, position = &quot;dodge&quot;) +
+  labs(x = &quot;number sentiments&quot;, y = &quot;culture&quot;)
+
+ggsave(p6_comp_cult, file=&quot;p6_comp_cult.png&quot;) </code></pre>
+<p><img src="p6_comp_cult.png" style="width:70.0%" /></p>
+<p>The results show that negative sentiments dominate all 3 cultures, compared to positive ones. However, it is easy to see that in relation to the total number of sentiments in each culture, the negative sentiments are actually more pronounced for the terms <em>Hellenian</em> and <em>Athenian</em>. So our results do not suggests that Herodotus’ Histories are culturally biased.</p>
+</div>
+<div id="wrap-up" class="section level2">
+<h2>Wrap up</h2>
+<p>We have seen how we can use text mining tools together with visualization in order to get a first impression of <em>The Histories</em>. In addition to analyzing words, we have seen how to generate abstract topics from text data. Also sentiment analysis was applied to see whether Herodotus’ description was positively biased towards the Greek culture.</p>
+<p>Is the book worth reading after all? After mining <em>Herodotus</em> I have to admit: the book will certainly stay on my reading list.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-gentzkow2019text" class="csl-entry">
+Gentzkow, Matthew, Bryan Kelly, and Matt Taddy. 2019. <span>“Text as Data.”</span> <em>Journal of Economic Literature</em> 57 (3): 535–74.
+</div>
+<div id="ref-topicm" class="csl-entry">
+Grün, Bettina, and Kurt Hornik. 2011. <span>“<span class="nocase">topicmodels</span>: An <span>R</span> Package for Fitting Topic Models.”</span> <em>Journal of Statistical Software</em> 40 (13): 1–30. <a href="https://doi.org/10.18637/jss.v040.i13">https://doi.org/10.18637/jss.v040.i13</a>.
+</div>
+<div id="ref-kapusc" class="csl-entry">
+Kapuściński, Ryszard. 2007. <em>Travels with Herodotus</em>. Random House.
+</div>
+<div id="ref-wcloud" class="csl-entry">
+Le Pennec, Erwan, and Kamil Slowikowski. 2019. <em>Ggwordcloud: A Word Cloud Geom for ’Ggplot2’</em>. <a href="https://CRAN.R-project.org/package=ggwordcloud">https://CRAN.R-project.org/package=ggwordcloud</a>.
+</div>
+<div id="ref-ldatune" class="csl-entry">
+Nikita, Murzintcev. 2020. <em>Ldatuning: Tuning of the Latent Dirichlet Allocation Models Parameters</em>. <a href="https://CRAN.R-project.org/package=ldatuning">https://CRAN.R-project.org/package=ldatuning</a>.
+</div>
+<div id="ref-gutr" class="csl-entry">
+Robinson, David. 2021. <em>Gutenbergr: Download and Process Public Domain Works from Project Gutenberg</em>. <a href="https://CRAN.R-project.org/package=gutenbergr">https://CRAN.R-project.org/package=gutenbergr</a>.
+</div>
+<div id="ref-tidytext" class="csl-entry">
+Silge, Julia, and David Robinson. 2016. <span>“Tidytext: Text Mining and Analysis Using Tidy Data Principles in r.”</span> <em>JOSS</em> 1 (3). <a href="https://doi.org/10.21105/joss.00037">https://doi.org/10.21105/joss.00037</a>.
+</div>
+<div id="ref-ggsci" class="csl-entry">
+Xiao, Nan. 2018. <em>Ggsci: Scientific Journal and Sci-Fi Themed Color Palettes for ’Ggplot2’</em>. <a href="https://CRAN.R-project.org/package=ggsci">https://CRAN.R-project.org/package=ggsci</a>.
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
