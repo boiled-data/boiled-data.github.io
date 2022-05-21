@@ -293,6 +293,18 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
+  <a href="feed2.xml">
+    <span class="fa fa-rss"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://de.linkedin.com/in/florian-klohn-a3a87562">
+    <span class="fa fa-linkedin"></span>
+     
+  </a>
+</li>
+<li>
   <a href="mailto:&lt;boiled.data@gmail.com&gt;">
     <span class="fa fa-envelope fa-lg"></span>
      
@@ -338,7 +350,7 @@ library(viridis)</code></pre>
 </div>
 <div id="example" class="section level2">
 <h2>Example</h2>
-<p>As a start, let’s see how to transcend data into information with just a few lines of R-code: Data is provided by the <a href="https://worldhappiness.report/ed/2021/">worldhappiness report 2021</a>. The publisher collects and summarizes data on individual “self stated” happiness across a lot of countries. We read the data</p>
+<p>As a start, lets see how to transcend data into information with just a few lines of R-code: Data is provided by the <a href="https://worldhappiness.report/ed/2021/">worldhappiness report 2021</a>. The publisher collects and summarizes data on individual “self stated” happiness across a lot of countries. We read the data</p>
 <pre class="r fold-show"><code>#data from https://worldhappiness.report/ed/2021/
 data_in &lt;- read_excel(&quot;DataPanelWHR2021C2.xls&quot;)
 
@@ -349,7 +361,7 @@ head(data_in)</code></pre>
 {"columns":[{"label":["Country name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Life Ladder"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Log GDP per capita"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Social support"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Healthy life expectancy at birth"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Freedom to make life choices"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Generosity"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Perceptions of corruption"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Positive affect"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["Negative affect"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"2008","3":"3.723590","4":"7.370100","5":"0.4506623","6":"50.80","7":"0.7181143","8":"0.16763999","9":"0.8816863","10":"0.5176372","11":"0.2581955"},{"1":"Afghanistan","2":"2009","3":"4.401778","4":"7.539972","5":"0.5523084","6":"51.20","7":"0.6788964","8":"0.19009919","9":"0.8500354","10":"0.5839256","11":"0.2370924"},{"1":"Afghanistan","2":"2010","3":"4.758381","4":"7.646709","5":"0.5390752","6":"51.60","7":"0.6001272","8":"0.12058964","9":"0.7067661","10":"0.6182655","11":"0.2753238"},{"1":"Afghanistan","2":"2011","3":"3.831719","4":"7.619532","5":"0.5211036","6":"51.92","7":"0.4959014","8":"0.16242748","9":"0.7311085","10":"0.6113873","11":"0.2671747"},{"1":"Afghanistan","2":"2012","3":"3.782938","4":"7.705479","5":"0.5206367","6":"52.24","7":"0.5309350","8":"0.23603241","9":"0.7756198","10":"0.7103847","11":"0.2679191"},{"1":"Afghanistan","2":"2013","3":"3.572100","4":"7.725029","5":"0.4835519","6":"52.56","7":"0.5779554","8":"0.06114766","9":"0.8232041","10":"0.6205848","11":"0.2733281"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>and manipulate it using the popular <a href="https://www.tidyverse.org/">R-tidyverse</a> framework in order to allow a regional as well as the developmental perspective on perceived happiness across the world. The resulting graph is inspired by <span class="citation">Healy (2018)</span>. We select data from 2010 to 2020 and add the constraint that a country must be observable at least during 5 years. The resulting graph, a map of the world’s happiness across space and time, is sorted with regard a country’s average happiness:</p>
+<p>and manipulate it using the popular <a href="https://www.tidyverse.org/">R-tidyverse</a> framework in order to allow a regional as well as the developmental perspective on perceived happiness across the world. The resulting graph is inspired by <span class="citation">Healy (2018)</span>. We select data from 2010 to 2020 and add the constraint that a country must be observable at least during 5 years. The resulting graph, a map of the world happiness across space and time, is sorted with regard to a country’s average happiness:</p>
 <pre class="r"><code>data_in %&gt;%
   filter(year %in% c(2010:2020)) %&gt;% #look at data from 2010 to 2020
   group_by(`Country name`) %&gt;%
@@ -367,7 +379,8 @@ theme_minimal(base_size = 8) +
   labs(title=&quot;Hierarchy and development of happiness&quot;, fill=&quot;Happiness score&quot;,
        y=&quot;Country&quot;, x=&quot;Year&quot;)  </code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Not very unexpectedly, the Nordic countries are at the top of the list, whereas African and Oriental countries are at the bottom. We see that average happiness is a relatively stable phenomenon, overall. Among others, the most happy country, Denmark, also had an decrease in average happiness in 2020. Was this due to the COVID-19 pandemic? Interestingly, in the same year average happiness increased in Germany compared to 2019. Did Germans had a good time working from home, or does this finding suggest that ones perceived happiness is evaluated also relative to other countries? (In Germany the impact of COVID-19 was less severe than in other countries from an epidemiological point of view.) Looking at the bottom of the list, we find second last country Afghanistan, for which, after a relatively good year in 2010, happiness decreased steadily afterwards. Extreme values are a potentially fruitful opportunity, when one is interested in addressing welfare of nations, for both good and bad. What are the reasons that some countries are better off than others? Whereas <span class="citation">Diamond (1997)</span> explains development of countries with a theory of geographical determinism, <span class="citation">Robinson and Acemoglu (2012)</span> see sound institutions as major trigger of long term prosperity. Also asymmetrical risk sharing can be an important driving force of differences in economic outcome, as discussed by <span class="citation">Taleb (2020)</span>. Although the philosopher’s stone in this regard seems not yet to be discovered, looking for most effective options on how people and countries can achieve better outcomes and build policies around it, is key in increasing people’s happiness. Hopefully, increased data availability conjoint with analytical skills are used properly, enhancing economic prosperity and freedom of mankind, allowing people to flourish, and to live a healthy and happy life.</p>
+<p>Not very unexpectedly, the Nordic countries are at the top of the list, whereas African and Oriental countries are at the bottom. We see that average happiness is a relatively stable phenomenon, overall. Among others, the most happy country, Denmark, also had an decrease in average happiness in 2020. Was this due to the COVID-19 pandemic? Interestingly, in the same year average happiness increased in Germany compared to 2019. Did Germans had a good time working from home, or does this finding suggest that ones perceived happiness is evaluated also relative to other countries? (In Germany the impact of COVID-19 was less severe than in other countries from an epidemiological point of view.) Looking at the bottom of the list, we find second last country Afghanistan, for which, after a relatively good year in 2010, happiness decreased steadily afterwards. Extreme values are a potentially fruitful opportunity, when one is interested in addressing welfare of nations, for both good and bad.</p>
+<p>What are the reasons that some countries are better off than others? Whereas dynamic geographical determinism is suggested by <span class="citation">Diamond (1997)</span>, economic theories following Adam Smith emphasize the importance of technological progress, productivity, trade and functioning and inclusive institutions <span class="citation">(Robinson and Acemoglu 2012)</span> as driving forces of long lasting growth and development. According to <span class="citation">Harari (2014)</span> political and religious ideas can have a large impact on the organization and distribution of resources as well. A rather internal perspective of how complexes such as desire and fear can shape development of mankind is formulated by <span class="citation">Nietzsche (1886)</span> on the one hand. In contrast, <span class="citation">Seligman (2012)</span> suggests a model of growth based on positive psychology. These vast number of ideas shows that a successful organization of human society is a demanding task. In the era of increased data availability, empirical analysis can help doing better informed decisions, enhancing economic prosperity, allowing people to flourish, and to live a healthy and happy life.</p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="unnumbered">References</h2>
@@ -378,6 +391,9 @@ Diamond, Jared M. 1997. <em>Guns, Germs, and Steel</em>.
 <div id="ref-p3" class="csl-entry">
 Garnier, Simon, Ross, Noam, Rudis, Robert, Camargo, et al. 2021. <em><span class="nocase">viridis</span> - Colorblind-Friendly Color Maps for r</em>. <a href="https://doi.org/10.5281/zenodo.4679424">https://doi.org/10.5281/zenodo.4679424</a>.
 </div>
+<div id="ref-harari2014brief" class="csl-entry">
+Harari, Yuval. 2014. <span>“Sapiens: A Brief History of Humankind.”</span> <em>Publish in Agreement with The Deborah Harris Agency and the Grayhawk Agency</em>.
+</div>
 <div id="ref-healy2018visualizing" class="csl-entry">
 Healy, Kieran. 2018. <span>“Visualizing the Baby Boom.”</span> <em>Socius</em> 4: 2378023118777324.
 </div>
@@ -386,6 +402,9 @@ Kahneman, Daniel. 2011. <em>Thinking, Fast and Slow</em>. Macmillan.
 </div>
 <div id="ref-kuhn2013applied" class="csl-entry">
 Kuhn, Max, and Kjell Johnson. 2013. <em>Applied Predictive Modeling</em>. Vol. 26. Springer.
+</div>
+<div id="ref-nietzsche1886jgb" class="csl-entry">
+Nietzsche, Friedrich. 1886. <em>Beyond Good and Evil</em>.
 </div>
 <div id="ref-pearl2018book" class="csl-entry">
 Pearl, Judea, and Dana Mackenzie. 2018. <em>The Book of Why: The New Science of Cause and Effect</em>. Basic books.
@@ -399,14 +418,14 @@ Reinhart, Alex. 2015. <em>Statistics Done Wrong: The Woefully Complete Guide</em
 <div id="ref-robinson2012nations" class="csl-entry">
 Robinson, James A, and Daron Acemoglu. 2012. <em>Why Nations Fail: The Origins of Power, Prosperity and Poverty</em>. Profile London.
 </div>
+<div id="ref-seligman2012flourish" class="csl-entry">
+Seligman, Martin EP. 2012. <em>Flourish: A Visionary New Understanding of Happiness and Well-Being</em>. Simon; Schuster.
+</div>
 <div id="ref-spiegelhalter2019art" class="csl-entry">
 Spiegelhalter, David. 2019. <em>The Art of Statistics: Learning from Data</em>. Penguin UK.
 </div>
-<div id="ref-taleb2020skin" class="csl-entry">
-Taleb, Nassim Nicholas. 2020. <em>Skin in the Game: Hidden Asymmetries in Daily Life</em>. Random House Trade Paperbacks.
-</div>
 <div id="ref-watzlawick2018wirklich" class="csl-entry">
-Watzlawick, Paul. 2018. <em>Wie Wirklich Ist Die Wirklichkeit?: Wahn, t<span>ä</span>uschung, Verstehen</em>. Piper ebooks.
+Watzlawick, Paul. 2018. <em>Wie Wirklich Ist Die Wirklichkeit?: Wahn, <span>T</span><span>ä</span>uschung, Verstehen</em>. Piper ebooks.
 </div>
 <div id="ref-p2" class="csl-entry">
 Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. <span>“Welcome to the <span class="nocase">tidyverse</span>.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.

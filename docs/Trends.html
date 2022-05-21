@@ -290,6 +290,18 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
+  <a href="feed2.xml">
+    <span class="fa fa-rss"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://de.linkedin.com/in/florian-klohn-a3a87562">
+    <span class="fa fa-linkedin"></span>
+     
+  </a>
+</li>
+<li>
   <a href="mailto:&lt;boiled.data@gmail.com&gt;">
     <span class="fa fa-envelope fa-lg"></span>
      
@@ -338,7 +350,7 @@ theme_set(theme_light())</code></pre>
 </div>
 <div id="data-analysis" class="section level2">
 <h2>Data Analysis</h2>
-<p>Let’s figure out the relative amount internet users were looking for back pain related keywords from 2016 onward. We focus on queries from Germany, and assume that the back pain synonyms ‘Rückenschmerzen,’ ‘Rücken Schmerzen,’ ‘Rückenschmerz,’ ‘Rücken Schmerz,’ reflect overall interest in this topic, as a proxy for the associated burden of disease over time. Data is provided on a monthly level.</p>
+<p>Lets figure out the relative amount internet users were looking for back pain related keywords from 2016 onward. We focus on queries from Germany, and assume that the back pain synonyms ‘Rückenschmerzen,’ ‘Rücken Schmerzen,’ ‘Rückenschmerz,’ ‘Rücken Schmerz,’ reflect overall interest in this topic, as a proxy for the associated burden of disease over time. Data is provided on a monthly level.</p>
 <pre class="r"><code>#trends &lt;- gtrends(keyword = c(&quot;Schmerz Rücken + Rückenschmerz + Schmerzen Rücken + Rückenschmerzen&quot;), time = #&#39;2016-01-01 2022-03-31&#39;, geo=&quot;DE&quot;)
 #write_rds(trends, &quot;trends_ruecken20220415.rds&quot;)
 trends &lt;- read_rds(&quot;trends_ruecken20220415.rds&quot;)
@@ -356,7 +368,7 @@ trends$interest_over_time %&gt;%
   scale_colour_viridis_d(option=&quot;viridis&quot;) +
   labs(y=&quot;relative amount of queries&quot;, x=&quot;year&quot;, title=&quot;Figure 1: Queries for back pain over time&quot;)</code></pre>
 <p><img src="Trends_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p>We see in Figure 1 that the relative number of queries is increasing steadily over time, ie there is a positive time trend. In order to better understand the data structure let’s decompose, trend, seasonality and error (using just complete 12 year periods):</p>
+<p>We see in Figure 1 that the relative number of queries is increasing steadily over time, ie there is a positive time trend. In order to better understand the data structure let us now decompose, trend, seasonality and error (using just complete 12 year periods):</p>
 <pre class="r"><code>#create time series:
 ts_in &lt;- trends$interest_over_time %&gt;%
   filter(date&gt;= &#39;2016-01-01&#39; &amp; date&lt;= &#39;2020-12-31&#39;) %&gt;%
@@ -735,7 +747,7 @@ time_2
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
 <p>Overall we have found a substantial increase in the relative interest in back pain based on online queries using Google Trends. What can be done? From a policy perspective it is clear that there need to be enough supply of health care provision in order for sufficient treatment, mitigate pain and avoidance of chronic disease. Another important aspect of back pain-treatment often is a person’s self awareness, to successfully figure out what he or she needs and when and what exercise to do. Here, in addition to professional help, <a href="https://letmegooglethat.com/?q=back+pain+help">digital services</a> can support to easily access information and provide tools in order to relieve pain – given high quality information is provided.</p>
-<p>One thing we have to keep in mind, is that Google Trends reflects the importance of queries, relative to all queries at a point in time at a specific location. It is obvious that the overall internet queries increased strongly in 2020. So our results from above suggest that back pain queries increased even more strongly.</p>
+<p>One thing we have to keep in mind, is that Google Trends reflect the importance of queries, relative to all queries at a point in time at a specific location. It is obvious that the overall internet queries increased strongly in 2020. So our results from above suggest that back pain queries increased even more strongly.</p>
 <p>Generally, we can imagine that process data from internet companies allow to address a lot interesting questions. Indeed, <span class="citation">Stephens-Davidowitz (2018)</span> argues that people’s thoughts/motivations are much more honestly reflected in their internet searches, as compared to answering survey questions.</p>
 </div>
 <div id="references" class="section level2 unnumbered">
