@@ -547,11 +547,11 @@ other
 </tr>
 </tbody>
 </table>
-<p>Table 1 shows that the mean of our variable of interest, the outcome <em>re78</em> (income in 1978) is higher in our treatment group. Despite the observational character of our data, we see that the sample is relatively homogeneous concerning the pre-treatment variables: only the indicator variable on whether a person has a high school diploma seems to vary between treatment and control group significantly.</p>
+<p>Table 1 shows that the mean of our variable of interest, the outcome <em>re78</em> (income in 1978) is higher in our treatment group. Despite the observational character of our data, we see that the sample is relatively homogeneous concerning the pre-treatment variables: only the indicator variable <em>nodegree</em>, on whether a person has a high school diploma, seems to vary between treatment and control group significantly.</p>
 </div>
 <div id="strategy-empirical-analysis" class="section level2">
 <h2>Strategy &amp; Empirical Analysis</h2>
-<p>In the potential outcome framework <span class="citation">(Rubin, 2005)</span> the average treatment effect (ATE) can be written as the expectation <span class="math inline">\(E(\delta)=E[y^1-y^0]\)</span>, where <span class="math inline">\(y^1\)</span> and <span class="math inline">\(y^0\)</span> are potential outcomes of income in 1978. Under conditional independence <span class="math inline">\((y^1,y^0)\bot T|X\)</span> we assume that these outcomes are independent of treatment <span class="math inline">\(T\)</span> given covariates <span class="math inline">\(X\)</span>.</p>
+<p>In the potential outcome framework <span class="citation">(Rubin, 2005)</span> the average treatment effect (ATE) can be written as the expectation <span class="math inline">\(E(\delta)=E[y^1-y^0]\)</span>, where <span class="math inline">\(y^1\)</span> and <span class="math inline">\(y^0\)</span> are potential outcomes of income in 1978. Under conditional independence assumption <span class="math inline">\((y^1,y^0)\bot T|X\)</span> these outcomes are independent of treatment <span class="math inline">\(T\)</span> given covariates <span class="math inline">\(X\)</span>.</p>
 <p>We use 2 methods in order to estimate the average treatment effect (ATE). Firstly, we apply the well known linear regression for estimation and risk adjustment <span class="citation">(eg. Angrist &amp; Pischke, 2009; Pearl, 2013)</span>. Secondly, we consider Bayesian Additive Regression Trees <span class="citation">(Chipman et al., 2010; J. L. Hill, 2011)</span>, a machine learning model recently becoming popular as it allows to detect relevant interactions in the data generating process and can be used to estimate heterogeneous treatment effects as well <span class="citation">(Carnegie et al., 2019; J. Hill et al., 2020)</span>.</p>
 <pre class="r"><code>#Linear regression
 
@@ -630,13 +630,13 @@ LinReg
 BART
 </td>
 <td style="text-align:right;">
-804.01
+803.05
 </td>
 <td style="text-align:right;">
--295.95
+-308.61
 </td>
 <td style="text-align:right;">
-1903.96
+1914.71
 </td>
 </tr>
 </tbody>
@@ -653,7 +653,7 @@ BART
 </tr>
 </tfoot>
 </table>
-<p>We recognize in table 2 that the treatment effect of BART is very similar to linear regression. The ATE-point estimates are both positive, suggesting that program participation increases average income by about 800 USD. However, both 95% confidence-, credible intervals show that there is a lot of variability in the data – an effect of zero cannot be rejected.</p>
+<p>We recognize in Table 2 that the treatment effect of BART is very similar to linear regression. The ATE-point estimates are both positive, suggesting that program participation increases average income by about 800 USD. However, both 95% confidence-, credible intervals show that there is a lot of variability in the data – an effect of zero cannot be rejected.</p>
 <p>In addition to one point estimate we often would like to have information on treatment effects for specific subgroups. This could help us to redesign the program or allow for more effective enrollment. Obviously, these questions can be of interest also in other areas – imagine online marketing or personalized medicine for example. Thankfully, BART can also provide treatment effects for each observation in the data, which are called the individual conditional average treatment effects (iCATE): <span class="math inline">\(\tau(X_i)=E[y^1_i-y^0_i|X_i]\)</span>. Let us have a look at the distribution of individual CATE in Figure 1.</p>
 <pre class="r"><code>#Extract individual treatment effects
 i_cate &lt;- fitted(bc_fit, type=&quot;icate&quot;, sample = c(&quot;all&quot;))
@@ -707,7 +707,7 @@ p4 &lt;- data_cate %&gt;%
 title1=textGrob(&quot;Figure 2: CATE by numeric variables&quot;, gp=gpar(fontface=&quot;bold&quot;))
 grid.arrange(p2,  p3, p4, ncol=2, top=title1) </code></pre>
 <p><img src="BartLabor_files/figure-html/chk4-1.png" width="672" /></p>
-<p>We see that program effectiveness increased with age until a threshold of 30 years. We find the program most effective for people between 5 and 10K USD whereas the relationship between years of education and iCATE is U-shaped. The scatterplots allow to visually distinguish iCATE by treatment status – a very nice feature as discussed above. Next let us assess the interaction of our treatment with the factor variables.</p>
+<p>We see that program effectiveness increased with age until a threshold of 30 years. The program seems to have been most effective for people between 5 and 10K USD whereas the relationship between years of education and iCATE is U-shaped. The scatterplots allow to visually distinguish iCATE by treatment status – a very nice feature as discussed above. Next let us assess the interaction of our treatment with the factor variables.</p>
 <pre class="r"><code>#Boxplots:
 #race
 p5 &lt;- data_cate %&gt;%
@@ -735,7 +735,7 @@ grid.arrange(p5,  p6, p7, ncol=2, top=title2) </code></pre>
 </div>
 <div id="discussion" class="section level2">
 <h2>Discussion</h2>
-<p>We analysed the impact of a labor market program by using linear Regression and BART, a tree based nonparametric Bayesian regression approach which very successfully recovers the underlying data generating process in the presence of interactions. We have found some evidence for effect moderation of the treatment, especially being married, having low income and black color are associated with a positive treatment effect. Being married and low income were found to generate interaction effects by <span class="citation">Rolling (2014)</span> as well.</p>
+<p>We analysed the impact of a labor market program by using linear regression and BART, a tree based nonparametric Bayesian regression approach which very successfully recovers the underlying data generating process in the presence of interactions. We have found some evidence for effect moderation of the treatment, especially being married and black color are associated with a positive treatment effect. The relation between pre-treatment income and iCATE is nonlinear. Marital status and income were found to generate interaction effects by <span class="citation">Rolling (2014)</span> as well.</p>
 <p>Let us recall the assumption that all relevant control variables are accounted for in the analysis (ignorability). This does not necessary hold true and is also emphasized by the seminal study of <span class="citation">LaLonde (1986)</span>. See for example <span class="citation">VanderWeele &amp; Shpitser (2011)</span> for a discussion of confounder selection. Furthermore, when estimating ATE we mainly focused on modeling the outcome equation of our treatment, hence we implicitly assume no selection into treatment. Luckily, other treatment effects (ATT, ATC) can be generated by re-weighting towards the population of interest <span class="citation">(eg. Morgan &amp; Todd, 2008)</span>, both in case of linear regression and BART.</p>
 </div>
 <div id="references" class="section level2 unnumbered">
