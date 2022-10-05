@@ -1,4 +1,4 @@
-<?xml-stylesheet type="text/xsl" href="/sheet.xsl"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Boiled Data</title><description>From data to information</description><link>https://boiled-data.github.io</link><atom:link href="https://boiled-data.github.io/feed.xml" rel="self" type="application/rss+xml"/><item><title>COVID-19: Mortality in Germany, 2020/21</title><link>https://boiled-data.github.io/Covid_19_Germany.html</link><guid>https://boiled-data.github.io/Covid_19_Germany.html</guid><pubDate> 11 Dec 2021 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.7383820998278825" morss_score="14.922837762012497"&gt;
+<?xml-stylesheet type="text/xsl" href="/sheet.xsl"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Boiled Data</title><description>From data to information</description><link>https://boiled-data.github.io</link><atom:link href="https://boiled-data.github.io/feed.xml" rel="self" type="application/rss+xml"/><item><title>COVID-19: Mortality in Germany, 2020/21</title><link>https://boiled-data.github.io/Covid_19_Germany.html</link><guid>https://boiled-data.github.io/Covid_19_Germany.html</guid><pubDate> 11 Dec 2021 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.724928366762177" morss_score="14.909384028946794"&gt;
 
 
 
@@ -193,7 +193,7 @@ Wollschläger, Daniel, Irene Schmidtmann, Sebastian Fückel, Maria Blettner, and
 &lt;/div&gt;
 
 &lt;/div&gt;
-</ns0:encoded></item><item><title>Scale: Organisms &amp; Organizations</title><link>https://boiled-data.github.io/Scale.html</link><guid>https://boiled-data.github.io/Scale.html</guid><pubDate> 20 Mar 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.964659381539177" morss_score="13.665854600662684"&gt;
+</ns0:encoded></item><item><title>Scale: Organisms &amp; Organizations</title><link>https://boiled-data.github.io/Scale.html</link><guid>https://boiled-data.github.io/Scale.html</guid><pubDate> 20 Mar 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.962764719571794" morss_score="13.6639599386953"&gt;
 
 
 
@@ -404,7 +404,7 @@ Wickham, Hadley, and Dana Seidel. 2020. &lt;em&gt;Scales: Scale Functions for Vi
 &lt;/div&gt;
 
 &lt;/div&gt;
-</ns0:encoded></item><item><title>Trends in Back Pain</title><link>https://boiled-data.github.io/Trends.html</link><guid>https://boiled-data.github.io/Trends.html</guid><pubDate> 15 Apr 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.69023569023569" morss_score="14.930256535329832"&gt;
+</ns0:encoded></item><item><title>Trends in Back Pain</title><link>https://boiled-data.github.io/Trends.html</link><guid>https://boiled-data.github.io/Trends.html</guid><pubDate> 15 Apr 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.677130044843049" morss_score="14.91715088993719"&gt;
 
 
 
@@ -873,7 +873,7 @@ Zeileis, Achim, Susanne Köll, and Nathaniel Graham. 2020. &lt;span&gt;“Variou
 &lt;/div&gt;
 
 &lt;/div&gt;
-</ns0:encoded></item><item><title>The Histories</title><link>https://boiled-data.github.io/Histories.html</link><guid>https://boiled-data.github.io/Histories.html</guid><pubDate> 21 May 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.647831800262812" morss_score="18.42141670592319"&gt;
+</ns0:encoded></item><item><title>The Histories</title><link>https://boiled-data.github.io/Histories.html</link><guid>https://boiled-data.github.io/Histories.html</guid><pubDate> 21 May 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.637636761487965" morss_score="18.411221667148343"&gt;
 
 
 
@@ -1155,6 +1155,459 @@ Silge, Julia, and David Robinson. 2016. &lt;span&gt;“Tidytext: Text Mining and
 Xiao, Nan. 2018. &lt;em&gt;Ggsci: Scientific Journal and Sci-Fi Themed Color Palettes for ’Ggplot2’&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=ggsci"&gt;https://CRAN.R-project.org/package=ggsci&lt;/a&gt;.
 &lt;/div&gt;
 
+
+&lt;/div&gt;
+</ns0:encoded></item><item><title>What if..? Program Evaluation in the Labor Market.</title><link>https://boiled-data.github.io/BartLabor.html</link><guid>https://boiled-data.github.io/BartLabor.html</guid><pubDate> 1 Oct 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.82089552238806" morss_score="16.686164983465904"&gt;
+
+
+
+&lt;a href="https://boiled-data.github.io/index.html"&gt;Start&lt;/a&gt;
+
+
+
+
+
+
+
+
+&lt;h1&gt;Linear regression and her bigger brother BART: Treatment effects in the labor market&lt;/h1&gt;
+&lt;h4&gt;1 Oct 2022&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;#Preliminaries:
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, eval = TRUE) #set eval = TRUE when run first
+
+rm(list=ls())
+
+library(tidyverse)
+library(haven)
+library(bartCause)
+library(kableExtra)
+library(tableone)
+library(gridExtra)
+library(grid)
+
+theme_set(theme_light())&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Evaluation of the effectiveness of labor market programs is of great importance in order to learn how to design good programs and provide support efficiently. Consequently, there is a huge literature on the evaluation of labor market trainings and we add to this by allowing for heterogeneous treatment effects. We will evaluate the effectiveness of a federally-funded labor treatment program &lt;span&gt;(LaLonde, 1986)&lt;/span&gt; which was implemented in the mid-1970s (US) with the objective of providing work experience. The male subsample we use consists of experimental treatment units and non-experimental comparison units &lt;span&gt;(Dehejia &amp;amp; Wahba, 1999)&lt;/span&gt;. Let us assess whether the treatment had an impact on earnings given available pre-treatment variables.&lt;/p&gt;
+
+&lt;div id="the-data" class="section level2" morss_own_score="3.0" morss_score="13.5"&gt;
+&lt;h2&gt;The Data&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;#download the data:
+#lalonde &amp;lt;- haven::read_dta("http://www.nber.org/~rdehejia/data/nsw.dta") 
+#saveRDS(lalonde, file="lalonde1986.rds")
+lalonde_in &amp;lt;- readRDS("lalonde1986.rds") 
+
+lalonde &amp;lt;- lalonde_in %&amp;gt;%
+            mutate(race=as_factor(case_when(black==1 ~ 'black',
+                                  hispanic==1 ~ 'hispanic',
+                                  TRUE ~ 'other'))) %&amp;gt;%
+           select(-c(black, hispanic, data_id)) %&amp;gt;%
+           relocate(re78, .before = 1)
+
+
+allvars &amp;lt;- colnames(lalonde)
+allvars &amp;lt;- allvars[allvars!='treat'] 
+catvars &amp;lt;- c("race", "married", "nodegree")
+
+
+#Descriptive Statistics:
+tab1 &amp;lt;- CreateTableOne(vars = allvars, strata="treat", data = lalonde, factorVars = catvars) 
+
+kableone(tab1, caption = "Table 1: Descriptive Statistics", col.names=c("Treat=0", "Treat=1", "p", ""))  %&amp;gt;%
+  remove_column(5) %&amp;gt;%
+  kable_classic(full_width = F)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;caption&gt;
+Table 1: Descriptive Statistics
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;
+Treat=0
+&lt;/th&gt;
+&lt;th&gt;
+Treat=1
+&lt;/th&gt;
+&lt;th&gt;
+p
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;
+n
+&lt;/td&gt;
+&lt;td&gt;
+425
+&lt;/td&gt;
+&lt;td&gt;
+297
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+re78 (mean (SD))
+&lt;/td&gt;
+&lt;td&gt;
+5090.05 (5718.09)
+&lt;/td&gt;
+&lt;td&gt;
+5976.35 (6923.80)
+&lt;/td&gt;
+&lt;td&gt;
+0.061
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+age (mean (SD))
+&lt;/td&gt;
+&lt;td&gt;
+24.45 (6.59)
+&lt;/td&gt;
+&lt;td&gt;
+24.63 (6.69)
+&lt;/td&gt;
+&lt;td&gt;
+0.721
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+education (mean (SD))
+&lt;/td&gt;
+&lt;td&gt;
+10.19 (1.62)
+&lt;/td&gt;
+&lt;td&gt;
+10.38 (1.82)
+&lt;/td&gt;
+&lt;td&gt;
+0.136
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+married = 1 (%)
+&lt;/td&gt;
+&lt;td&gt;
+67 (15.8)
+&lt;/td&gt;
+&lt;td&gt;
+50 (16.8)
+&lt;/td&gt;
+&lt;td&gt;
+0.778
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+nodegree = 1 (%)
+&lt;/td&gt;
+&lt;td&gt;
+346 (81.4)
+&lt;/td&gt;
+&lt;td&gt;
+217 (73.1)
+&lt;/td&gt;
+&lt;td&gt;
+0.010
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+re75 (mean (SD))
+&lt;/td&gt;
+&lt;td&gt;
+3026.68 (5201.25)
+&lt;/td&gt;
+&lt;td&gt;
+3066.10 (4874.89)
+&lt;/td&gt;
+&lt;td&gt;
+0.918
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+race (%)
+&lt;/td&gt;
+&lt;td&gt;
+0.567
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+black
+&lt;/td&gt;
+&lt;td&gt;
+340 (80.0)
+&lt;/td&gt;
+&lt;td&gt;
+238 (80.1)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+hispanic
+&lt;/td&gt;
+&lt;td&gt;
+48 (11.3)
+&lt;/td&gt;
+&lt;td&gt;
+28 ( 9.4)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+other
+&lt;/td&gt;
+&lt;td&gt;
+37 ( 8.7)
+&lt;/td&gt;
+&lt;td&gt;
+31 (10.4)
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Table 1 shows that the mean of our variable of interest, the outcome &lt;em&gt;re78&lt;/em&gt; (income in 1978) is higher in our treatment group. Despite the observational character of our data, we see that the sample is relatively homogeneous concerning the pre-treatment variables: only the indicator variable &lt;em&gt;nodegree&lt;/em&gt;, on whether a person has a high school diploma, seems to vary between treatment and control group significantly.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="strategy-empirical-analysis" class="section level2" morss_own_score="3.0" morss_score="51.0"&gt;
+&lt;h2&gt;Strategy &amp;amp; Empirical Analysis&lt;/h2&gt;
+&lt;p&gt;In the potential outcome framework &lt;span&gt;(Rubin, 2005)&lt;/span&gt; the average treatment effect (ATE) can be written as the expectation &lt;span&gt;\(E(\delta)=E[y^1-y^0]\)&lt;/span&gt;, where &lt;span&gt;\(y^1\)&lt;/span&gt; and &lt;span&gt;\(y^0\)&lt;/span&gt; are potential outcomes of income in 1978. Under conditional independence assumption &lt;span&gt;\((y^1,y^0)\bot T|X\)&lt;/span&gt; these outcomes are independent of treatment &lt;span&gt;\(T\)&lt;/span&gt; given covariates &lt;span&gt;\(X\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;We use 2 methods in order to estimate the average treatment effect (ATE). Firstly, we apply the well known linear regression for estimation and risk adjustment &lt;span&gt;(eg. Angrist &amp;amp; Pischke, 2009; Pearl, 2013)&lt;/span&gt;. Secondly, we consider Bayesian Additive Regression Trees &lt;span&gt;(Chipman et al., 2010; J. L. Hill, 2011)&lt;/span&gt;, a machine learning model recently becoming popular as it allows to detect relevant interactions in the data generating process and can be used to estimate heterogeneous treatment effects as well &lt;span&gt;(Carnegie et al., 2019; J. Hill et al., 2020)&lt;/span&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#Linear regression
+
+lm &amp;lt;- lm(re78 ~ treat + re75 + age + education + race + married + nodegree, data=lalonde)
+
+ate_lm &amp;lt;- as.data.frame(coef(lm)) %&amp;gt;%
+        bind_cols(confint(lm)) %&amp;gt;%
+        rownames_to_column() %&amp;gt;%
+        filter(rowname=='treat') %&amp;gt;%
+        rename(estimate=`coef(lm)`, ci.lower=`2.5 %`, ci.upper=`97.5 %`) %&amp;gt;%
+        mutate(model='LinReg') %&amp;gt;%
+        relocate(model, .before=1) %&amp;gt;%
+        select(-rowname)
+  
+#BART
+
+bc_fit &amp;lt;- bartc(lalonde[,'re78'], lalonde[,'treat'], lalonde[,3:8], n.samples = 1000L, estimand='ate',
+                method.rsp='bart', method.trt='glm', verbose = FALSE) 
+
+
+ate_bart &amp;lt;- summary(bc_fit)$estimates %&amp;gt;%
+            select(-sd) %&amp;gt;%
+            mutate(model='BART')  %&amp;gt;%
+            relocate(model, .before=1)
+
+#Prepare ATE-Output
+ate &amp;lt;- ate_lm %&amp;gt;%
+      bind_rows(ate_bart)
+
+rownames(ate) &amp;lt;- NULL
+
+kable(
+  ate,
+  digits = 2,
+  caption = "Table 2: Treatment effect on income"
+) %&amp;gt;%
+  kable_classic(full_width = F) %&amp;gt;% 
+  footnote(general = "ci: 95 % confidence intervals for linear regression, \n credible intervals for BART ")&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;caption&gt;
+Table 2: Treatment effect on income
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;
+model
+&lt;/th&gt;
+&lt;th&gt;
+estimate
+&lt;/th&gt;
+&lt;th&gt;
+ci.lower
+&lt;/th&gt;
+&lt;th&gt;
+ci.upper
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;
+LinReg
+&lt;/td&gt;
+&lt;td&gt;
+806.51
+&lt;/td&gt;
+&lt;td&gt;
+-112.09
+&lt;/td&gt;
+&lt;td&gt;
+1725.11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+BART
+&lt;/td&gt;
+&lt;td&gt;
+803.05
+&lt;/td&gt;
+&lt;td&gt;
+-308.61
+&lt;/td&gt;
+&lt;td&gt;
+1914.71
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tfoot&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;span&gt;Note: &lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt; credible intervals for BART
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;p&gt;We recognize in Table 2 that the treatment effect of BART is very similar to linear regression. The ATE-point estimates are both positive, suggesting that program participation increases average income by about 800 USD. However, both 95% confidence-, credible intervals show that there is a lot of variability in the data – an effect of zero cannot be rejected.&lt;/p&gt;
+&lt;p&gt;In addition to one point estimate we often would like to have information on treatment effects for specific subgroups. This could help us to redesign the program or allow for more effective enrollment. Obviously, these questions can be of interest also in other areas – imagine online marketing or personalized medicine for example. Thankfully, BART can also provide treatment effects for each observation in the data, which are called the individual conditional average treatment effects (iCATE): &lt;span&gt;\(\tau(X_i)=E[y^1_i-y^0_i|X_i]\)&lt;/span&gt;. Let us have a look at the distribution of individual CATE in Figure 1.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#Extract individual treatment effects
+i_cate &amp;lt;- fitted(bc_fit, type="icate", sample = c("all"))
+
+
+data_cate &amp;lt;- lalonde %&amp;gt;%
+  bind_cols(as.data.frame(i_cate))
+  
+
+#Histogram CATE
+data_cate %&amp;gt;%
+  ggplot(aes(x=i_cate)) +
+  geom_histogram(bins=20, color='black', fill='grey') + 
+  theme_minimal() + labs(y = 'Number of people', x='individual CATE', title='Figure 1: Distribution of iCATE')&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/BartLabor_files/figure-html/chk3-1.png"&gt;&lt;/p&gt;
+&lt;p&gt;Interestingly, although the peak of the distribution is around 800 similar to ATE from above, the treatment effects vary a lot. There are even individuals for which a negative effect can be seen. In order to better understand the data generating process, we want to check next whether the individual treatment effects vary with explanatory variables, that could moderate the treatment effect. Figure 2 visualizes the treatment effects dependent on numeric variables age, income and years of education before treatment.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#Scatterplots:
+
+#age
+p2 &amp;lt;- data_cate %&amp;gt;%
+  mutate(treat=as_factor(treat)) %&amp;gt;%
+  ggplot(aes(y=i_cate, x=age)) +
+  geom_point(aes(color=treat)) +
+  scale_colour_manual(values=c("blue", "orange")) +
+  geom_smooth(color='black') +
+  theme_minimal() 
+
+
+#income
+p3 &amp;lt;- data_cate %&amp;gt;%
+   mutate(treat=as_factor(treat)) %&amp;gt;%
+  ggplot(aes(y=i_cate, x=re75)) +
+  geom_point(aes(color=treat)) +
+  scale_colour_manual(values=c("blue", "orange")) +
+  geom_smooth(color='black') +
+  theme_minimal() 
+
+
+#educ
+p4 &amp;lt;- data_cate %&amp;gt;%
+   mutate(treat=as_factor(treat)) %&amp;gt;%
+  ggplot(aes(y=i_cate, x=education)) +
+  geom_point(aes(color=treat)) +
+  geom_smooth(aes(y=i_cate, x=education)) +
+  scale_colour_manual(values=c("blue", "orange")) +
+  geom_smooth(color='black') +
+  scale_x_continuous(breaks = rep(1:8)*2) +
+  theme_minimal() 
+
+#combine  plots next to each other
+title1=textGrob("Figure 2: CATE by numeric variables", gp=gpar(fontface="bold"))
+grid.arrange(p2,  p3, p4, ncol=2, top=title1) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/BartLabor_files/figure-html/chk4-1.png"&gt;&lt;/p&gt;
+&lt;p&gt;We see that program effectiveness increased with age until a threshold of 30 years. The program seems to have been most effective for people between 5 and 10K USD whereas the relationship between years of education and iCATE is U-shaped. The scatterplots allow to visually distinguish iCATE by treatment status – a very nice feature as discussed above. Next let us assess the interaction of our treatment with the factor variables.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#Boxplots:
+#race
+p5 &amp;lt;- data_cate %&amp;gt;%
+  ggplot(aes(y=i_cate, x=race)) +
+  geom_boxplot()  +
+  theme_minimal() 
+
+#married 
+p6 &amp;lt;- data_cate %&amp;gt;%
+  mutate(married=as.factor(married)) %&amp;gt;%
+  ggplot(aes(y=i_cate, x=married)) +
+  geom_boxplot() +
+  theme_minimal() 
+
+p7 &amp;lt;- data_cate %&amp;gt;%
+  mutate(nodegree=as.factor(nodegree)) %&amp;gt;%
+  ggplot(aes(y=i_cate, x=nodegree)) +
+  geom_boxplot() +
+  theme_minimal() 
+
+title2=textGrob("Figure 2: CATE by factor variables", gp=gpar(fontface="bold"))
+grid.arrange(p5,  p6, p7, ncol=2, top=title2) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/BartLabor_files/figure-html/chk5-1.png"&gt;&lt;/p&gt;
+&lt;p&gt;Figure 3 reveals that black colored benefited most from the program whereas being hispanic is associated with negative CATE. Married people benefited highly from program participation as well.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Discussion&lt;/h2&gt;
+&lt;p&gt;We analysed the impact of a labor market program by using linear regression and BART, a tree based nonparametric Bayesian regression approach which very successfully recovers the underlying data generating process in the presence of interactions. We have found some evidence for effect moderation of the treatment, especially being married and black color are associated with a positive treatment effect. The relation between pre-treatment income and iCATE is nonlinear. Marital status and income were found to generate interaction effects by &lt;span&gt;Rolling (2014)&lt;/span&gt; as well.&lt;/p&gt;
+&lt;p&gt;Let us recall the assumption that all relevant control variables are accounted for in the analysis (ignorability). This does not necessary hold true and is also emphasized by the seminal study of &lt;span&gt;LaLonde (1986)&lt;/span&gt;. See for example &lt;span&gt;VanderWeele &amp;amp; Shpitser (2011)&lt;/span&gt; for a discussion of confounder selection. Furthermore, when estimating ATE we mainly focused on modeling the outcome equation of our treatment, hence we implicitly assume no selection into treatment. Luckily, other treatment effects (ATT, ATC) can be generated by re-weighting towards the population of interest &lt;span&gt;(eg. Morgan &amp;amp; Todd, 2008)&lt;/span&gt;, both in case of linear regression and BART.&lt;/p&gt;
+
+
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2" morss_own_score="5.457831325301205" morss_score="35.99949799196787"&gt;
+&lt;div&gt;
+Angrist, J. D., &amp;amp; Pischke, J.-S. (2009). &lt;em&gt;Mostly harmless econometrics: An empiricist’s companion&lt;/em&gt;. Princeton university press.
+&lt;/div&gt;
+&lt;div&gt;
+Carnegie, N., Dorie, V., &amp;amp; Hill, J. L. (2019). Examining treatment effect heterogeneity using BART. &lt;em&gt;Observational Studies&lt;/em&gt;, &lt;em&gt;5&lt;/em&gt;(2), 52–70.
+&lt;/div&gt;
+&lt;div&gt;
+Chipman, H. A., George, E. I., &amp;amp; McCulloch, R. E. (2010). BART: Bayesian additive regression trees. &lt;em&gt;The Annals of Applied Statistics&lt;/em&gt;, &lt;em&gt;4&lt;/em&gt;(1), 266–298.
+&lt;/div&gt;
+&lt;div&gt;
+Dehejia, R. H., &amp;amp; Wahba, S. (1999). Causal effects in nonexperimental studies: Reevaluating the evaluation of training programs. &lt;em&gt;Journal of the American Statistical Association&lt;/em&gt;, &lt;em&gt;94&lt;/em&gt;(448), 1053–1062.
+&lt;/div&gt;
+&lt;div&gt;
+Hill, J. L. (2011). Bayesian nonparametric modeling for causal inference. &lt;em&gt;Journal of Computational and Graphical Statistics&lt;/em&gt;, &lt;em&gt;20&lt;/em&gt;(1), 217–240.
+&lt;/div&gt;
+&lt;div&gt;
+Hill, J., Linero, A., &amp;amp; Murray, J. (2020). Bayesian additive regression trees: A review and look forward. &lt;em&gt;Annual Review of Statistics and Its Application&lt;/em&gt;, &lt;em&gt;7&lt;/em&gt;(1).
+&lt;/div&gt;
+&lt;div&gt;
+LaLonde, R. J. (1986). Evaluating the econometric evaluations of training programs with experimental data. &lt;em&gt;The American Economic Review&lt;/em&gt;, 604–620.
+&lt;/div&gt;
+&lt;div&gt;
+Morgan, S. L., &amp;amp; Todd, J. J. (2008). 6. A diagnostic routine for the detection of consequential heterogeneity of causal effects. &lt;em&gt;Sociological Methodology&lt;/em&gt;, &lt;em&gt;38&lt;/em&gt;(1), 231–282.
+&lt;/div&gt;
+&lt;div&gt;
+Pearl, J. (2013). Linear models: A useful &lt;span&gt;“microscope”&lt;/span&gt; for causal analysis. &lt;em&gt;Journal of Causal Inference&lt;/em&gt;, &lt;em&gt;1&lt;/em&gt;(1), 155–170.
+&lt;/div&gt;
+&lt;div&gt;
+Rolling, C. A. (2014). &lt;em&gt;Estimation of conditional average treatment effects&lt;/em&gt; [PhD thesis]. University of Minnesota.
+&lt;/div&gt;
+&lt;div&gt;
+Rubin, D. B. (2005). Causal inference using potential outcomes: Design, modeling, decisions. &lt;em&gt;Journal of the American Statistical Association&lt;/em&gt;, &lt;em&gt;100&lt;/em&gt;(469), 322–331.
+&lt;/div&gt;
+&lt;div&gt;
+VanderWeele, T. J., &amp;amp; Shpitser, I. (2011). A new criterion for confounder selection. &lt;em&gt;Biometrics&lt;/em&gt;, &lt;em&gt;67&lt;/em&gt;(4), 1406–1413.
+&lt;/div&gt;
+&lt;div&gt;
+Wickham, H., Miller, E., &amp;amp; Smith, D. (2022). &lt;em&gt;Haven: Import and export ’SPSS’, ’stata’ and ’SAS’ files&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=haven"&gt;https://CRAN.R-project.org/package=haven&lt;/a&gt;
+&lt;/div&gt;
+&lt;div&gt;
+Zhu, H. (2021). &lt;em&gt;kableExtra: Construct complex table with ’kable’ and pipe syntax&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=kableExtra"&gt;https://CRAN.R-project.org/package=kableExtra&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 
 &lt;/div&gt;
 </ns0:encoded></item></channel></rss>
