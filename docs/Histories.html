@@ -13,7 +13,7 @@
 
 <title>Herodotus’ Histories</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
@@ -166,11 +166,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -199,8 +203,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -208,16 +212,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -291,8 +288,8 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="feed.xml">
-    <span class="fa fa-rss"></span>
+  <a href="https://github.com/boiled-data">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -305,6 +302,12 @@ $(document).ready(function () {
 <li>
   <a href="mailto:&lt;boiled.data@gmail.com&gt;">
     <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="feed.xml">
+    <span class="fa fa-rss"></span>
      
   </a>
 </li>
@@ -331,7 +334,7 @@ $(document).ready(function () {
 </div>
 
 
-<p><img src="p0_hist_wordcloud.png" style="width:80.0%" /></p>
+<p><img src="Histories/p0_hist_wordcloud.png" style="width:80.0%" /></p>
 <pre class="r"><code>#Preliminaries:
 knitr::opts_chunk$set(message=FALSE, warning=FALSE, eval = FALSE) #set eval = TRUE when run first
 
@@ -345,21 +348,42 @@ library(topicmodels)
 library(ldatuning)
 library(ggsci)
 
-theme_set(theme_light())</code></pre>
+theme_set(theme_light())
+
+dir.create(&quot;Histories&quot;, showWarnings = FALSE)</code></pre>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p><em>Herodotus</em> (484 – 425 BC), the first known author doing systematic investigation of historical events, is famous for his important work on the Greco-Persian wars: <em>Histories</em>, originally meaning ‘critical inquiry,’ is therefore foundational to the Western historian tradition. The text is so profound that it accompanied the well known journalist and author Ryszard Kapuściński on his journeys across the globe. The book is on my reading list for some time now.</p>
-<p>However, probably due to its old age the book is not very easy to digest. How can we use data science to have a first impression of the book content? Fortunately, text mining tools are available for natural language processing that can help us doing the job. Interesting sources concerning text mining in R are eg. <a href="https://slcladal.github.io/index.html">LADAL</a> and <a href="https://content-analysis-with-r.com/index.html">Automated Content Analysis with R</a>. Data scientists interested in history may find <a href="https://programminghistorian.org/en/lessons/">Programming Historian</a> quite illuminating. But now let us play a little bit with the text using <a href="https://www.tidytextmining.com">tidytext</a>.</p>
+<p><em>Herodotus</em> (484 – 425 BC), the first known author doing
+systematic investigation of historical events, is famous for his
+important work on the Greco-Persian wars: <em>Histories</em>, originally
+meaning ‘critical inquiry’, is therefore foundational to the Western
+historian tradition. The text is so profound that it accompanied the
+well known journalist and author Ryszard Kapuściński on his journeys
+across the globe. The book is on my reading list for some time now.</p>
+<p>However, probably due to its old age the book is not very easy to
+digest. How can we use data science to have a first impression of the
+book content? Fortunately, text mining tools are available for natural
+language processing that can help us doing the job. Interesting sources
+concerning text mining in R are eg. <a
+href="https://slcladal.github.io/index.html">LADAL</a> and <a
+href="https://content-analysis-with-r.com/index.html">Automated Content
+Analysis with R</a>. Data scientists interested in history may find <a
+href="https://programminghistorian.org/en/lessons/">Programming
+Historian</a> quite illuminating. But now let us play a little bit with
+the text using <a
+href="https://www.tidytextmining.com">tidytext</a>.</p>
 </div>
 <div id="word-count" class="section level2">
 <h2>Word Count</h2>
-<p>One first way to look at the ‘Histories’ is by using the number of words. What are the most prevalent words in the book, after excluding stop word (ie. irrelevant words)?</p>
+<p>One first way to look at the ‘Histories’ is by using the number of
+words. What are the most prevalent words in the book, after excluding
+stop word (ie. irrelevant words)?</p>
 <pre class="r"><code>#Download data:
 #gutenberg_metadata
 #gutenberg_works(str_detect(title, &quot;Herodotus&quot;))
 #hist_in &lt;- gutenberg_download(c(2707, 2456))
-#saveRDS(hist_in, &quot;hist_gut.rds&quot;)
-hist_in &lt;- readRDS(&quot;hist_gut.rds&quot;)
+#saveRDS(hist_in, &quot;Histories/hist_gut.rds&quot;)
+hist_in &lt;- readRDS(&quot;Histories/hist_gut.rds&quot;)
 
 #preparation: add chapter-information to data:
 hist_df &lt;- hist_in %&gt;%
@@ -390,7 +414,7 @@ hist_wordcloud &lt;- hist_tidy %&gt;%
   geom_text_wordcloud(shape=&quot;square&quot;) + #, ylim=c(0,1), xlim=c(0.25, 0.85)
   theme_minimal() +
   scale_size_area(max_size = 15)
-ggsave(hist_wordcloud, file=&quot;p0_hist_wordcloud.png&quot;) # import plot via markdown
+ggsave(hist_wordcloud, file=&quot;Histories/p0_hist_wordcloud.png&quot;) # import plot via markdown
 
 
 #plot word count as bar char:
@@ -401,10 +425,16 @@ p1_hist_tidy &lt;- hist_tidy %&gt;%
   ggplot(aes(n, word)) +
   geom_col( fill=&#39;darkgreen&#39;) +
   labs(y = &#39;word&#39;, x=&#39;number occurrences&#39;, title=&#39;Figure 1: Most frequent words in Histories&#39;)
-ggsave(p1_hist_tidy, file=&quot;p1_hist_tidy.png&quot;)  # import via markdown</code></pre>
-<p><img src="p1_hist_tidy.png" style="width:70.0%" /></p>
-<p>We see that <em>time</em>, <em>land</em>, <em>son</em> and <em>king</em> are on the top of the list followed by the main cultural players of the story – the <em>Persians</em> and the Greek, represented by <em>Hellenes</em> and <em>Athenians</em>.</p>
-<p>A more sophisticated approach of revealing representative document words, is to focus on important words that are most distinctive to each of the book’s 9 chapters. We do this by weighting the term frequency (tf) with the inverse document frequency (idf).</p>
+ggsave(p1_hist_tidy, file=&quot;Histories/p1_hist_tidy.png&quot;)  # import via markdown</code></pre>
+<p><img src="Histories/p1_hist_tidy.png" style="width:70.0%" /></p>
+<p>We see that <em>time</em>, <em>land</em>, <em>son</em> and
+<em>king</em> are on the top of the list followed by the main cultural
+players of the story – the <em>Persians</em> and the Greek, represented
+by <em>Hellenes</em> and <em>Athenians</em>.</p>
+<p>A more sophisticated approach of revealing representative document
+words, is to focus on important words that are most distinctive to each
+of the book’s 9 chapters. We do this by weighting the term frequency
+(tf) with the inverse document frequency (idf).</p>
 <pre class="r"><code>hist_tf_idf &lt;- hist_df %&gt;%
   unnest_tokens(word, text) %&gt;%
   group_by(chapter, word) %&gt;%
@@ -424,13 +454,26 @@ p2_hist_tf_idf &lt;- hist_tf_idf %&gt;%
   scale_fill_simpsons() +
   labs(x = &quot;term frequency (in %) * inverse document frequency&quot;, y = &#39;words&#39;, title=&#39;Figure 2: Most distinctive words per chapter&#39;) 
 
-ggsave(p2_hist_tf_idf, file=&quot;p2_hist_tf_idf.png&quot;) </code></pre>
-<p><img src="p2_hist_tf_idf.png" style="width:70.0%" /></p>
-<p>These most distinctive words per chapter show a strong emphasis on geographical and biographical details, as expected in historical literature. For example, the second book deals to large extent with Egypt, which can easily seen by the top keywords.</p>
+ggsave(p2_hist_tf_idf, file=&quot;Histories/p2_hist_tf_idf.png&quot;) </code></pre>
+<p><img src="Histories/p2_hist_tf_idf.png" style="width:70.0%" /></p>
+<p>These most distinctive words per chapter show a strong emphasis on
+geographical and biographical details, as expected in historical
+literature. For example, the second book deals to large extent with
+Egypt, which can easily seen by the top keywords.</p>
 </div>
 <div id="topic-modeling" class="section level2">
 <h2>Topic Modeling</h2>
-<p>How can we access content of the book in a more meaningful way by using abstract topics? We do so by applying <em>topic modeling</em>, a statistical framework for unsupervised classification that discovers topics occurring in a collection of documents (here: chapters). We use Latent Dirichlet Allocation (LDA), a typical approach for topic modeling, in order to automatically find both associations between words and the topics, and associations between topics and the book’s nine chapters. Although the number of topics are a priori unknown and serve as an input for the algorithm, there are different approaches to automatically determine the optimal number of topics. So let us first figure out the relevant topic number at first.</p>
+<p>How can we access content of the book in a more meaningful way by
+using abstract topics? We do so by applying <em>topic modeling</em>, a
+statistical framework for unsupervised classification that discovers
+topics occurring in a collection of documents (here: chapters). We use
+Latent Dirichlet Allocation (LDA), a typical approach for topic
+modeling, in order to automatically find both associations between words
+and the topics, and associations between topics and the book’s nine
+chapters. Although the number of topics are a priori unknown and serve
+as an input for the algorithm, there are different approaches to
+automatically determine the optimal number of topics. So let us first
+figure out the relevant topic number at first.</p>
 <pre class="r"><code>#prepare data fro LDA
 hist_dtm &lt;- hist_tidy  %&gt;%
   count(chapter, word) %&gt;%
@@ -456,9 +499,12 @@ p3_top_num &lt;- ldatuning.metriken %&gt;%
   scale_color_simpsons() +
   facet_wrap(~ opt, ncol=1) +
   labs(y=NULL, x=&#39;number of topics&#39;, title=&quot;Figure 3: Metrics to choose topic number&quot;)
-ggsave(p3_top_num, file=&quot;p3_top_num.png&quot;) </code></pre>
-<p><img src="p3_top_num.png" style="width:70.0%" /></p>
-<p>Given criteria above we choose 8 as the number of topics in <em>Histories</em> and use them as the input for our final LDA. The result will allow us to extract the most distinctive words for each of the generated topics.</p>
+ggsave(p3_top_num, file=&quot;Histories/p3_top_num.png&quot;) </code></pre>
+<p><img src="Histories/p3_top_num.png" style="width:70.0%" /></p>
+<p>Given criteria above we choose 8 as the number of topics in
+<em>Histories</em> and use them as the input for our final LDA. The
+result will allow us to extract the most distinctive words for each of
+the generated topics.</p>
 <pre class="r"><code>#LDA with 8 topics:
 hist_lda &lt;- LDA(hist_dtm, k = 8, control = list(seed = 42), method=&quot;Gibbs&quot;) 
 
@@ -478,9 +524,12 @@ p4_topic_word &lt;- topic_word %&gt;%
   facet_wrap(~topic, ncol = 2, scales = &quot;free&quot;) +
   labs(x = &quot;beta (term frequency)&quot;, y = &quot;term&quot;, title=&#39;Figure 4: Most important words per topic&#39;)
 
-ggsave(p4_topic_word, file=&quot;p4_topic_word.png&quot;) </code></pre>
-<p><img src="p4_topic_word.png" style="width:70.0%" /></p>
-<p>One approach to understand the 8 topics is to look at their most important words. We can see that topic 7 contains words such as ‘son,’ ‘time,’ ‘king’ – words that are also most prevalent overall as shown above. How are the 8 topics distributed over the nine chapters?</p>
+ggsave(p4_topic_word, file=&quot;Histories/p4_topic_word.png&quot;) </code></pre>
+<p><img src="Histories/p4_topic_word.png" style="width:70.0%" /></p>
+<p>One approach to understand the 8 topics is to look at their most
+important words. We can see that topic 7 contains words such as ‘son’,
+‘time’, ‘king’ – words that are also most prevalent overall as shown
+above. How are the 8 topics distributed over the nine chapters?</p>
 <pre class="r"><code>#Association between Documents &amp; Themen: (gamma)
 doc_topic &lt;- tidy(hist_lda, matrix = &quot;gamma&quot;) %&gt;% 
   mutate(document=as_factor(document))
@@ -493,22 +542,42 @@ p5_doc_topic &lt;- doc_topic %&gt;%
   theme_minimal(base_size = 8) +
   labs(title=&quot;Figure 5: Relationship between topics and chapters&quot;, fill=&quot;gamma&quot;, y=&quot;topic&quot;, x=&quot;chapter&quot;)  
 
-ggsave(p5_doc_topic, file=&quot;p5_doc_topic.png&quot;) </code></pre>
-<p><img src="p5_doc_topic.png" style="width:70.0%" /></p>
-<p>A visual inspection suggests all chapters are a mixture of topic 4 and 7 + some individual component. Whereas topic 7 captures ideas of ancestry, topic 4 also contains words that are associated with religion. We also see that the chapters 2-3 and 8-9 seem to have some overlap in their content.</p>
-<p>So far, we have used tools to figure out what the <em>Histories</em> are about. According to <span class="citation">Kapuściński (2007)</span> the main theme of <em>Histories</em> can be described by the form of following 3 rules, which governed antiquity, in comparison with the modern world:</p>
+ggsave(p5_doc_topic, file=&quot;Histories/p5_doc_topic.png&quot;) </code></pre>
+<p><img src="Histories/p5_doc_topic.png" style="width:70.0%" /></p>
+<p>A visual inspection suggests all chapters are a mixture of topic 4
+and 7 + some individual component. Whereas topic 7 captures ideas of
+ancestry, topic 4 also contains words that are associated with religion.
+We also see that the chapters 2-3 and 8-9 seem to have some overlap in
+their content.</p>
+<p>So far, we have used tools to figure out what the <em>Histories</em>
+are about. According to <span class="citation">Kapuściński (2007)</span>
+the main theme of <em>Histories</em> can be described by the form of
+following 3 rules, which governed antiquity, in comparison with the
+modern world:</p>
 <ol style="list-style-type: decimal">
 <li>The law of vengeance applies.</li>
 <li>Human happiness is not permanent.</li>
 <li>No one can escape fate, even not a god.</li>
 </ol>
-<p>From today’s perspective these rules, especially 1 and 3, seem very fatalistic, but they governed peoples life with cycles of crime and punishment over a long period of time. If you know how to derive such an interpretation with text mining methods, please let me know.</p>
-<p>One last aspect worth discussing is the fact that Herodotus had a Hellenian background. Was his description of the Persian-Greek conflict culturally biased and how can data analytics support detecting this?</p>
+<p>From today’s perspective these rules, especially 1 and 3, seem very
+fatalistic, but they governed peoples life with cycles of crime and
+punishment over a long period of time. If you know how to derive such an
+interpretation with text mining methods, please let me know.</p>
+<p>One last aspect worth discussing is the fact that Herodotus had a
+Hellenian background. Was his description of the Persian-Greek conflict
+culturally biased and how can data analytics support detecting this?</p>
 </div>
 <div id="sentiment-analysis" class="section level2">
 <h2>Sentiment Analysis</h2>
-<p>In order to tackle this question we use a sentiment word lexicon in which words are classified as positively or negatively. Are the terms ‘Persian,’ ‘Hellenic’ and ‘Athenian’ to the same extent associated with positive/negative words in <em>Histories</em>?</p>
-<p>As a first step we generate <em>bi-grams</em> (or word pairs), and extract neighboring words of the terms <em>Persia</em>, <em>Hellen</em>, <em>Athen</em>, reflecting different cultures. Then these neighboring words are matched with the sentiment lexicon and the number of sentiments are summed up for each of the 3 cultures.</p>
+<p>In order to tackle this question we use a sentiment word lexicon in
+which words are classified as positively or negatively. Are the terms
+‘Persian’, ‘Hellenic’ and ‘Athenian’ to the same extent associated with
+positive/negative words in <em>Histories</em>?</p>
+<p>As a first step we generate <em>bi-grams</em> (or word pairs), and
+extract neighboring words of the terms <em>Persia</em>, <em>Hellen</em>,
+<em>Athen</em>, reflecting different cultures. Then these neighboring
+words are matched with the sentiment lexicon and the number of
+sentiments are summed up for each of the 3 cultures.</p>
 <pre class="r"><code>#remove stop words before calculating bi-grams:
 bg_herod &lt;- hist_df %&gt;%
   unnest_tokens(word, text) %&gt;% 
@@ -560,41 +629,69 @@ p6_comp_cult &lt;- comp_cult %&gt;%
   geom_bar(stat=&quot;identity&quot;, position = &quot;dodge&quot;) +
   labs(x = &quot;number sentiments&quot;, y = &quot;culture&quot;, title=&#39;Figure 6: Total number of sentiments by culture&#39;)
 
-ggsave(p6_comp_cult, file=&quot;p6_comp_cult.png&quot;) </code></pre>
-<p><img src="p6_comp_cult.png" style="width:70.0%" /></p>
-<p>The results show that negative sentiments dominate all 3 cultures, compared to positive ones. However, it is easy to see that in relation to the total number of sentiments in each culture, the negative sentiments are actually more pronounced for the terms <em>Hellenian</em> and <em>Athenian</em>. So our results do not suggest that Herodotus’ Histories are culturally biased in favor of the Greek culture.</p>
+ggsave(p6_comp_cult, file=&quot;Histories/p6_comp_cult.png&quot;) </code></pre>
+<p><img src="Histories/p6_comp_cult.png" style="width:70.0%" /></p>
+<p>The results show that negative sentiments dominate all 3 cultures,
+compared to positive ones. However, it is easy to see that in relation
+to the total number of sentiments in each culture, the negative
+sentiments are actually more pronounced for the terms <em>Hellenian</em>
+and <em>Athenian</em>. So our results do not suggest that Herodotus’
+Histories are culturally biased in favor of the Greek culture.</p>
 </div>
 <div id="wrap-up" class="section level2">
 <h2>Wrap Up</h2>
-<p>We have seen how to use text mining tools together with visualization in order to get a first impression of <em>The Histories</em>. In addition to analyzing words, we have seen how to generate abstract topics from text data. Also sentiment analysis was applied to see whether Herodotus’ description was positively biased towards the Greek culture.</p>
-<p>Is the book worth reading after all? After mining <em>Histories</em> the book will certainly stay on my reading list.</p>
+<p>We have seen how to use text mining tools together with visualization
+in order to get a first impression of <em>The Histories</em>. In
+addition to analyzing words, we have seen how to generate abstract
+topics from text data. Also sentiment analysis was applied to see
+whether Herodotus’ description was positively biased towards the Greek
+culture.</p>
+<p>Is the book worth reading after all? After mining <em>Histories</em>
+the book will certainly stay on my reading list.</p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="unnumbered">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-gentzkow2019text" class="csl-entry">
-Gentzkow, Matthew, Bryan Kelly, and Matt Taddy. 2019. <span>“Text as Data.”</span> <em>Journal of Economic Literature</em> 57 (3): 535–74.
+Gentzkow, Matthew, Bryan Kelly, and Matt Taddy. 2019. <span>“Text as
+Data.”</span> <em>Journal of Economic Literature</em> 57 (3): 535–74.
 </div>
 <div id="ref-topicm" class="csl-entry">
-Grün, Bettina, and Kurt Hornik. 2011. <span>“<span class="nocase">topicmodels</span>: An <span>R</span> Package for Fitting Topic Models.”</span> <em>Journal of Statistical Software</em> 40 (13): 1–30. <a href="https://doi.org/10.18637/jss.v040.i13">https://doi.org/10.18637/jss.v040.i13</a>.
+Grün, Bettina, and Kurt Hornik. 2011. <span>“<span
+class="nocase">topicmodels</span>: An <span>R</span> Package for Fitting
+Topic Models.”</span> <em>Journal of Statistical Software</em> 40 (13):
+1–30. <a
+href="https://doi.org/10.18637/jss.v040.i13">https://doi.org/10.18637/jss.v040.i13</a>.
 </div>
 <div id="ref-kapusc" class="csl-entry">
-Kapuściński, Ryszard. 2007. <em>Travels with Herodotus</em>. Random House.
+Kapuściński, Ryszard. 2007. <em>Travels with Herodotus</em>. Random
+House.
 </div>
 <div id="ref-wcloud" class="csl-entry">
-Le Pennec, Erwan, and Kamil Slowikowski. 2019. <em>Ggwordcloud: A Word Cloud Geom for ’Ggplot2’</em>. <a href="https://CRAN.R-project.org/package=ggwordcloud">https://CRAN.R-project.org/package=ggwordcloud</a>.
+Le Pennec, Erwan, and Kamil Slowikowski. 2019. <em>Ggwordcloud: A Word
+Cloud Geom for ’Ggplot2’</em>. <a
+href="https://CRAN.R-project.org/package=ggwordcloud">https://CRAN.R-project.org/package=ggwordcloud</a>.
 </div>
 <div id="ref-ldatune" class="csl-entry">
-Nikita, Murzintcev. 2020. <em>Ldatuning: Tuning of the Latent Dirichlet Allocation Models Parameters</em>. <a href="https://CRAN.R-project.org/package=ldatuning">https://CRAN.R-project.org/package=ldatuning</a>.
+Nikita, Murzintcev. 2020. <em>Ldatuning: Tuning of the Latent Dirichlet
+Allocation Models Parameters</em>. <a
+href="https://CRAN.R-project.org/package=ldatuning">https://CRAN.R-project.org/package=ldatuning</a>.
 </div>
 <div id="ref-gutr" class="csl-entry">
-Robinson, David. 2021. <em>Gutenbergr: Download and Process Public Domain Works from Project Gutenberg</em>. <a href="https://CRAN.R-project.org/package=gutenbergr">https://CRAN.R-project.org/package=gutenbergr</a>.
+Robinson, David. 2021. <em>Gutenbergr: Download and Process Public
+Domain Works from Project Gutenberg</em>. <a
+href="https://CRAN.R-project.org/package=gutenbergr">https://CRAN.R-project.org/package=gutenbergr</a>.
 </div>
 <div id="ref-tidytext" class="csl-entry">
-Silge, Julia, and David Robinson. 2016. <span>“Tidytext: Text Mining and Analysis Using Tidy Data Principles in r.”</span> <em>JOSS</em> 1 (3). <a href="https://doi.org/10.21105/joss.00037">https://doi.org/10.21105/joss.00037</a>.
+Silge, Julia, and David Robinson. 2016. <span>“Tidytext: Text Mining and
+Analysis Using Tidy Data Principles in r.”</span> <em>JOSS</em> 1 (3).
+<a
+href="https://doi.org/10.21105/joss.00037">https://doi.org/10.21105/joss.00037</a>.
 </div>
 <div id="ref-ggsci" class="csl-entry">
-Xiao, Nan. 2018. <em>Ggsci: Scientific Journal and Sci-Fi Themed Color Palettes for ’Ggplot2’</em>. <a href="https://CRAN.R-project.org/package=ggsci">https://CRAN.R-project.org/package=ggsci</a>.
+Xiao, Nan. 2018. <em>Ggsci: Scientific Journal and Sci-Fi Themed Color
+Palettes for ’Ggplot2’</em>. <a
+href="https://CRAN.R-project.org/package=ggsci">https://CRAN.R-project.org/package=ggsci</a>.
 </div>
 </div>
 </div>

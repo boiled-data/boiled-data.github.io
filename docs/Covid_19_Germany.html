@@ -13,7 +13,7 @@
 
 <title>Germany: Mortality in Times of COVID-19</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
@@ -166,11 +166,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -199,8 +203,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -208,16 +212,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -291,8 +288,8 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="feed.xml">
-    <span class="fa fa-rss"></span>
+  <a href="https://github.com/boiled-data">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -305,6 +302,12 @@ $(document).ready(function () {
 <li>
   <a href="mailto:&lt;boiled.data@gmail.com&gt;">
     <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="feed.xml">
+    <span class="fa fa-rss"></span>
      
   </a>
 </li>
@@ -325,7 +328,8 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Germany: Mortality in Times of COVID-19</h1>
+<h1 class="title toc-ignore">Germany: Mortality in Times of
+COVID-19</h1>
 <h4 class="date">15 May 2022 (first version 25 Nov 2020)</h4>
 
 </div>
@@ -347,19 +351,32 @@ library(ggdag)
 theme_set(theme_light())</code></pre>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>Since year 2019/2020 mankind has to deal with the communicable disease COVID-19. People across many countries and societies as a whole are affected from both an epidemiological and economic point of view. Data on mortality was regularly published across media, also to justify rigorous policy interventions. However, the numbers were rarely well explained. Hence, we close this gap by using public data from official statistics in order to visualize the mortality in Germany over time, also accounting for changes in population size. Following reproducible research paradigm, code is embedded within the document.</p>
+<p>Since year 2019/2020 mankind has to deal with the communicable
+disease COVID-19. People across many countries and societies as a whole
+are affected from both an epidemiological and economic point of view.
+Data on mortality was regularly published across media, also to justify
+rigorous policy interventions. However, the numbers were rarely well
+explained. Hence, we close this gap by using public data from official
+statistics in order to visualize the mortality in Germany over time,
+also accounting for changes in population size. Following reproducible
+research paradigm, code is embedded within the document.</p>
 </div>
 <div id="absolute-mortality" class="section level2">
 <h2>Absolute Mortality</h2>
-<p>Figure 1 shows a simple relationship of total COVID-19 (C) and mortality (M) cases. If such a simple dependency holds then a comparison between then mortality in year 2020 with the preceding years may reveal the effect of COVID-19.</p>
+<p>Figure 1 shows a simple relationship of total COVID-19 (C) and
+mortality (M) cases. If such a simple dependency holds then a comparison
+between then mortality in year 2020 with the preceding years may reveal
+the effect of COVID-19.</p>
 <p><img src="Covid_19_Germany_files/figure-html/unnamed-chunk-1-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>Figure 2 shows the mortality of year 2020 (and 2021 up to November), in contrast to the mean-, minimum-, and maximum- mortality of the 4 preceding years.</p>
+<p>Figure 2 shows the mortality of year 2020 (and 2021 up to November),
+in contrast to the mean-, minimum-, and maximum- mortality of the 4
+preceding years.</p>
 <pre class="r"><code>#read data
 #source: https://www-genesis.destatis.de/
-pop &lt;- read_csv2(&quot;PopulationGermany.csv&quot;)
+pop &lt;- read_csv2(&quot;filesMortality/PopulationGermany.csv&quot;)
 
 #source: https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Sterbefaelle-Lebenserwartung/Tabellen/sonderauswertung-sterbefaelle.html?nn=209016
-deaths &lt;- read_csv2(&quot;sonderauswertung_sterbefaelle_Tage_26Nov2021.csv&quot;)
+deaths &lt;- read_csv2(&quot;filesMortality/sonderauswertung_sterbefaelle_Tage_26Nov2021.csv&quot;)
 
 pop_year &lt;- pop %&gt;%
   #gather(`31.12.2015`, `31.12.2016`,`31.12.2017`,`31.12.2018`,`31.12.2019`,
@@ -448,14 +465,27 @@ p2 &lt;- pop_death_time_comp %&gt;%
 title1=textGrob(&quot;Figure 2: Weekly mortality in Germany&quot;, gp=gpar(fontface=&quot;bold&quot;))
 grid.arrange(p1,  p2, ncol=2, top=title1)          </code></pre>
 <p><img src="Covid_19_Germany_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>When interpreting this figure we have to acknowledge that in 2018 there was a very high mortality due to a very severe influenza season in the first quarter. We see for 2020 three peaks of relatively high mortality in week 15, around week 32, and from week 42 onward. The first and the last peak was correlated with strong policy interventions (“lockdown”). We also see that the cumulative mortality in 2020 was relatively high, at the end of the year even maximum mortality of year 2018 was surpassed. For year 2021 the mortality remains high, with an increasing tendency from the middle of the year onward.</p>
+<p>When interpreting this figure we have to acknowledge that in 2018
+there was a very high mortality due to a very severe influenza season in
+the first quarter. We see for 2020 three peaks of relatively high
+mortality in week 15, around week 32, and from week 42 onward. The first
+and the last peak was correlated with strong policy interventions
+(“lockdown”). We also see that the cumulative mortality in 2020 was
+relatively high, at the end of the year even maximum mortality of year
+2018 was surpassed. For year 2021 the mortality remains high, with an
+increasing tendency from the middle of the year onward.</p>
 <!--Our findings are in line with @zur2020sonderauswertung, who argued that absolute mortality in 2020 will probably not be higher than that of year 2018. -->
 </div>
 <div id="mortality-per-capita" class="section level2">
 <h2>Mortality per capita</h2>
-<p>However these total number can provide wrong evidence about the mortality, if the population changes between the years: If the population number (P) increases we would expect that more people die (see Figure 3), also in absence of COVID-19.</p>
+<p>However these total number can provide wrong evidence about the
+mortality, if the population changes between the years: If the
+population number (P) increases we would expect that more people die
+(see Figure 3), also in absence of COVID-19.</p>
 <p><img src="Covid_19_Germany_files/figure-html/unnamed-chunk-3-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>Hence, we have to account for change in population size. Figure 4 shows the data from above but uses the population of the beginning of each year in order to calculate number of deceased per capita.</p>
+<p>Hence, we have to account for change in population size. Figure 4
+shows the data from above but uses the population of the beginning of
+each year in order to calculate number of deceased per capita.</p>
 <pre class="r"><code>#2 Calculate Mortality per capita (population at the beginning of year): 
 #plot absolute mortality per capita:
 p3 &lt;- pop_death_time_comp %&gt;%
@@ -478,35 +508,86 @@ p4 &lt;- pop_death_time_comp %&gt;%
 title2=textGrob(&quot;Figure 4: Weekly mortality per capita in Germany&quot; , gp=gpar(fontface=&quot;bold&quot;))
 grid.arrange(p3,  p4, ncol=2, top=title2)</code></pre>
 <p><img src="Covid_19_Germany_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>We find that changes of the number of citizens did not alter the found pattern from above. In the end of 2020 overall mortality increased strongly, probably driven by COVID-19. The same holds true for year 2021, although this data is still preliminary at the time of data analysis. However, other potential relevant variables are not included into to the analysis. If the relationship between COVID-19 cases and mortality is confounded by the important variable age (see Figure 5) we need to account for changes in the age structure over the years in our analysis, as suggested in Figure 5:</p>
+<p>We find that changes of the number of citizens did not alter the
+found pattern from above. In the end of 2020 overall mortality increased
+strongly, probably driven by COVID-19. The same holds true for year
+2021, although this data is still preliminary at the time of data
+analysis. However, other potential relevant variables are not included
+into to the analysis. If the relationship between COVID-19 cases and
+mortality is confounded by the important variable age (see Figure 5) we
+need to account for changes in the age structure over the years in our
+analysis, as suggested in Figure 5:</p>
 <p><img src="Covid_19_Germany_files/figure-html/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p><span class="citation">Ragnitz (2022)</span> emphasizes the role of ageing that needs to be accounted for when comparing expected mortality with actual mortality – otherwise ‘excess mortality’ would be overestimated. Contemporary literature discusses the size of COVID-19 associated excess mortality in Germany. <span class="citation">Stang et al. (2020)</span> find an increased mortality for most age groups 60+ during the first wave of COVID-19. <span class="citation">De Nicola, Kauermann, and Höhle (2022)</span> analyse age specific mortality during the year 2020. They distinguish between weekly and yearly mortality and also compare different methods. The authors find overall excess mortality was about 1 percent in 2020, mainly driven by fatalities in higher age groups at the end of the year. Another interesting enterprise is to consider further potential missing variables that might bias estimates of the COVID-19 impact on mortality. Findings of <span class="citation">Wollschläger et al. (2022)</span> indicate excess mortality as well, after adjusting for air temperature, seasonal influenza-activity and socioeconomic deprivation as additional risk factors.</p>
-<p>So far, <a href="https://ourworldindata.org/covid-deaths">international comparisons</a> suggest that some countries were more severely hit by the COVID-19 pandemic than others. The future may tell where this was due to better policies, and which other factors played an important role.</p>
+<p><span class="citation">Ragnitz (2022)</span> emphasizes the role of
+ageing that needs to be accounted for when comparing expected mortality
+with actual mortality – otherwise ‘excess mortality’ would be
+overestimated. Contemporary literature discusses the size of COVID-19
+associated excess mortality in Germany. <span class="citation">Stang et
+al. (2020)</span> find an increased mortality for most age groups 60+
+during the first wave of COVID-19. <span class="citation">De Nicola,
+Kauermann, and Höhle (2022)</span> analyse age specific mortality during
+the year 2020. They distinguish between weekly and yearly mortality and
+also compare different methods. The authors find overall excess
+mortality was about 1 percent in 2020, mainly driven by fatalities in
+higher age groups at the end of the year. Another interesting enterprise
+is to consider further potential missing variables that might bias
+estimates of the COVID-19 impact on mortality. Findings of <span
+class="citation">Wollschläger et al. (2022)</span> indicate excess
+mortality as well, after adjusting for air temperature, seasonal
+influenza-activity and socioeconomic deprivation as additional risk
+factors.</p>
+<p>So far, <a
+href="https://ourworldindata.org/covid-deaths">international
+comparisons</a> suggest that some countries were more severely hit by
+the COVID-19 pandemic than others. The future may tell where this was
+due to better policies, and which other factors played an important
+role.</p>
 <p>Take care and stay healthy! :)</p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="unnumbered">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-p1" class="csl-entry">
-Auguie, Baptiste. 2017. <em>gridExtra: Miscellaneous Functions for "Grid" Graphics</em>. <a href="https://CRAN.R-project.org/package=gridExtra">https://CRAN.R-project.org/package=gridExtra</a>.
+Auguie, Baptiste. 2017. <em>gridExtra: Miscellaneous Functions for
+"Grid" Graphics</em>. <a
+href="https://CRAN.R-project.org/package=gridExtra">https://CRAN.R-project.org/package=gridExtra</a>.
 </div>
 <div id="ref-p3" class="csl-entry">
-Barrett, Malcolm. 2021. <em>Ggdag: Analyze and Create Elegant Directed Acyclic Graphs</em>. <a href="https://CRAN.R-project.org/package=ggdag">https://CRAN.R-project.org/package=ggdag</a>.
+Barrett, Malcolm. 2021. <em>Ggdag: Analyze and Create Elegant Directed
+Acyclic Graphs</em>. <a
+href="https://CRAN.R-project.org/package=ggdag">https://CRAN.R-project.org/package=ggdag</a>.
 </div>
 <div id="ref-de2022assessing" class="csl-entry">
-De Nicola, Giacomo, Göran Kauermann, and Michael Höhle. 2022. <span>“On Assessing Excess Mortality in Germany During the COVID-19 Pandemic.”</span> <em>AStA Wirtschafts-Und Sozialstatistisches Archiv</em>, 1–16.
+De Nicola, Giacomo, Göran Kauermann, and Michael Höhle. 2022. <span>“On
+Assessing Excess Mortality in Germany During the COVID-19
+Pandemic.”</span> <em>AStA Wirtschafts-Und Sozialstatistisches
+Archiv</em>, 1–16.
 </div>
 <div id="ref-p2" class="csl-entry">
-Grolemund, Garrett, and Hadley Wickham. 2011. <span>“Dates and Times Made Easy with <span class="nocase">lubridate</span>.”</span> <em>Journal of Statistical Software</em> 40 (3): 1–25. <a href="https://www.jstatsoft.org/v40/i03/">https://www.jstatsoft.org/v40/i03/</a>.
+Grolemund, Garrett, and Hadley Wickham. 2011. <span>“Dates and Times
+Made Easy with <span class="nocase">lubridate</span>.”</span>
+<em>Journal of Statistical Software</em> 40 (3): 1–25. <a
+href="https://www.jstatsoft.org/v40/i03/">https://www.jstatsoft.org/v40/i03/</a>.
 </div>
 <div id="ref-ragnitz2022ubersterblichkeit" class="csl-entry">
-Ragnitz, Joachim. 2022. <span>“<span>Ü</span>bersterblichkeit w<span>ä</span>hrend Der Corona-Pandemie.”</span> <em>Ifo Dresden Berichtet</em> 29 (01): 29–35.
+Ragnitz, Joachim. 2022. <span>“<span>Ü</span>bersterblichkeit
+w<span>ä</span>hrend Der Corona-Pandemie.”</span> <em>Ifo Dresden
+Berichtet</em> 29 (01): 29–35.
 </div>
 <div id="ref-stang2020excess" class="csl-entry">
-Stang, Andreas, Fabian Standl, Bernd Kowall, Bastian Brune, Juliane Böttcher, Marcus Brinkmann, Ulf Dittmer, and Karl-Heinz Jöckel. 2020. <span>“Excess Mortality Due to COVID-19 in Germany.”</span> <em>Journal of Infection</em> 81 (5): 797–801.
+Stang, Andreas, Fabian Standl, Bernd Kowall, Bastian Brune, Juliane
+Böttcher, Marcus Brinkmann, Ulf Dittmer, and Karl-Heinz Jöckel. 2020.
+<span>“Excess Mortality Due to COVID-19 in Germany.”</span> <em>Journal
+of Infection</em> 81 (5): 797–801.
 </div>
 <div id="ref-wollschlager2022erklarbarkeit" class="csl-entry">
-Wollschläger, Daniel, Irene Schmidtmann, Sebastian Fückel, Maria Blettner, and Emilio Gianicolo. 2022. <span>“Erkl<span>ä</span>rbarkeit Der Altersadjustierten <span>Ü</span>bersterblichkeit Mit Den COVID-19-Attribuierten Sterbef<span>ä</span>llen von Januar 2020 Bis Juli 2021.”</span> <em>Bundesgesundheitsblatt-Gesundheitsforschung-Gesundheitsschutz</em> 65 (3): 378–87.
+Wollschläger, Daniel, Irene Schmidtmann, Sebastian Fückel, Maria
+Blettner, and Emilio Gianicolo. 2022. <span>“Erkl<span>ä</span>rbarkeit
+Der Altersadjustierten <span>Ü</span>bersterblichkeit Mit Den
+COVID-19-Attribuierten Sterbef<span>ä</span>llen von Januar 2020 Bis
+Juli 2021.”</span>
+<em>Bundesgesundheitsblatt-Gesundheitsforschung-Gesundheitsschutz</em>
+65 (3): 378–87.
 </div>
 </div>
 </div>

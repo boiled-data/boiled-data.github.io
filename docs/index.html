@@ -14,7 +14,7 @@
 
 <title>From Data Towards Information</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
@@ -169,11 +169,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -202,8 +206,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -211,16 +215,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -294,8 +291,8 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="feed.xml">
-    <span class="fa fa-rss"></span>
+  <a href="https://github.com/boiled-data">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -308,6 +305,12 @@ $(document).ready(function () {
 <li>
   <a href="mailto:&lt;boiled.data@gmail.com&gt;">
     <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="feed.xml">
+    <span class="fa fa-rss"></span>
      
   </a>
 </li>
@@ -343,15 +346,55 @@ library(tidyverse)
 library(viridis)</code></pre>
 <div id="situation" class="section level2">
 <h2>Situation</h2>
-<p>Most people know Winston Churchill’s famous quote “I only believe in statistics that I doctored myself.” Nowadays, as the amount and availability of information is increasing tremendously, correlates of this statement become more and more apparent. The ability to properly derive useful information from data is both key and obstacle for decision makers such as politicians, businesses and ordinary people. This trend is reinforced as social media competes heavily for our attention with pictures, facts and stories, and our resources for verification are usually very limited. Good news is that it can certainly be possible to come up with more evidence based decisions, especially as data availability (see e.g. <a href="https://datahub.io/">DataHub</a> or <a href="https://datasetsearch.research.google.com/">Dataset Search</a>), software and hardware limitations recently become less of a problem. But how to separate wheat from chaff? One step in the right direction will certainly be proper data literacy and transparency.</p>
+<p>Most people know the famous quote “I only believe in statistics that
+I doctored myself”. Nowadays, as the amount and availability of
+information is increasing tremendously, urgency of this statement
+becomes even more pronounced. The ability to properly derive useful
+information from data is both key and obstacle for business decision
+makers, politicians and ordinary people. This trend is reinforced as
+social media competes heavily for our attention with pictures, facts and
+stories, and our resources for verification are usually very limited.
+Good news is that it is possible to come up with more evidence based
+decisions, especially as data availability (see e.g. <a
+href="https://datahub.io/">DataHub</a> or <a
+href="https://datasetsearch.research.google.com/">Dataset Search</a>),
+software and hardware limitations become less of a problem. But how to
+separate wheat from chaff? One step in the right direction will
+certainly be proper data literacy and transparency.</p>
 </div>
 <div id="help" class="section level2">
 <h2>Help</h2>
-<p>Good readings on how (not) to do statistical analysis are for example provided by <span class="citation">Reinhart (2015)</span> or <span class="citation">Spiegelhalter (2019)</span>, whereas <span class="citation">Kahneman (2011)</span> discusses cognitive challenges in decision making, for example people’s immanent inability to digest probabilistic information. Analytical tools such as statistics software <a href="https://www.r-project.org/">R</a> allow powerful data analysis and, in conjunction with <a href="https://rmarkdown.rstudio.com/">R-Markdown</a> or <a href="https://quarto.org/">Quarto</a>, to present results together with the used code. Platforms like <a href="https://www.r-bloggers.com/">R-Bloggers</a> and <a href="https://rweekly.org/">R Weekly</a> facilitate developments in reproducible data analysis. Such possibilities, in parallel with adequate habits of communication (eg. <span class="citation">Watzlawick (2018)</span>) enable cultivating sound (public) discussion of data driven decision making. Being able to do the work provides you with a range of skills from exploring and <a href="https://www.r-graph-gallery.com/">visualizing data structures</a>, over predicting likely outcomes for new instances (eg. <span class="citation">Kuhn and Johnson (2013)</span>), to assessing causal relationships (eg. <span class="citation">Pearl and Mackenzie (2018)</span>).</p>
+<p>Good readings on how (not) to do statistical analysis are for example
+provided by <span class="citation">Reinhart (2015)</span> or <span
+class="citation">Spiegelhalter (2019)</span>, whereas <span
+class="citation">Kahneman (2011)</span> discusses cognitive challenges
+in decision making, for example people’s immanent inability to digest
+probabilistic information. Analytical tools such as statistics software
+<a href="https://www.r-project.org/">R</a> allow powerful data analysis
+and, in conjunction with <a
+href="https://rmarkdown.rstudio.com/">R-Markdown</a> or <a
+href="https://quarto.org/">Quarto</a>, to present results together with
+the used code. Platforms like <a
+href="https://www.r-bloggers.com/">R-Bloggers</a> and <a
+href="https://rweekly.org/">R Weekly</a> facilitate developments in
+reproducible data analysis. Such possibilities, in parallel with
+adequate habits of communication <span class="citation">(eg. Watzlawick
+2018; Franconeri et al. 2021)</span> can enable cultivating sound
+(public) discussion of data driven decision making. Being able to do the
+work provides you with a range of skills from exploring and <a
+href="https://www.r-graph-gallery.com/">visualizing data structures</a>,
+over predicting likely outcomes for new instances (eg. <span
+class="citation">Kuhn and Johnson (2013)</span>), to assessing causal
+relationships (eg. <span class="citation">Pearl and Mackenzie
+(2018)</span>).</p>
 </div>
 <div id="example" class="section level2">
 <h2>Example</h2>
-<p>As a start, lets see how to transcend data into information with just a few lines of R-code: Data is provided by the <a href="https://worldhappiness.report/ed/2021/">worldhappiness report 2021</a>. The publisher collects and summarizes data on individual “self stated” happiness across a lot of countries. We read the data</p>
+<p>As a start, lets see how to transcend data into information with just
+a few lines of R-code: Data is provided by the <a
+href="https://worldhappiness.report/ed/2021/">worldhappiness report
+2021</a>. The publisher collects and summarizes data on individual “self
+stated” happiness across a lot of countries. We read the data</p>
 <pre class="r fold-show"><code>#data from https://worldhappiness.report/ed/2021/
 data_in &lt;- read_excel(&quot;DataPanelWHR2021C2.xls&quot;)
 
@@ -362,7 +405,14 @@ head(data_in)</code></pre>
 {"columns":[{"label":["Country name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Life Ladder"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Log GDP per capita"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Social support"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Healthy life expectancy at birth"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Freedom to make life choices"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Generosity"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Perceptions of corruption"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Positive affect"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["Negative affect"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"2008","3":"3.723590","4":"7.370100","5":"0.4506623","6":"50.80","7":"0.7181143","8":"0.16763999","9":"0.8816863","10":"0.5176372","11":"0.2581955"},{"1":"Afghanistan","2":"2009","3":"4.401778","4":"7.539972","5":"0.5523084","6":"51.20","7":"0.6788964","8":"0.19009919","9":"0.8500354","10":"0.5839256","11":"0.2370924"},{"1":"Afghanistan","2":"2010","3":"4.758381","4":"7.646709","5":"0.5390752","6":"51.60","7":"0.6001272","8":"0.12058964","9":"0.7067661","10":"0.6182655","11":"0.2753238"},{"1":"Afghanistan","2":"2011","3":"3.831719","4":"7.619532","5":"0.5211036","6":"51.92","7":"0.4959014","8":"0.16242748","9":"0.7311085","10":"0.6113873","11":"0.2671747"},{"1":"Afghanistan","2":"2012","3":"3.782938","4":"7.705479","5":"0.5206367","6":"52.24","7":"0.5309350","8":"0.23603241","9":"0.7756198","10":"0.7103847","11":"0.2679191"},{"1":"Afghanistan","2":"2013","3":"3.572100","4":"7.725029","5":"0.4835519","6":"52.56","7":"0.5779554","8":"0.06114766","9":"0.8232041","10":"0.6205848","11":"0.2733281"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>and manipulate it using the popular <a href="https://www.tidyverse.org/">R-tidyverse</a> framework in order to allow a regional as well as the developmental perspective on perceived happiness across the world. The resulting graph is inspired by <span class="citation">Healy (2018)</span>. We select data from 2010 to 2020 and add the constraint that a country must be observable at least during 5 years. The resulting graph, a map of the world happiness across space and time, is sorted with regard to a country’s average happiness:</p>
+<p>and manipulate it using the popular <a
+href="https://www.tidyverse.org/">R-tidyverse</a> framework in order to
+allow a regional as well as the developmental perspective on perceived
+happiness across the world. The resulting graph is inspired by <span
+class="citation">Healy (2018)</span>. We select data from 2010 to 2020
+and add the constraint that a country must be observable at least during
+5 years. The resulting graph, a map of the world happiness across space
+and time, is sorted with regard to a country’s average happiness:</p>
 <pre class="r"><code>data_in %&gt;%
   filter(year %in% c(2010:2020)) %&gt;% #look at data from 2010 to 2020
   group_by(`Country name`) %&gt;%
@@ -380,8 +430,35 @@ theme_minimal(base_size = 8) +
   labs(title=&quot;Hierarchy and development of happiness&quot;, fill=&quot;Happiness score&quot;,
        y=&quot;Country&quot;, x=&quot;Year&quot;)  </code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Not very unexpectedly, the Nordic countries are at the top of the list, whereas African and Oriental countries are at the bottom. We see that average happiness is a relatively stable phenomenon, overall. Among others, the most happy country, Denmark, also had an decrease in average happiness in 2020. Was this due to the COVID-19 pandemic? Looking at the bottom of the list, we find the second last country Afghanistan, for which, after a relatively good year in 2010, happiness decreased steadily afterwards. Considering changes or extreme values are a potentially fruitful opportunity, when one is interested in addressing welfare of nations, for both good and bad.</p>
-<p>What are the reasons that some countries are better off than others? Whereas dynamic geographical determinism is suggested by <span class="citation">Diamond (1997)</span>, economic theories following Adam Smith emphasize the importance of technological progress, productivity, trade and functioning and inclusive institutions <span class="citation">(Robinson and Acemoglu 2012)</span> as driving forces of long lasting growth and development. According to <span class="citation">Harari (2014)</span> political and religious ideas can have a large impact on the organization and distribution of resources as well. In addition, a rather internal perspective of how complexes such as desire and fear can shape development of mankind is formulated by <span class="citation">Nietzsche (1886)</span>. In contrast, <span class="citation">Seligman (2012)</span> suggests a model of growth based on positive psychology. These vast number of ideas shows that a successful organization of human society is a demanding task. In the era of increased data availability, empirical analysis can help doing better informed decisions, enhancing economic prosperity, allowing people to flourish, and to live a healthier and happy life.</p>
+<p>Not very unexpectedly, the Nordic countries are at the top of the
+list, whereas African and Oriental countries are at the bottom. We see
+that average happiness is a relatively stable phenomenon, overall. Among
+others, the most happy country, Denmark, also had an decrease in average
+happiness in 2020. Was this due to the COVID-19 pandemic? Looking at the
+bottom of the list, we find the second last country Afghanistan, for
+which, after a relatively good year in 2010, happiness decreased
+steadily afterwards. Considering changes or extreme values are a
+potentially fruitful opportunity, when one is interested in addressing
+welfare of nations, for both good and bad.</p>
+<p>What are the reasons that some countries are better off than others?
+Whereas dynamic geographical determinism is suggested by <span
+class="citation">Diamond (1997)</span>, economic theories following Adam
+Smith emphasize the importance of technological progress, productivity,
+trade and functioning and inclusive institutions <span
+class="citation">(Robinson and Acemoglu 2012)</span> as driving forces
+of long lasting growth and development. According to <span
+class="citation">Harari (2014)</span> political and religious ideas can
+have a large impact on the organization and distribution of resources as
+well. In addition, a rather internal perspective of how complexes such
+as desire and fear can shape development of mankind is formulated by
+<span class="citation">Nietzsche (1886)</span>. In contrast, <span
+class="citation">Seligman (2012)</span> suggests a model of growth based
+on positive psychology. These vast number of ideas show that a
+successful organization of both human societies and society are
+demanding tasks. In the era of increased data availability, empirical
+analysis can help doing better informed decisions, enhancing economic
+prosperity, allowing people to flourish, and to live a healthier and
+happy life.</p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="unnumbered">References</h2>
@@ -389,50 +466,77 @@ theme_minimal(base_size = 8) +
 <div id="ref-diamond1999guns" class="csl-entry">
 Diamond, Jared M. 1997. <em>Guns, Germs, and Steel</em>.
 </div>
+<div id="ref-franconeri2021science" class="csl-entry">
+Franconeri, Steven L, Lace M Padilla, Priti Shah, Jeffrey M Zacks, and
+Jessica Hullman. 2021. <span>“The Science of Visual Data Communication:
+What Works.”</span> <em>Psychological Science in the Public
+Interest</em> 22 (3): 110–61.
+</div>
 <div id="ref-p3" class="csl-entry">
-Garnier, Simon, Ross, Noam, Rudis, Robert, Camargo, et al. 2021. <em><span class="nocase">viridis</span> - Colorblind-Friendly Color Maps for r</em>. <a href="https://doi.org/10.5281/zenodo.4679424">https://doi.org/10.5281/zenodo.4679424</a>.
+Garnier, Simon, Ross, Noam, Rudis, Robert, Camargo, et al. 2021.
+<em><span class="nocase">viridis</span> - Colorblind-Friendly Color Maps
+for r</em>. <a
+href="https://doi.org/10.5281/zenodo.4679424">https://doi.org/10.5281/zenodo.4679424</a>.
 </div>
 <div id="ref-harari2014brief" class="csl-entry">
-Harari, Yuval. 2014. <span>“Sapiens: A Brief History of Humankind.”</span> <em>Publish in Agreement with The Deborah Harris Agency and the Grayhawk Agency</em>.
+Harari, Yuval. 2014. <span>“Sapiens: A Brief History of
+Humankind.”</span> <em>Publish in Agreement with The Deborah Harris
+Agency and the Grayhawk Agency</em>.
 </div>
 <div id="ref-healy2018visualizing" class="csl-entry">
-Healy, Kieran. 2018. <span>“Visualizing the Baby Boom.”</span> <em>Socius</em> 4: 2378023118777324.
+Healy, Kieran. 2018. <span>“Visualizing the Baby Boom.”</span>
+<em>Socius</em> 4: 2378023118777324.
 </div>
 <div id="ref-kahneman2011thinking" class="csl-entry">
 Kahneman, Daniel. 2011. <em>Thinking, Fast and Slow</em>. Macmillan.
 </div>
 <div id="ref-kuhn2013applied" class="csl-entry">
-Kuhn, Max, and Kjell Johnson. 2013. <em>Applied Predictive Modeling</em>. Vol. 26. Springer.
+Kuhn, Max, and Kjell Johnson. 2013. <em>Applied Predictive
+Modeling</em>. Vol. 26. Springer.
 </div>
 <div id="ref-nietzsche1886jgb" class="csl-entry">
 Nietzsche, Friedrich. 1886. <em>Beyond Good and Evil</em>.
 </div>
 <div id="ref-pearl2018book" class="csl-entry">
-Pearl, Judea, and Dana Mackenzie. 2018. <em>The Book of Why: The New Science of Cause and Effect</em>. Basic books.
+Pearl, Judea, and Dana Mackenzie. 2018. <em>The Book of Why: The New
+Science of Cause and Effect</em>. Basic books.
 </div>
 <div id="ref-p4" class="csl-entry">
-R Core Team. 2021. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+R Core Team. 2021. <em>R: A Language and Environment for Statistical
+Computing</em>. Vienna, Austria: R Foundation for Statistical Computing.
+<a href="https://www.R-project.org/">https://www.R-project.org/</a>.
 </div>
 <div id="ref-reinhart2015statistics" class="csl-entry">
-Reinhart, Alex. 2015. <em>Statistics Done Wrong: The Woefully Complete Guide</em>. No starch press.
+Reinhart, Alex. 2015. <em>Statistics Done Wrong: The Woefully Complete
+Guide</em>. No starch press.
 </div>
 <div id="ref-robinson2012nations" class="csl-entry">
-Robinson, James A, and Daron Acemoglu. 2012. <em>Why Nations Fail: The Origins of Power, Prosperity and Poverty</em>. Profile London.
+Robinson, James A, and Daron Acemoglu. 2012. <em>Why Nations Fail: The
+Origins of Power, Prosperity and Poverty</em>. Profile London.
 </div>
 <div id="ref-seligman2012flourish" class="csl-entry">
-Seligman, Martin EP. 2012. <em>Flourish: A Visionary New Understanding of Happiness and Well-Being</em>. Simon; Schuster.
+Seligman, Martin EP. 2012. <em>Flourish: A Visionary New Understanding
+of Happiness and Well-Being</em>. Simon; Schuster.
 </div>
 <div id="ref-spiegelhalter2019art" class="csl-entry">
-Spiegelhalter, David. 2019. <em>The Art of Statistics: Learning from Data</em>. Penguin UK.
+Spiegelhalter, David. 2019. <em>The Art of Statistics: Learning from
+Data</em>. Penguin UK.
 </div>
 <div id="ref-watzlawick2018wirklich" class="csl-entry">
-Watzlawick, Paul. 2018. <em>Wie Wirklich Ist Die Wirklichkeit?: Wahn, <span>T</span><span>ä</span>uschung, Verstehen</em>. Piper ebooks.
+Watzlawick, Paul. 2018. <em>Wie Wirklich Ist Die Wirklichkeit?: Wahn,
+<span>T</span><span>ä</span>uschung, Verstehen</em>. Piper ebooks.
 </div>
 <div id="ref-p2" class="csl-entry">
-Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. <span>“Welcome to the <span class="nocase">tidyverse</span>.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy
+D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019.
+<span>“Welcome to the <span class="nocase">tidyverse</span>.”</span>
+<em>Journal of Open Source Software</em> 4 (43): 1686. <a
+href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
 </div>
 <div id="ref-p1" class="csl-entry">
-Wickham, Hadley, and Jennifer Bryan. 2019. <em>Readxl: Read Excel Files</em>. <a href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.
+Wickham, Hadley, and Jennifer Bryan. 2019. <em>Readxl: Read Excel
+Files</em>. <a
+href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.
 </div>
 </div>
 </div>

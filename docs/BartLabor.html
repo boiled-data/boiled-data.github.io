@@ -11,9 +11,9 @@
 
 
 
-<title>Linear regression and her bigger brother BART: Treatment effects in the labor market</title>
+<title>Linear regression and BART: Program Evaluation in the labor market</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
@@ -33,8 +33,6 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -168,11 +166,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -201,8 +203,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -210,16 +212,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -293,8 +288,8 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="feed.xml">
-    <span class="fa fa-rss"></span>
+  <a href="https://github.com/boiled-data">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -307,6 +302,12 @@ $(document).ready(function () {
 <li>
   <a href="mailto:&lt;boiled.data@gmail.com&gt;">
     <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="feed.xml">
+    <span class="fa fa-rss"></span>
      
   </a>
 </li>
@@ -327,14 +328,15 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Linear regression and her bigger brother BART: Treatment effects in the labor market</h1>
+<h1 class="title toc-ignore">Linear regression and BART: Program
+Evaluation in the labor market</h1>
 <h4 class="date">1 Oct 2022</h4>
 
 </div>
 
 
 <pre class="r"><code>#Preliminaries:
-knitr::opts_chunk$set(message=FALSE, warning=FALSE, eval = TRUE) #set eval = TRUE when run first
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, eval = FALSE) #set eval = TRUE when run first
 
 rm(list=ls())
 
@@ -346,17 +348,30 @@ library(tableone)
 library(gridExtra)
 library(grid)
 
-theme_set(theme_light())</code></pre>
+theme_set(theme_light())
+
+dir.create(&quot;BartLabor&quot;, showWarnings = FALSE)</code></pre>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>Evaluation of the effectiveness of labor market programs is of great importance in order to learn how to design good programs and provide support efficiently. Consequently, there is a huge literature on the evaluation of labor market trainings and we add to this by allowing for heterogeneous treatment effects. We will evaluate the effectiveness of a federally-funded labor treatment program <span class="citation">(LaLonde, 1986)</span> which was implemented in the mid-1970s (US) with the objective of providing work experience. The male subsample we use consists of experimental treatment units and non-experimental comparison units <span class="citation">(Dehejia &amp; Wahba, 1999)</span>. Let us assess whether the treatment had an impact on earnings given available pre-treatment variables.</p>
+<p>Evaluation of labor market programs is of great importance in order
+to learn how to better design programs and provide support effectively.
+Consequently, there is a huge literature on the evaluation of labor
+market trainings and we add to this by allowing for heterogeneous
+treatment effects. We will evaluate the effectiveness of a
+federally-funded labor treatment program <span class="citation">(LaLonde
+1986)</span> which was implemented in the mid-1970s (US) with the
+objective of providing work experience. The male subsample we use
+consists of experimental treatment units and non-experimental comparison
+units <span class="citation">(Dehejia and Wahba 1999)</span>. Let us
+assess whether the treatment had an impact on earnings given available
+pre-treatment variables.</p>
 </div>
 <div id="the-data" class="section level2">
 <h2>The Data</h2>
 <pre class="r"><code>#download the data:
 #lalonde &lt;- haven::read_dta(&quot;http://www.nber.org/~rdehejia/data/nsw.dta&quot;) 
-#saveRDS(lalonde, file=&quot;lalonde1986.rds&quot;)
-lalonde_in &lt;- readRDS(&quot;lalonde1986.rds&quot;) 
+#saveRDS(lalonde, file=&quot;BartLabor/lalonde1986.rds&quot;)
+lalonde_in &lt;- readRDS(&quot;BartLabor/lalonde1986.rds&quot;) 
 
 lalonde &lt;- lalonde_in %&gt;%
             mutate(race=as_factor(case_when(black==1 ~ &#39;black&#39;,
@@ -376,183 +391,40 @@ tab1 &lt;- CreateTableOne(vars = allvars, strata=&quot;treat&quot;, data = lalon
 
 kableone(tab1, caption = &quot;Table 1: Descriptive Statistics&quot;, col.names=c(&quot;Treat=0&quot;, &quot;Treat=1&quot;, &quot;p&quot;, &quot;&quot;))  %&gt;%
   remove_column(5) %&gt;%
-  kable_classic(full_width = F)</code></pre>
-<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>
-Table 1: Descriptive Statistics
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:left;">
-Treat=0
-</th>
-<th style="text-align:left;">
-Treat=1
-</th>
-<th style="text-align:left;">
-p
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-n
-</td>
-<td style="text-align:left;">
-425
-</td>
-<td style="text-align:left;">
-297
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-re78 (mean (SD))
-</td>
-<td style="text-align:left;">
-5090.05 (5718.09)
-</td>
-<td style="text-align:left;">
-5976.35 (6923.80)
-</td>
-<td style="text-align:left;">
-0.061
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-age (mean (SD))
-</td>
-<td style="text-align:left;">
-24.45 (6.59)
-</td>
-<td style="text-align:left;">
-24.63 (6.69)
-</td>
-<td style="text-align:left;">
-0.721
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-education (mean (SD))
-</td>
-<td style="text-align:left;">
-10.19 (1.62)
-</td>
-<td style="text-align:left;">
-10.38 (1.82)
-</td>
-<td style="text-align:left;">
-0.136
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-married = 1 (%)
-</td>
-<td style="text-align:left;">
-67 (15.8)
-</td>
-<td style="text-align:left;">
-50 (16.8)
-</td>
-<td style="text-align:left;">
-0.778
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-nodegree = 1 (%)
-</td>
-<td style="text-align:left;">
-346 (81.4)
-</td>
-<td style="text-align:left;">
-217 (73.1)
-</td>
-<td style="text-align:left;">
-0.010
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-re75 (mean (SD))
-</td>
-<td style="text-align:left;">
-3026.68 (5201.25)
-</td>
-<td style="text-align:left;">
-3066.10 (4874.89)
-</td>
-<td style="text-align:left;">
-0.918
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-race (%)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-0.567
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-black
-</td>
-<td style="text-align:left;">
-340 (80.0)
-</td>
-<td style="text-align:left;">
-238 (80.1)
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-hispanic
-</td>
-<td style="text-align:left;">
-48 (11.3)
-</td>
-<td style="text-align:left;">
-28 ( 9.4)
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-other
-</td>
-<td style="text-align:left;">
-37 ( 8.7)
-</td>
-<td style="text-align:left;">
-31 (10.4)
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-</tbody>
-</table>
-<p>Table 1 shows that the mean of our variable of interest, the outcome <em>re78</em> (income in 1978) is higher in our treatment group. Despite the observational character of our data, we see that the sample is relatively homogeneous concerning the pre-treatment variables: only the indicator variable <em>nodegree</em>, on whether a person has a high school diploma, seems to vary between treatment and control group significantly.</p>
+  kable_classic(full_width = F) %&gt;%
+  save_kable(&quot;BartLabor/bart_tab1_out.png&quot;, zoom = 3)</code></pre>
+<center>
+<p><img src="BartLabor/bart_tab1_out.png" style="width:40.0%" /></p>
+</center>
+<p>Table 1 shows that the mean of our variable of interest, the outcome
+<em>re78</em> (income in 1978) is higher in our treatment group. Despite
+the observational character of our data, we see that the sample is
+relatively homogeneous concerning the pre-treatment variables: only the
+indicator variable <em>nodegree</em>, on whether a person has a high
+school diploma, seems to vary between treatment and control group
+significantly.</p>
 </div>
 <div id="strategy-empirical-analysis" class="section level2">
 <h2>Strategy &amp; Empirical Analysis</h2>
-<p>In the potential outcome framework <span class="citation">(Rubin, 2005)</span> the average treatment effect (ATE) can be written as the expectation <span class="math inline">\(E(\delta)=E[y^1-y^0]\)</span>, where <span class="math inline">\(y^1\)</span> and <span class="math inline">\(y^0\)</span> are potential outcomes of income in 1978. Under conditional independence assumption <span class="math inline">\((y^1,y^0)\bot T|X\)</span> these outcomes are independent of treatment <span class="math inline">\(T\)</span> given covariates <span class="math inline">\(X\)</span>.</p>
-<p>We use 2 methods in order to estimate the average treatment effect (ATE). Firstly, we apply the well known linear regression for estimation and risk adjustment <span class="citation">(eg. Angrist &amp; Pischke, 2009; Pearl, 2013)</span>. Secondly, we consider Bayesian Additive Regression Trees <span class="citation">(Chipman et al., 2010; J. L. Hill, 2011)</span>, a machine learning model recently becoming popular as it allows to detect relevant interactions in the data generating process and can be used to estimate heterogeneous treatment effects as well <span class="citation">(Carnegie et al., 2019; J. Hill et al., 2020)</span>.</p>
+<p>In the potential outcome framework <span class="citation">(Rubin
+2005)</span> the average treatment effect (ATE) can be written as the
+expectation <span class="math inline">\(E(\delta)=E[y^1-y^0]\)</span>,
+where <span class="math inline">\(y^1\)</span> and <span
+class="math inline">\(y^0\)</span> are potential outcomes of income in
+1978. Under conditional independence assumption <span
+class="math inline">\((y^1,y^0)\bot T|X\)</span> these outcomes are
+independent of treatment <span class="math inline">\(T\)</span> given
+covariates <span class="math inline">\(X\)</span>.</p>
+<p>We use 2 methods in order to estimate the average treatment effect
+(ATE). Firstly, we apply the well known linear regression for estimation
+and risk adjustment <span class="citation">(eg. Angrist and Pischke
+2009; Pearl 2013)</span>. Secondly, we consider Bayesian Additive
+Regression Trees <span class="citation">(Chipman, George, and McCulloch
+2010; J. L. Hill 2011)</span>, a machine learning model recently
+becoming popular that allows to detect relevant interactions in the data
+generating process and can be used to estimate heterogeneous treatment
+effects as well <span class="citation">(Carnegie, Dorie, and Hill 2019;
+J. Hill, Linero, and Murray 2020)</span>.</p>
 <pre class="r"><code>#Linear regression
 
 lm &lt;- lm(re78 ~ treat + re75 + age + education + race + married + nodegree, data=lalonde)
@@ -585,76 +457,32 @@ rownames(ate) &lt;- NULL
 
 kable(
   ate,
+  format=&quot;html&quot;, 
   digits = 2,
   caption = &quot;Table 2: Treatment effect on income&quot;
 ) %&gt;%
   kable_classic(full_width = F) %&gt;% 
-  footnote(general = &quot;ci: 95 % confidence intervals for linear regression, \n credible intervals for BART &quot;)</code></pre>
-<table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
-<caption>
-Table 2: Treatment effect on income
-</caption>
-<thead>
-<tr>
-<th style="text-align:left;">
-model
-</th>
-<th style="text-align:right;">
-estimate
-</th>
-<th style="text-align:right;">
-ci.lower
-</th>
-<th style="text-align:right;">
-ci.upper
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-LinReg
-</td>
-<td style="text-align:right;">
-806.51
-</td>
-<td style="text-align:right;">
--112.09
-</td>
-<td style="text-align:right;">
-1725.11
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-BART
-</td>
-<td style="text-align:right;">
-803.05
-</td>
-<td style="text-align:right;">
--308.61
-</td>
-<td style="text-align:right;">
-1914.71
-</td>
-</tr>
-</tbody>
-<tfoot>
-<tr>
-<td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Note: </span>
-</td>
-</tr>
-<tr>
-<td style="padding: 0; " colspan="100%">
-<sup></sup> ci: 95 % confidence intervals for linear regression, <br> credible intervals for BART
-</td>
-</tr>
-</tfoot>
-</table>
-<p>We recognize in Table 2 that the treatment effect of BART is very similar to linear regression. The ATE-point estimates are both positive, suggesting that program participation increases average income by about 800 USD. However, both 95% confidence-, credible intervals show that there is a lot of variability in the data – an effect of zero cannot be rejected.</p>
-<p>In addition to one point estimate we often would like to have information on treatment effects for specific subgroups. This could help us to redesign the program or allow for more effective enrollment. Obviously, these questions can be of interest also in other areas – imagine online marketing or personalized medicine for example. Thankfully, BART can also provide treatment effects for each observation in the data, which are called the individual conditional average treatment effects (iCATE): <span class="math inline">\(\tau(X_i)=E[y^1_i-y^0_i|X_i]\)</span>. Let us have a look at the distribution of individual CATE in Figure 1.</p>
+  footnote(general = &quot;ci: 95 % confidence intervals for linear regression, \n credible intervals for BART &quot;) %&gt;%
+  save_kable(&quot;BartLabor/bart_tab2_out.png&quot;, zoom = 3)</code></pre>
+<center>
+<p><img src="BartLabor/bart_tab2_out.png" style="width:32.0%" /></p>
+</center>
+<p>We recognize in Table 2 that the treatment effect of BART is very
+similar to linear regression. The ATE-point estimates are both positive,
+suggesting that program participation increases average income by about
+800 USD. However, both 95% confidence-, credible intervals show that
+there is a lot of variability in the data – an effect of zero cannot be
+rejected.</p>
+<p>In addition to one point estimate we often would like to have
+information on treatment effects for specific subgroups. This could help
+us to redesign the program or allow for more effective enrollment.
+Obviously, these questions can be of interest also in other areas –
+imagine online marketing or personalized medicine for example.
+Thankfully, BART can also provide treatment effects for each observation
+in the data, which are called the individual conditional average
+treatment effects (iCATE): <span
+class="math inline">\(\tau(X_i)=E[y^1_i-y^0_i|X_i]\)</span>. Let us have
+a look at the distribution of individual CATE in Figure 1.</p>
 <pre class="r"><code>#Extract individual treatment effects
 i_cate &lt;- fitted(bc_fit, type=&quot;icate&quot;, sample = c(&quot;all&quot;))
 
@@ -664,12 +492,22 @@ data_cate &lt;- lalonde %&gt;%
   
 
 #Histogram CATE
-data_cate %&gt;%
+bart_p1 &lt;- data_cate %&gt;%
   ggplot(aes(x=i_cate)) +
   geom_histogram(bins=20, color=&#39;black&#39;, fill=&#39;grey&#39;) + 
-  theme_minimal() + labs(y = &#39;Number of people&#39;, x=&#39;individual CATE&#39;, title=&#39;Figure 1: Distribution of iCATE&#39;)</code></pre>
-<p><img src="BartLabor_files/figure-html/chk3-1.png" width="672" /></p>
-<p>Interestingly, although the peak of the distribution is around 800 similar to ATE from above, the treatment effects vary a lot. There are even individuals for which a negative effect can be seen. In order to better understand the data generating process, we want to check next whether the individual treatment effects vary with explanatory variables, that could moderate the treatment effect. Figure 2 visualizes the treatment effects dependent on numeric variables age, income and years of education before treatment.</p>
+  theme_minimal() + labs(y = &#39;Number of people&#39;, x=&#39;individual CATE&#39;, title=&#39;Figure 1: Distribution of iCATE&#39;)
+
+
+ggsave(bart_p1, file=&quot;BartLabor/bart_p1.png&quot;)  # import in markdown</code></pre>
+<p><img src="BartLabor/bart_p1.png" style="width:70.0%" /></p>
+<p>Interestingly, although the peak of the distribution is around 800
+similar to ATE from above, the treatment effects vary a lot. There are
+even individuals for which a negative effect can be seen. In order to
+better understand the data generating process, we want to check next
+whether the individual treatment effects vary with explanatory
+variables, that could moderate the treatment effect. Figure 2 visualizes
+the treatment effects dependent on numeric variables age, income and
+years of education before treatment.</p>
 <pre class="r"><code>#Scatterplots:
 
 #age
@@ -705,9 +543,17 @@ p4 &lt;- data_cate %&gt;%
 
 #combine  plots next to each other
 title1=textGrob(&quot;Figure 2: CATE by numeric variables&quot;, gp=gpar(fontface=&quot;bold&quot;))
-grid.arrange(p2,  p3, p4, ncol=2, top=title1) </code></pre>
-<p><img src="BartLabor_files/figure-html/chk4-1.png" width="672" /></p>
-<p>We see that program effectiveness increased with age until a threshold of 30 years. The program seems to have been most effective for people between 5 and 10K USD whereas the relationship between years of education and iCATE is U-shaped. The scatterplots allow to visually distinguish iCATE by treatment status – a very nice feature as discussed above. Next let us assess the interaction of our treatment with the factor variables.</p>
+bart_p2 &lt;- arrangeGrob(p2,  p3, p4, ncol=2, top=title1) 
+
+ggsave(bart_p2, file=&quot;BartLabor/bart_p2.png&quot;)  # import in markdown</code></pre>
+<p><img src="BartLabor/bart_p2.png" style="width:70.0%" /></p>
+<p>We see that program effectiveness increased with age until a
+threshold of 30 years. The program seems to have been most effective for
+people between 5 and 10K USD whereas the relationship between years of
+education and iCATE is U-shaped. The scatterplots allow to visually
+distinguish iCATE by treatment status – a very nice feature as discussed
+above. Next let us assess the interaction of our treatment with the
+factor variables.</p>
 <pre class="r"><code>#Boxplots:
 #race
 p5 &lt;- data_cate %&gt;%
@@ -729,59 +575,108 @@ p7 &lt;- data_cate %&gt;%
   theme_minimal() 
 
 title2=textGrob(&quot;Figure 2: CATE by factor variables&quot;, gp=gpar(fontface=&quot;bold&quot;))
-grid.arrange(p5,  p6, p7, ncol=2, top=title2) </code></pre>
-<p><img src="BartLabor_files/figure-html/chk5-1.png" width="672" /></p>
-<p>Figure 3 reveals that black colored benefited most from the program whereas being hispanic is associated with negative CATE. Married people benefited highly from program participation as well.</p>
+bart_p3 &lt;- arrangeGrob(p5,  p6, p7, ncol=2, top=title2) 
+
+ggsave(bart_p3, file=&quot;BartLabor/bart_p3.png&quot;)  # import in markdown</code></pre>
+<p><img src="BartLabor/bart_p3.png" style="width:70.0%" /></p>
+<p>Figure 3 reveals that black colored benefited most from the program
+whereas being hispanic is associated with negative CATE. Married people
+benefited highly from program participation as well.</p>
 </div>
 <div id="discussion" class="section level2">
 <h2>Discussion</h2>
-<p>We analysed the impact of a labor market program by using linear regression and BART, a tree based nonparametric Bayesian regression approach which very successfully recovers the underlying data generating process in the presence of interactions. We have found some evidence for effect moderation of the treatment, especially being married and black color are associated with a positive treatment effect. The relation between pre-treatment income and iCATE is nonlinear. Marital status and income were found to generate interaction effects by <span class="citation">Rolling (2014)</span> as well.</p>
-<p>Let us recall the assumption that all relevant control variables are accounted for in the analysis (ignorability). This does not necessary hold true and is also emphasized by the seminal study of <span class="citation">LaLonde (1986)</span>. See for example <span class="citation">VanderWeele &amp; Shpitser (2011)</span> for a discussion of confounder selection. Furthermore, when estimating ATE we mainly focused on modeling the outcome equation of our treatment, hence we implicitly assume no selection into treatment. Luckily, other treatment effects (ATT, ATC) can be generated by re-weighting towards the population of interest <span class="citation">(eg. Morgan &amp; Todd, 2008)</span>, both in case of linear regression and BART.</p>
+<p>We analysed the impact of a labor market program by using linear
+regression and BART, a tree based nonparametric Bayesian regression
+approach which very successfully recovers the underlying data generating
+process in the presence of interactions. We have found some evidence for
+effect moderation of the treatment, especially being married and black
+color are associated with a positive treatment effect. The relation
+between pre-treatment income and iCATE is nonlinear. Marital status and
+income were found to generate interaction effects by <span
+class="citation">Rolling (2014)</span> as well.</p>
+<p>Let us recall the assumption that all relevant control variables are
+accounted for in the analysis (ignorability). This does not necessary
+hold true and is also emphasized by the seminal study of <span
+class="citation">LaLonde (1986)</span>. See for example <span
+class="citation">VanderWeele and Shpitser (2011)</span> for a discussion
+of confounder selection. Furthermore, when estimating ATE we mainly
+focused on modeling the outcome equation of our treatment, hence we
+implicitly assume no selection into treatment. Luckily, other treatment
+effects (ATT, ATC) can be generated by re-weighting towards the
+population of interest <span class="citation">(eg. Morgan and Todd
+2008)</span>, both in case of linear regression and BART.</p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="unnumbered">References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-angrist2009mostly" class="csl-entry">
-Angrist, J. D., &amp; Pischke, J.-S. (2009). <em>Mostly harmless econometrics: An empiricist’s companion</em>. Princeton university press.
+Angrist, Joshua D, and Jörn-Steffen Pischke. 2009. <em>Mostly Harmless
+Econometrics: An Empiricist’s Companion</em>. Princeton university
+press.
 </div>
 <div id="ref-carnegie2019examining" class="csl-entry">
-Carnegie, N., Dorie, V., &amp; Hill, J. L. (2019). Examining treatment effect heterogeneity using BART. <em>Observational Studies</em>, <em>5</em>(2), 52–70.
+Carnegie, Nicole, Vincent Dorie, and Jennifer L Hill. 2019.
+<span>“Examining Treatment Effect Heterogeneity Using BART.”</span>
+<em>Observational Studies</em> 5 (2): 52–70.
 </div>
 <div id="ref-chipman2010bart" class="csl-entry">
-Chipman, H. A., George, E. I., &amp; McCulloch, R. E. (2010). BART: Bayesian additive regression trees. <em>The Annals of Applied Statistics</em>, <em>4</em>(1), 266–298.
+Chipman, Hugh A, Edward I George, and Robert E McCulloch. 2010.
+<span>“BART: Bayesian Additive Regression Trees.”</span> <em>The Annals
+of Applied Statistics</em> 4 (1): 266–98.
 </div>
 <div id="ref-dehejia1999causal" class="csl-entry">
-Dehejia, R. H., &amp; Wahba, S. (1999). Causal effects in nonexperimental studies: Reevaluating the evaluation of training programs. <em>Journal of the American Statistical Association</em>, <em>94</em>(448), 1053–1062.
+Dehejia, Rajeev H, and Sadek Wahba. 1999. <span>“Causal Effects in
+Nonexperimental Studies: Reevaluating the Evaluation of Training
+Programs.”</span> <em>Journal of the American Statistical
+Association</em> 94 (448): 1053–62.
 </div>
 <div id="ref-hill2011bayesian" class="csl-entry">
-Hill, J. L. (2011). Bayesian nonparametric modeling for causal inference. <em>Journal of Computational and Graphical Statistics</em>, <em>20</em>(1), 217–240.
+Hill, Jennifer L. 2011. <span>“Bayesian Nonparametric Modeling for
+Causal Inference.”</span> <em>Journal of Computational and Graphical
+Statistics</em> 20 (1): 217–40.
 </div>
 <div id="ref-hill2020bayesian" class="csl-entry">
-Hill, J., Linero, A., &amp; Murray, J. (2020). Bayesian additive regression trees: A review and look forward. <em>Annual Review of Statistics and Its Application</em>, <em>7</em>(1).
+Hill, Jennifer, Antonio Linero, and Jared Murray. 2020. <span>“Bayesian
+Additive Regression Trees: A Review and Look Forward.”</span> <em>Annual
+Review of Statistics and Its Application</em> 7 (1).
 </div>
 <div id="ref-lalonde1986evaluating" class="csl-entry">
-LaLonde, R. J. (1986). Evaluating the econometric evaluations of training programs with experimental data. <em>The American Economic Review</em>, 604–620.
+LaLonde, Robert J. 1986. <span>“Evaluating the Econometric Evaluations
+of Training Programs with Experimental Data.”</span> <em>The American
+Economic Review</em>, 604–20.
 </div>
 <div id="ref-morgan20086" class="csl-entry">
-Morgan, S. L., &amp; Todd, J. J. (2008). 6. A diagnostic routine for the detection of consequential heterogeneity of causal effects. <em>Sociological Methodology</em>, <em>38</em>(1), 231–282.
+Morgan, Stephen L, and Jennifer J Todd. 2008. <span>“6. A Diagnostic
+Routine for the Detection of Consequential Heterogeneity of Causal
+Effects.”</span> <em>Sociological Methodology</em> 38 (1): 231–82.
 </div>
 <div id="ref-pearl2013linear" class="csl-entry">
-Pearl, J. (2013). Linear models: A useful <span>“microscope”</span> for causal analysis. <em>Journal of Causal Inference</em>, <em>1</em>(1), 155–170.
+Pearl, Judea. 2013. <span>“Linear Models: A Useful
+<span>‘Microscope’</span> for Causal Analysis.”</span> <em>Journal of
+Causal Inference</em> 1 (1): 155–70.
 </div>
 <div id="ref-rolling2014estimation" class="csl-entry">
-Rolling, C. A. (2014). <em>Estimation of conditional average treatment effects</em> [PhD thesis]. University of Minnesota.
+Rolling, Craig Anthony. 2014. <span>“Estimation of Conditional Average
+Treatment Effects.”</span> PhD thesis, University of Minnesota.
 </div>
 <div id="ref-rubin2005causal" class="csl-entry">
-Rubin, D. B. (2005). Causal inference using potential outcomes: Design, modeling, decisions. <em>Journal of the American Statistical Association</em>, <em>100</em>(469), 322–331.
+Rubin, Donald B. 2005. <span>“Causal Inference Using Potential Outcomes:
+Design, Modeling, Decisions.”</span> <em>Journal of the American
+Statistical Association</em> 100 (469): 322–31.
 </div>
 <div id="ref-vanderweele2011new" class="csl-entry">
-VanderWeele, T. J., &amp; Shpitser, I. (2011). A new criterion for confounder selection. <em>Biometrics</em>, <em>67</em>(4), 1406–1413.
+VanderWeele, Tyler J, and Ilya Shpitser. 2011. <span>“A New Criterion
+for Confounder Selection.”</span> <em>Biometrics</em> 67 (4): 1406–13.
 </div>
 <div id="ref-haven" class="csl-entry">
-Wickham, H., Miller, E., &amp; Smith, D. (2022). <em>Haven: Import and export ’SPSS’, ’stata’ and ’SAS’ files</em>. <a href="https://CRAN.R-project.org/package=haven">https://CRAN.R-project.org/package=haven</a>
+Wickham, Hadley, Evan Miller, and Danny Smith. 2022. <em>Haven: Import
+and Export ’SPSS’, ’Stata’ and ’SAS’ Files</em>. <a
+href="https://CRAN.R-project.org/package=haven">https://CRAN.R-project.org/package=haven</a>.
 </div>
 <div id="ref-kableextra" class="csl-entry">
-Zhu, H. (2021). <em>kableExtra: Construct complex table with ’kable’ and pipe syntax</em>. <a href="https://CRAN.R-project.org/package=kableExtra">https://CRAN.R-project.org/package=kableExtra</a>
+Zhu, Hao. 2021. <em>kableExtra: Construct Complex Table with ’Kable’ and
+Pipe Syntax</em>. <a
+href="https://CRAN.R-project.org/package=kableExtra">https://CRAN.R-project.org/package=kableExtra</a>.
 </div>
 </div>
 </div>
