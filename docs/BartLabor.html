@@ -11,7 +11,7 @@
 
 
 
-<title>Linear regression and BART: Program Evaluation in the Labor Market</title>
+<title>Program Evaluation in the Labor Market: Linear Regression and Bayesian Additive Regression Trees</title>
 
 <script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -328,8 +328,8 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Linear regression and BART: Program
-Evaluation in the Labor Market</h1>
+<h1 class="title toc-ignore">Program Evaluation in the Labor Market:
+Linear Regression and Bayesian Additive Regression Trees</h1>
 <h4 class="date">1 Oct 2022</h4>
 
 </div>
@@ -419,12 +419,12 @@ covariates <span class="math inline">\(X\)</span>.</p>
 (ATE). Firstly, we apply the well known linear regression for estimation
 and risk adjustment <span class="citation">(eg. Angrist and Pischke
 2009; Pearl 2013)</span>. Secondly, we consider Bayesian Additive
-Regression Trees <span class="citation">(Chipman, George, and McCulloch
-2010; J. L. Hill 2011)</span>, a machine learning model recently
-becoming popular that allows to detect relevant interactions in the data
-generating process and can be used to estimate heterogeneous treatment
-effects as well <span class="citation">(Carnegie, Dorie, and Hill 2019;
-J. Hill, Linero, and Murray 2020)</span>.</p>
+Regression Trees (BART) <span class="citation">(Chipman, George, and
+McCulloch 2010; J. L. Hill 2011)</span>, a machine learning model
+recently becoming popular that allows to detect relevant interactions in
+the data generating process and can be used to estimate heterogeneous
+treatment effects as well <span class="citation">(Carnegie, Dorie, and
+Hill 2019; J. Hill, Linero, and Murray 2020)</span>.</p>
 <pre class="r"><code>#Linear regression
 
 lm &lt;- lm(re78 ~ treat + re75 + age + education + race + married + nodegree, data=lalonde)
