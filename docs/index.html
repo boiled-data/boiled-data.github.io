@@ -347,40 +347,41 @@ library(viridis)</code></pre>
 <div id="situation" class="section level2">
 <h2>Situation</h2>
 <p>Most people know the famous quote “I only believe in statistics that
-I doctored myself”. Nowadays, as the amount and availability of
-information is increasing tremendously, urgency of this statement
-becomes even more pronounced. The ability to properly derive useful
-information from data is both key and obstacle for business decision
-makers, politicians and ordinary people. This trend is reinforced as
-social media competes heavily for our attention with pictures, facts and
-stories, and our resources for verification are usually very limited.
-Good news is that it is possible to come up with more evidence based
-decisions, especially as data availability (see e.g. <a
-href="https://datahub.io/">DataHub</a> or <a
-href="https://datasetsearch.research.google.com/">Dataset Search</a>),
-software and hardware limitations become less of a problem. But how to
-separate wheat from chaff? One step in the right direction will
-certainly be proper data literacy and transparency.</p>
+I doctored myself”. Nowadays, as the amount and availability of data are
+increasing tremendously, the relevance of this statement becomes more
+and more pronounced. The ability to properly derive useful information
+from data is both key and obstacle for business decision-makers,
+politicians and ordinary people. This trend is reinforced as social
+media strives heavily for our attention <span class="citation">(e.g.
+Zuboff 2019)</span> with pictures, facts, stories, and our resources for
+verification are usually very limited. The good news is that it is
+possible to come up with more evidence-based decisions, especially as
+data availability (see e.g. <a href="https://datahub.io/">DataHub</a> or
+<a href="https://datasetsearch.research.google.com/">Dataset
+Search</a>), software and hardware limitations become less of a problem.
+But how to separate the wheat from the chaff? One step in the right
+direction will certainly be proper data literacy and transparency.</p>
 </div>
 <div id="help" class="section level2">
 <h2>Help</h2>
 <p>Good readings on how (not) to do statistical analysis are for example
 provided by <span class="citation">Reinhart (2015)</span> or <span
-class="citation">Spiegelhalter (2019)</span>, whereas <span
-class="citation">Kahneman (2011)</span> discusses cognitive challenges
-in decision making, for example people’s immanent inability to digest
-probabilistic information. Analytical tools such as statistics software
-<a href="https://www.r-project.org/">R</a> allow powerful data analysis
+class="citation">Spiegelhalter (2019)</span>. The work of <span
+class="citation">Kahneman (2011)</span> and <span
+class="citation">Mousavi and Gigerenzer (2014)</span> revolves around
+rational decision-making and people’s difficulties in probabilistic
+reasoning. Analytical tools such as statistics software <a
+href="https://www.r-project.org/">R</a> allow powerful data analysis
 and, in conjunction with <a
 href="https://rmarkdown.rstudio.com/">R-Markdown</a> or <a
-href="https://quarto.org/">Quarto</a>, to present results together with
-the used code. Platforms like <a
+href="https://quarto.org/">Quarto</a>, present results together with the
+code used. Platforms like <a
 href="https://www.r-bloggers.com/">R-Bloggers</a> and <a
 href="https://rweekly.org/">R Weekly</a> facilitate developments in
 reproducible data analysis. Such possibilities, in parallel with
 adequate habits of communication <span class="citation">(eg. Watzlawick
 2018; Franconeri et al. 2021)</span> can enable cultivating sound
-(public) discussion of data driven decision making. Being able to do the
+(public) discussion of data-driven decision making. Being able to do the
 work provides you with a range of skills from exploring and <a
 href="https://www.r-graph-gallery.com/">visualizing data structures</a>,
 over predicting likely outcomes for new instances (eg. <span
@@ -390,11 +391,11 @@ relationships (eg. <span class="citation">Pearl and Mackenzie
 </div>
 <div id="example" class="section level2">
 <h2>Example</h2>
-<p>As a start, lets see how to transcend data into information with just
-a few lines of R-code: Data is provided by the <a
+<p>As a start, let’s see how to transcend data into information with
+just a few lines of R-code: Data is provided by the <a
 href="https://worldhappiness.report/ed/2021/">worldhappiness report
-2021</a>. The publisher collects and summarizes data on individual “self
-stated” happiness across a lot of countries. We read the data</p>
+2021</a>. The publisher collects and summarizes data on individual
+“self-stated” happiness across a lot of countries. We read the data</p>
 <pre class="r fold-show"><code>#data from https://worldhappiness.report/ed/2021/
 data_in &lt;- read_excel(&quot;DataPanelWHR2021C2.xls&quot;)
 
@@ -407,11 +408,11 @@ head(data_in)</code></pre>
 </div>
 <p>and manipulate it using the popular <a
 href="https://www.tidyverse.org/">R-tidyverse</a> framework in order to
-allow a regional as well as the developmental perspective on perceived
+allow a regional as well as a developmental perspective on perceived
 happiness across the world. The resulting graph is inspired by <span
 class="citation">Healy (2018)</span>. We select data from 2010 to 2020
-and add the constraint that a country must be observable at least during
-5 years. The resulting graph, a map of the world happiness across space
+and add the constraint that a country must be observable for at least 5
+years. The resulting graph, a map of the world’s happiness across space
 and time, is sorted with regard to a country’s average happiness:</p>
 <pre class="r"><code>data_in %&gt;%
   filter(year %in% c(2010:2020)) %&gt;% #look at data from 2010 to 2020
@@ -433,32 +434,32 @@ theme_minimal(base_size = 8) +
 <p>Not very unexpectedly, the Nordic countries are at the top of the
 list, whereas African and Oriental countries are at the bottom. We see
 that average happiness is a relatively stable phenomenon, overall. Among
-others, the most happy country, Denmark, also had an decrease in average
+others, the happiest country, Denmark, also had a decrease in average
 happiness in 2020. Was this due to the COVID-19 pandemic? Looking at the
 bottom of the list, we find the second last country Afghanistan, for
 which, after a relatively good year in 2010, happiness decreased
 steadily afterwards. Considering changes or extreme values are a
 potentially fruitful opportunity, when one is interested in addressing
-welfare of nations, for both good and bad.</p>
+the welfare of nations, for both good and bad.</p>
 <p>What are the reasons that some countries are better off than others?
 Whereas dynamic geographical determinism is suggested by <span
-class="citation">Diamond (1997)</span>, economic theories following Adam
-Smith emphasize the importance of technological progress, productivity,
-trade and functioning and inclusive institutions <span
+class="citation">Diamond (1997)</span>, <a
+href="https://www.econlib.org/econtalk/">economic theories</a> following
+Adam Smith emphasized the importance of technological progress,
+productivity, trade, and functioning and inclusive institutions <span
 class="citation">(Robinson and Acemoglu 2012)</span> as driving forces
-of long lasting growth and development. According to <span
+of long-lasting growth and development. According to <span
 class="citation">Harari (2014)</span> political and religious ideas can
 have a large impact on the organization and distribution of resources as
 well. In addition, a rather internal perspective of how complexes such
-as desire and fear can shape development of mankind is formulated by
+as desire and fear can shape the development of mankind is formulated by
 <span class="citation">Nietzsche (1886)</span>. In contrast, <span
 class="citation">Seligman (2012)</span> suggests a model of growth based
 on positive psychology. These vast number of ideas show that a
-successful organization of both human societies and society are
-demanding tasks. In the era of increased data availability, empirical
-analysis can help doing better informed decisions, enhancing economic
-prosperity, allowing people to flourish, and to live a healthier and
-happy life.</p>
+successful organization of human society is a demanding task. In the era
+of increased data availability, proper empirical analysis can help to do
+better-informed decisions, enhancing economic prosperity, allowing
+people to flourish, and to live a healthier and happy life.</p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="unnumbered">References</h2>
@@ -493,6 +494,11 @@ Kahneman, Daniel. 2011. <em>Thinking, Fast and Slow</em>. Macmillan.
 <div id="ref-kuhn2013applied" class="csl-entry">
 Kuhn, Max, and Kjell Johnson. 2013. <em>Applied Predictive
 Modeling</em>. Vol. 26. Springer.
+</div>
+<div id="ref-mousavi2014risk" class="csl-entry">
+Mousavi, Shabnam, and Gerd Gigerenzer. 2014. <span>“Risk, Uncertainty,
+and Heuristics.”</span> <em>Journal of Business Research</em> 67 (8):
+1671–78.
 </div>
 <div id="ref-nietzsche1886jgb" class="csl-entry">
 Nietzsche, Friedrich. 1886. <em>Beyond Good and Evil</em>.
@@ -537,6 +543,11 @@ href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</
 Wickham, Hadley, and Jennifer Bryan. 2019. <em>Readxl: Read Excel
 Files</em>. <a
 href="https://CRAN.R-project.org/package=readxl">https://CRAN.R-project.org/package=readxl</a>.
+</div>
+<div id="ref-zuboff2019age" class="csl-entry">
+Zuboff, Shoshana. 2019. <em>The Age of Surveillance Capitalism: The
+Fight for a Human Future at the New Frontier of Power: Barack Obama’s
+Books of 2019</em>. Profile books.
 </div>
 </div>
 </div>
