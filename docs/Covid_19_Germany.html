@@ -351,22 +351,23 @@ library(ggdag)
 theme_set(theme_light())</code></pre>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>Since year 2019/2020 mankind has to deal with the communicable
-disease COVID-19. People across many countries and societies as a whole
-are affected from both an epidemiological and economic point of view.
-Data on mortality was regularly published across media, also to justify
-rigorous policy interventions. However, the numbers were rarely well
-explained. Hence, we close this gap by using public data from official
-statistics in order to visualize the mortality in Germany over time,
-also accounting for changes in population size. Following reproducible
-research paradigm, code is embedded within the document.</p>
+<p>Since the year 2019/2020, mankind has had to deal with the
+communicable disease COVID-19. People across many countries and
+societies as a whole are affected from both an epidemiological and
+economic point of view. Data on mortality was regularly published across
+media, also to justify rigorous policy interventions. However, the
+numbers were rarely well explained. Hence, we close this gap by using
+public data from official statistics to visualize the mortality in
+Germany over time, also accounting for changes in population size.
+Following reproducible research paradigm, code is embedded within the
+document.</p>
 </div>
 <div id="absolute-mortality" class="section level2">
 <h2>Absolute Mortality</h2>
-<p>Figure 1 shows a simple relationship of total COVID-19 (C) and
+<p>Figure 1 shows a simple relationship between total COVID-19 (C) and
 mortality (M) cases. If such a simple dependency holds then a comparison
-between then mortality in year 2020 with the preceding years may reveal
-the effect of COVID-19.</p>
+between the mortality in the year 2020 with mortality in preceding years
+may reveal the effect of COVID-19.</p>
 <p><img src="Covid_19_Germany_files/figure-html/unnamed-chunk-1-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Figure 2 shows the mortality of year 2020 (and 2021 up to November),
 in contrast to the mean-, minimum-, and maximum- mortality of the 4
@@ -466,26 +467,25 @@ title1=textGrob(&quot;Figure 2: Weekly mortality in Germany&quot;, gp=gpar(fontf
 grid.arrange(p1,  p2, ncol=2, top=title1)          </code></pre>
 <p><img src="Covid_19_Germany_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>When interpreting this figure we have to acknowledge that in 2018
-there was a very high mortality due to a very severe influenza season in
-the first quarter. We see for 2020 three peaks of relatively high
+there was very high mortality due to a very severe influenza season in
+the first quarter. We see in 2020 three peaks of relatively high
 mortality in week 15, around week 32, and from week 42 onward. The first
 and the last peak was correlated with strong policy interventions
 (“lockdown”). We also see that the cumulative mortality in 2020 was
-relatively high, at the end of the year even maximum mortality of year
-2018 was surpassed. For year 2021 the mortality remains high, with an
-increasing tendency from the middle of the year onward.</p>
-<!--Our findings are in line with @zur2020sonderauswertung, who argued that absolute mortality in 2020 will probably not be higher than that of year 2018. -->
+relatively high, at the end of the year even the maximum mortality of
+year 2018 was surpassed. For year 2021 the mortality remains high, with
+an increasing tendency from the middle of the year onward.</p>
 </div>
 <div id="mortality-per-capita" class="section level2">
 <h2>Mortality per capita</h2>
-<p>However these total number can provide wrong evidence about the
-mortality, if the population changes between the years: If the
-population number (P) increases we would expect that more people die
-(see Figure 3), also in absence of COVID-19.</p>
+<p>However, these total numbers can provide wrong evidence about the
+mortality, if the population changes over the years: If the population
+number (P) increases we would expect that more people die (see Figure
+3), also in absence of COVID-19.</p>
 <p><img src="Covid_19_Germany_files/figure-html/unnamed-chunk-3-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>Hence, we have to account for change in population size. Figure 4
-shows the data from above but uses the population of the beginning of
-each year in order to calculate number of deceased per capita.</p>
+<p>Hence, we have to account for changes in population size. Figure 4
+shows the data from above but uses the population at the beginning of
+each year to calculate the number of deceased per capita.</p>
 <pre class="r"><code>#2 Calculate Mortality per capita (population at the beginning of year): 
 #plot absolute mortality per capita:
 p3 &lt;- pop_death_time_comp %&gt;%
@@ -508,34 +508,34 @@ p4 &lt;- pop_death_time_comp %&gt;%
 title2=textGrob(&quot;Figure 4: Weekly mortality per capita in Germany&quot; , gp=gpar(fontface=&quot;bold&quot;))
 grid.arrange(p3,  p4, ncol=2, top=title2)</code></pre>
 <p><img src="Covid_19_Germany_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>We find that changes of the number of citizens did not alter the
-found pattern from above. In the end of 2020 overall mortality increased
-strongly, probably driven by COVID-19. The same holds true for year
-2021, although this data is still preliminary at the time of data
-analysis. However, other potential relevant variables are not included
-into to the analysis. If the relationship between COVID-19 cases and
-mortality is confounded by the important variable age (see Figure 5) we
-need to account for changes in the age structure over the years in our
-analysis, as suggested in Figure 5:</p>
+<p>We find that changes in the number of citizens did not alter the
+found pattern from above. At the end of 2020 overall mortality increased
+strongly, probably driven by COVID-19. The same holds for the year 2021,
+although this data is still preliminary at the time of data analysis.
+However, other potentially relevant variables are not included in the
+analysis. If the relationship between COVID-19 cases and mortality is
+confounded by the important variable age (see Figure 5) we need to
+account for changes in the age structure over the years in our analysis,
+as suggested in Figure 5:</p>
 <p><img src="Covid_19_Germany_files/figure-html/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p><span class="citation">Ragnitz (2022)</span> emphasizes the role of
 ageing that needs to be accounted for when comparing expected mortality
 with actual mortality – otherwise ‘excess mortality’ would be
-overestimated. Contemporary literature discusses the size of COVID-19
-associated excess mortality in Germany. <span class="citation">Stang et
-al. (2020)</span> find an increased mortality for most age groups 60+
-during the first wave of COVID-19. <span class="citation">De Nicola,
-Kauermann, and Höhle (2022)</span> analyse age specific mortality during
-the year 2020. They distinguish between weekly and yearly mortality and
-also compare different methods. The authors find overall excess
-mortality was about 1 percent in 2020, mainly driven by fatalities in
-higher age groups at the end of the year. Another interesting enterprise
-is to consider further potential missing variables that might bias
-estimates of the COVID-19 impact on mortality. Findings of <span
-class="citation">Wollschläger et al. (2022)</span> indicate excess
-mortality as well, after adjusting for air temperature, seasonal
-influenza-activity and socioeconomic deprivation as additional risk
-factors.</p>
+overestimated. Contemporary literature discusses the size of
+COVID-19-associated excess mortality in Germany. <span
+class="citation">Stang et al. (2020)</span> find increased mortality for
+most age groups 60+ during the first wave of COVID-19. <span
+class="citation">De Nicola, Kauermann, and Höhle (2022)</span> analyze
+age-specific mortality during the year 2020. They distinguish between
+weekly and yearly mortality and also compare different methods. The
+authors find overall excess mortality was about 1 percent in 2020,
+mainly driven by fatalities in higher age groups at the end of the year.
+Another interesting enterprise is to consider further potential missing
+variables that might bias estimates of the COVID-19 impact on mortality.
+The findings of <span class="citation">Wollschläger et al. (2022)</span>
+indicate excess mortality as well, after adjusting for air temperature,
+seasonal influenza activity, and socioeconomic deprivation as additional
+risk factors.</p>
 <p>So far, <a
 href="https://ourworldindata.org/covid-deaths">international
 comparisons</a> suggest that some countries were more severely hit by

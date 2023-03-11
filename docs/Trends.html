@@ -358,26 +358,26 @@ considered a good ingredient to improve the situation). However, from
 2020 onward, exercise decreased strongly due to policies to mitigate the
 COVID-19 pandemic. Hence, a natural question is whether political
 lockdown had a negative influence on the prevalence of back pain. One
-potential mechanism could be higher number of people working from home.
-But how to detect changes in back pain over time? One way to approach
-this is to use <a href="https://trends.google.de/trends">Google
-Trends</a>, as it provides quasi instant access to aggregated queries
+potential mechanism could be a higher number of people working from
+home. But how to detect changes in back pain over time? One way to
+approach this is to use <a href="https://trends.google.de/trends">Google
+Trends</a>, as it provides quasi-instant access to aggregated queries
 from Google users. <span class="citation">Hoerger et al. (2020)</span>,
 <span class="citation">Knipe et al. (2020)</span> and <span
 class="citation">Brodeur et al. (2021)</span> use Google Trends to
-assess the impact of the pandemic on mental health/well being. <span
+assess the impact of the pandemic on mental health/well-being. <span
 class="citation">Szilagyi et al. (2021)</span> compare queries for back
-pain, before and after the pandemic. Seasonality of back pain in Italy
-was analyzed by <span class="citation">Ciaffi et al. (2021)</span>. But
-can health issues really be traced back to the COVID-19 pandemic, and
-how?</p>
+pain, before and after the pandemic. The seasonality of back pain in
+Italy was analyzed by <span class="citation">Ciaffi et al.
+(2021)</span>. But can health issues really be traced back to the
+COVID-19 pandemic, and how?</p>
 </div>
 <div id="data-analysis" class="section level2">
 <h2>Data Analysis</h2>
-<p>Lets figure out the relative amount internet users were looking for
-back pain related keywords from 2016 onward. We focus on queries from
-Germany, and assume that the back pain synonyms ‘Rückenschmerzen’,
-‘Rücken Schmerzen’, ‘Rückenschmerz’, ‘Rücken Schmerz’, reflect overall
+<p>Let us figure out the relative amount of internet queries for back
+pain-related keywords from 2016 onward. We focus on queries from Germany
+and assume that the back pain synonyms ‘Rückenschmerzen’, ‘Rücken
+Schmerzen’, ‘Rückenschmerz’, ‘Rücken Schmerz’, reflect the overall
 interest in this topic, as a proxy for the associated burden of disease
 over time. Data is provided on a monthly level.</p>
 <pre class="r"><code>#trends &lt;- gtrends(keyword = c(&quot;Schmerz Rücken + Rückenschmerz + Schmerzen Rücken + Rückenschmerzen&quot;), time = #&#39;2016-01-01 2022-03-31&#39;, geo=&quot;DE&quot;)
@@ -400,7 +400,7 @@ trends$interest_over_time %&gt;%
 <p>We see in Figure 1 that the relative number of queries is increasing
 steadily over time, ie there is a positive time trend. In order to
 better understand the data structure let us now decompose, trend,
-seasonality and error (using just complete 12 year periods):</p>
+seasonality and error (using just complete 12-year periods):</p>
 <pre class="r"><code>#create time series:
 ts_in &lt;- trends$interest_over_time %&gt;%
   filter(date&gt;= &#39;2016-01-01&#39; &amp; date&lt;= &#39;2020-12-31&#39;) %&gt;%
@@ -415,27 +415,27 @@ autoplot(dcp) +
   labs(title=&quot;Figure 2: Multiple seasonal decomposition of back pain queries&quot;)</code></pre>
 <p><img src="Trends_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>A monthly seasonal pattern can be seen which we should keep in mind
-when analyzing the relation of the pandemic with back pain. Due to the
-time structure of our data also autocorrelation is a potential issue we
-should we aware of.</p>
+when analyzing the relationship between the pandemic with back pain. Due
+to the time structure of our data also autocorrelation is a potential
+issue we should be aware of.</p>
 <pre class="r"><code>ggPacf(back_ts, main=&quot;Figure 3: Partial autocorrelation plot (back pain queries)&quot;)</code></pre>
 <p><img src="Trends_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>A strong partial autocorrelation with monthly lags can be seen which
 should be taken into account as well. Let us put together what we have
 learned so far, in order to assess whether the COVID-19 period is
-statistically associated with Google-queries for back pain: We do so by
+statistically associated with Google queries for back pain: We do so by
 applying <em>segmented regression analysis</em> <span
 class="citation">(e.g. Wagner et al. 2002; Jebb et al. 2015)</span>
 assuming an interrupted linear time trend in our model. The dependent
 variable <span class="math inline">\(hits_t\)</span> reflects the
 relative amount of queries for back pain over months <span
-class="math inline">\(t\)</span>, and is considered in logarithmic form.
+class="math inline">\(t\)</span> and is considered in logarithmic form.
 Explanatory variable <span class="math inline">\(time_t\)</span> is
 added to account for an assumed (partly <em>counterfactual</em>) linear
-time trend. Since lockdown policies began in Germany at 2020-3-16, we
+time trend. Since lockdown policies began in Germany on 2020-3-16, we
 test for a level change at the beginning of treatment by adding a dummy
 variable <span class="math inline">\(P_t\)</span> to the specification.
-As the back pain-trend may change during the lockdown, we add another
+As the back pain trend may change during the lockdown, we add another
 time variable <span
 class="math inline">\(time\:since\:treatment_t\)</span> to the
 specification – capturing time since treatment, zero before. This leads
@@ -805,13 +805,13 @@ time_2
 associated with a higher share of queries for back pain, given a linear
 time trend and month-flags. However, although positive, the level change
 after treatment lacks statistical significance (p&gt;0.05). Instead,
-compared to baseline, we find a steady increase of relative queries from
-the beginning of lockdown onward. From this point queries increased
-around <span
+compared to the baseline, we find a steady increase in relative queries
+from the beginning of the lockdown onward. From this point queries
+increased around <span
 class="math inline">\((e^{\hat{\beta}_3}-1)\cdot100=\)</span><code>0.518</code>
 percent each month – in addition to the assumed counterfactual time
 trend <span class="math inline">\(\beta_1\)</span>. This suggests that
-although people were saved concerning a COVID-19 infection, there seem
+although people were saved concerning a COVID-19 infection, there seems
 to be a negative external effect on other health outcomes in Germany (in
 addition to the psychological and economic burden).</p>
 </div>
@@ -819,23 +819,23 @@ addition to the psychological and economic burden).</p>
 <h2>Conclusion</h2>
 <p>Overall we have found a substantial increase in the relative interest
 in back pain based on online queries using Google Trends. What can be
-done? From a policy perspective it is clear that there need to be enough
-supply of health care provision in order for sufficient treatment,
-mitigate pain and avoidance of chronic disease. Another important aspect
-of back pain-treatment often is a person’s self awareness, to
-successfully figure out what he or she needs and when and what exercise
+done? From a policy perspective, it is clear that there needs to be
+enough supply of health care provision for sufficient treatment,
+mitigation of pain, and avoidance of chronic disease. Another important
+aspect of back pain treatment often is a person’s self-awareness, to
+successfully figure out what he or she needs and when and what exercises
 to do. Here, in addition to professional help, <a
 href="https://letmegooglethat.com/?q=back+pain+help">digital
-services</a> can support to easily access information and provide tools
-in order to relieve pain – given high quality information is
+services</a> can support to access information easily and provide tools
+in order to relieve pain – given high-quality information is
 provided.</p>
-<p>One thing we have to keep in mind, is that Google Trends reflect the
+<p>One thing we have to keep in mind is that Google Trends reflect the
 importance of queries, relative to all queries at a point in time at a
-specific location. It is obvious that the overall internet queries
-increased strongly in 2020. So our results from above suggest that back
-pain queries increased even more strongly.</p>
-<p>Generally, we can imagine that process data from internet companies
-allow to address a lot interesting questions. Indeed, <span
+specific location. It is obvious that overall internet queries increased
+strongly in 2020. So our results from above suggest that back pain
+queries increased even more strongly.</p>
+<p>Generally, we can imagine that process-data from internet companies
+allows to address a lot of interesting questions. Indeed, <span
 class="citation">Stephens-Davidowitz (2018)</span> argues that people’s
 thoughts/motivations are much more honestly reflected in their internet
 searches, as compared to answering survey questions.</p>

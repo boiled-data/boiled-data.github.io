@@ -356,7 +356,7 @@ dir.create(&quot;BartLabor&quot;, showWarnings = FALSE)</code></pre>
 <p>Evaluation of labor market programs is of great importance in order
 to learn how to better design programs and provide support effectively.
 Consequently, there is a huge literature on the evaluation of labor
-market trainings and we add to this by allowing for heterogeneous
+market training and we add to this by allowing for heterogeneous
 treatment effects. We will evaluate the effectiveness of a
 federally-funded labor treatment program <span class="citation">(LaLonde
 1986)</span> which was implemented in the mid-1970s (US) with the
@@ -401,7 +401,7 @@ kableone(tab1, caption = &quot;Table 1: Descriptive Statistics&quot;, col.names=
 the observational character of our data, we see that the sample is
 relatively homogeneous concerning the pre-treatment variables: only the
 indicator variable <em>nodegree</em>, on whether a person has a high
-school diploma, seems to vary between treatment and control group
+school diploma, seems to vary between the treatment and control group
 significantly.</p>
 </div>
 <div id="strategy-empirical-analysis" class="section level2">
@@ -415,16 +415,16 @@ class="math inline">\(y^0\)</span> are potential outcomes of income in
 class="math inline">\((y^1,y^0)\bot T|X\)</span> these outcomes are
 independent of treatment <span class="math inline">\(T\)</span> given
 covariates <span class="math inline">\(X\)</span>.</p>
-<p>We use 2 methods in order to estimate the average treatment effect
-(ATE). Firstly, we apply the well known linear regression for estimation
-and risk adjustment <span class="citation">(eg. Angrist and Pischke
-2009; Pearl 2013)</span>. Secondly, we consider Bayesian Additive
-Regression Trees (BART) <span class="citation">(Chipman, George, and
-McCulloch 2010; J. L. Hill 2011)</span>, a machine learning model
-recently becoming popular that allows to detect relevant interactions in
-the data generating process and can be used to estimate heterogeneous
-treatment effects as well <span class="citation">(Carnegie, Dorie, and
-Hill 2019; J. Hill, Linero, and Murray 2020)</span>.</p>
+<p>We use 2 methods to estimate the average treatment effect (ATE).
+Firstly, we apply the well-known linear regression for estimation and
+risk adjustment <span class="citation">(eg. Angrist and Pischke 2009;
+Pearl 2013)</span>. Secondly, we consider Bayesian Additive Regression
+Trees (BART) <span class="citation">(Chipman, George, and McCulloch
+2010; J. L. Hill 2011)</span>, a machine learning model recently
+becoming popular that allows detecting relevant interactions in the data
+generating process and can be used to estimate heterogeneous treatment
+effects as well <span class="citation">(Carnegie, Dorie, and Hill 2019;
+J. Hill, Linero, and Murray 2020)</span>.</p>
 <pre class="r"><code>#Linear regression
 
 lm &lt;- lm(re78 ~ treat + re75 + age + education + race + married + nodegree, data=lalonde)
@@ -470,10 +470,10 @@ kable(
 <p>We recognize in Table 2 that the treatment effect of BART is very
 similar to linear regression. The ATE-point estimates are both positive,
 suggesting that program participation increases average income by about
-800 USD. However, both 95% confidence-, credible intervals show that
+800 USD. However, both 95% confidence-, and credible intervals show that
 there is a lot of variability in the data – an effect of zero cannot be
 rejected.</p>
-<p>In addition to one point estimate we often would like to have
+<p>In addition to a point estimate, we often would like to have
 information on treatment effects for specific subgroups. This could help
 us to redesign the program or allow for more effective enrollment.
 Obviously, these questions can be of interest also in other areas –
@@ -506,7 +506,7 @@ even individuals for which a negative effect can be seen. In order to
 better understand the data generating process, we want to check next
 whether the individual treatment effects vary with explanatory
 variables, that could moderate the treatment effect. Figure 2 visualizes
-the treatment effects dependent on numeric variables age, income and
+the treatment effects dependent on numeric variables age, income, and
 years of education before treatment.</p>
 <pre class="r"><code>#Scatterplots:
 
@@ -550,9 +550,9 @@ ggsave(bart_p2, file=&quot;BartLabor/bart_p2.png&quot;)  # import in markdown</c
 <p>We see that program effectiveness increased with age until a
 threshold of 30 years. The program seems to have been most effective for
 people between 5 and 10K USD whereas the relationship between years of
-education and iCATE is U-shaped. The scatterplots allow to visually
+education and iCATE is U-shaped. The scatterplots allow you to visually
 distinguish iCATE by treatment status – a very nice feature as discussed
-above. Next let us assess the interaction of our treatment with the
+above. Next, let us assess the interaction of our treatment with the
 factor variables.</p>
 <pre class="r"><code>#Boxplots:
 #race
@@ -580,22 +580,22 @@ bart_p3 &lt;- arrangeGrob(p5,  p6, p7, ncol=2, top=title2)
 ggsave(bart_p3, file=&quot;BartLabor/bart_p3.png&quot;)  # import in markdown</code></pre>
 <p><img src="BartLabor/bart_p3.png" style="width:70.0%" /></p>
 <p>Figure 3 reveals that black colored benefited most from the program
-whereas being hispanic is associated with negative CATE. Married people
+whereas being Hispanic is associated with negative CATE. Married people
 benefited highly from program participation as well.</p>
 </div>
 <div id="discussion" class="section level2">
 <h2>Discussion</h2>
 <p>We analysed the impact of a labor market program by using linear
-regression and BART, a tree based nonparametric Bayesian regression
-approach which very successfully recovers the underlying data generating
+regression and BART, a tree-based nonparametric Bayesian regression
+approach that very successfully recovers the underlying data generating
 process in the presence of interactions. We have found some evidence for
 effect moderation of the treatment, especially being married and black
-color are associated with a positive treatment effect. The relation
+color is associated with a positive treatment effect. The relation
 between pre-treatment income and iCATE is nonlinear. Marital status and
 income were found to generate interaction effects by <span
 class="citation">Rolling (2014)</span> as well.</p>
 <p>Let us recall the assumption that all relevant control variables are
-accounted for in the analysis (ignorability). This does not necessary
+accounted for in the analysis (ignorability). This does not necessarily
 hold true and is also emphasized by the seminal study of <span
 class="citation">LaLonde (1986)</span>. See for example <span
 class="citation">VanderWeele and Shpitser (2011)</span> for a discussion
@@ -604,7 +604,7 @@ focused on modeling the outcome equation of our treatment, hence we
 implicitly assume no selection into treatment. Luckily, other treatment
 effects (ATT, ATC) can be generated by re-weighting towards the
 population of interest <span class="citation">(eg. Morgan and Todd
-2008)</span>, both in case of linear regression and BART.</p>
+2008)</span>, both in the case of linear regression and BART.</p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="unnumbered">References</h2>

@@ -353,17 +353,17 @@ theme_set(theme_light())
 dir.create(&quot;Histories&quot;, showWarnings = FALSE)</code></pre>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p><em>Herodotus</em> (484 – 425 BC), the first known author doing
+<p><em>Herodotus</em> (484 – 425 BC), the first known author to do a
 systematic investigation of historical events, is famous for his
 important work on the Greco-Persian wars: <em>Histories</em>, originally
 meaning ‘critical inquiry’, is therefore foundational to the Western
 historian tradition. The text is so profound that it accompanied the
-well known journalist and author Ryszard Kapuściński on his journeys
+well-known journalist and author Ryszard Kapuściński on his journeys
 across the globe. The book is on my reading list for some time now.</p>
-<p>However, probably due to its old age the book is not very easy to
+<p>However, probably due to its old age, the book is not very easy to
 digest. How can we use data science to have a first impression of the
 book content? Fortunately, text mining tools are available for natural
-language processing that can help us doing the job. Interesting sources
+language processing that can help us do the job. Interesting sources
 concerning text mining in R are eg. <a
 href="https://slcladal.github.io/index.html">LADAL</a> and <a
 href="https://content-analysis-with-r.com/index.html">Automated Content
@@ -377,7 +377,7 @@ href="https://www.tidytextmining.com">tidytext</a>.</p>
 <h2>Word Count</h2>
 <p>One first way to look at the ‘Histories’ is by using the number of
 words. What are the most prevalent words in the book, after excluding
-stop word (ie. irrelevant words)?</p>
+stop words (ie. irrelevant words)?</p>
 <pre class="r"><code>#Download data:
 #gutenberg_metadata
 #gutenberg_works(str_detect(title, &quot;Herodotus&quot;))
@@ -427,12 +427,12 @@ p1_hist_tidy &lt;- hist_tidy %&gt;%
   labs(y = &#39;word&#39;, x=&#39;number occurrences&#39;, title=&#39;Figure 1: Most frequent words in Histories&#39;)
 ggsave(p1_hist_tidy, file=&quot;Histories/p1_hist_tidy.png&quot;)  # import via markdown</code></pre>
 <p><img src="Histories/p1_hist_tidy.png" style="width:70.0%" /></p>
-<p>We see that <em>time</em>, <em>land</em>, <em>son</em> and
+<p>We see that <em>time</em>, <em>land</em>, <em>son</em>, and
 <em>king</em> are on the top of the list followed by the main cultural
-players of the story – the <em>Persians</em> and the Greek, represented
+players of the story – the <em>Persians</em> and the Greeks, represented
 by <em>Hellenes</em> and <em>Athenians</em>.</p>
-<p>A more sophisticated approach of revealing representative document
-words, is to focus on important words that are most distinctive to each
+<p>A more sophisticated approach for revealing representative document
+words is to focus on important words that are most distinctive to each
 of the book’s 9 chapters. We do this by weighting the term frequency
 (tf) with the inverse document frequency (idf).</p>
 <pre class="r"><code>hist_tf_idf &lt;- hist_df %&gt;%
@@ -459,18 +459,18 @@ ggsave(p2_hist_tf_idf, file=&quot;Histories/p2_hist_tf_idf.png&quot;) </code></p
 <p>These most distinctive words per chapter show a strong emphasis on
 geographical and biographical details, as expected in historical
 literature. For example, the second book deals to large extent with
-Egypt, which can easily seen by the top keywords.</p>
+Egypt, which can easily be seen by the top keywords.</p>
 </div>
 <div id="topic-modeling" class="section level2">
 <h2>Topic Modeling</h2>
-<p>How can we access content of the book in a more meaningful way by
+<p>How can we access the content of the book in a more meaningful way by
 using abstract topics? We do so by applying <em>topic modeling</em>, a
 statistical framework for unsupervised classification that discovers
 topics occurring in a collection of documents (here: chapters). We use
 Latent Dirichlet Allocation (LDA), a typical approach for topic
 modeling, in order to automatically find both associations between words
 and the topics, and associations between topics and the book’s nine
-chapters. Although the number of topics are a priori unknown and serve
+chapters. Although the number of topics is a priori unknown and serves
 as an input for the algorithm, there are different approaches to
 automatically determine the optimal number of topics. So let us first
 figure out the relevant topic number at first.</p>
@@ -501,7 +501,7 @@ p3_top_num &lt;- ldatuning.metriken %&gt;%
   labs(y=NULL, x=&#39;number of topics&#39;, title=&quot;Figure 3: Metrics to choose topic number&quot;)
 ggsave(p3_top_num, file=&quot;Histories/p3_top_num.png&quot;) </code></pre>
 <p><img src="Histories/p3_top_num.png" style="width:70.0%" /></p>
-<p>Given criteria above we choose 8 as the number of topics in
+<p>Given the criteria above we choose 8 as the number of topics in
 <em>Histories</em> and use them as the input for our final LDA. The
 result will allow us to extract the most distinctive words for each of
 the generated topics.</p>
@@ -528,7 +528,7 @@ ggsave(p4_topic_word, file=&quot;Histories/p4_topic_word.png&quot;) </code></pre
 <p><img src="Histories/p4_topic_word.png" style="width:70.0%" /></p>
 <p>One approach to understand the 8 topics is to look at their most
 important words. We can see that topic 7 contains words such as ‘son’,
-‘time’, ‘king’ – words that are also most prevalent overall as shown
+‘time’, and ‘king’ – words that are also most prevalent overall as shown
 above. How are the 8 topics distributed over the nine chapters?</p>
 <pre class="r"><code>#Association between Documents &amp; Themen: (gamma)
 doc_topic &lt;- tidy(hist_lda, matrix = &quot;gamma&quot;) %&gt;% 
@@ -544,15 +544,15 @@ p5_doc_topic &lt;- doc_topic %&gt;%
 
 ggsave(p5_doc_topic, file=&quot;Histories/p5_doc_topic.png&quot;) </code></pre>
 <p><img src="Histories/p5_doc_topic.png" style="width:70.0%" /></p>
-<p>A visual inspection suggests all chapters are a mixture of topic 4
+<p>A visual inspection suggests all chapters are a mixture of topics 4
 and 7 + some individual component. Whereas topic 7 captures ideas of
 ancestry, topic 4 also contains words that are associated with religion.
-We also see that the chapters 2-3 and 8-9 seem to have some overlap in
-their content.</p>
+We also see that chapters 2-3 and 8-9 seem to have some overlap in their
+content.</p>
 <p>So far, we have used tools to figure out what the <em>Histories</em>
-are about. According to <span class="citation">Kapuściński (2007)</span>
-the main theme of <em>Histories</em> can be described by the form of
-following 3 rules, which governed antiquity, in comparison with the
+are about. According to <span class="citation">Kapuściński
+(2007)</span>, the main theme of <em>Histories</em> can be described by
+the following 3 rules, which governed antiquity, in comparison with the
 modern world:</p>
 <ol style="list-style-type: decimal">
 <li>The law of vengeance applies.</li>
@@ -560,24 +560,24 @@ modern world:</p>
 <li>No one can escape fate, even not a god.</li>
 </ol>
 <p>From today’s perspective these rules, especially 1 and 3, seem very
-fatalistic, but they governed peoples life with cycles of crime and
+fatalistic, but they governed people’s life with cycles of crime and
 punishment over a long period of time. If you know how to derive such an
 interpretation with text mining methods, please let me know.</p>
 <p>One last aspect worth discussing is the fact that Herodotus had a
 Hellenian background. Was his description of the Persian-Greek conflict
-culturally biased and how can data analytics support detecting this?</p>
+culturally biased and how can data analytics support detect this?</p>
 </div>
 <div id="sentiment-analysis" class="section level2">
 <h2>Sentiment Analysis</h2>
 <p>In order to tackle this question we use a sentiment word lexicon in
-which words are classified as positively or negatively. Are the terms
-‘Persian’, ‘Hellenic’ and ‘Athenian’ to the same extent associated with
+which words are classified as positive or negative. Are the terms
+‘Persian’, ‘Hellenic’, and ‘Athenian’ to the same extent associated with
 positive/negative words in <em>Histories</em>?</p>
-<p>As a first step we generate <em>bi-grams</em> (or word pairs), and
+<p>As a first step, we generate <em>bi-grams</em> (or word pairs) and
 extract neighboring words of the terms <em>Persia</em>, <em>Hellen</em>,
-<em>Athen</em>, reflecting different cultures. Then these neighboring
-words are matched with the sentiment lexicon and the number of
-sentiments are summed up for each of the 3 cultures.</p>
+and <em>Athen</em>, reflecting different cultures. Then these
+neighboring words are matched with the sentiment lexicon and the number
+of sentiments is summed up for each of the 3 cultures.</p>
 <pre class="r"><code>#remove stop words before calculating bi-grams:
 bg_herod &lt;- hist_df %&gt;%
   unnest_tokens(word, text) %&gt;% 
@@ -643,8 +643,8 @@ Histories are culturally biased in favor of the Greek culture.</p>
 <p>We have seen how to use text mining tools together with visualization
 in order to get a first impression of <em>The Histories</em>. In
 addition to analyzing words, we have seen how to generate abstract
-topics from text data. Also sentiment analysis was applied to see
-whether Herodotus’ description was positively biased towards the Greek
+topics from text data. Also, sentiment analysis was applied to see
+whether Herodotus’ description was positively biased toward the Greek
 culture.</p>
 <p>Is the book worth reading after all? After mining <em>Histories</em>
 the book will certainly stay on my reading list.</p>
