@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2023-07-09" />
+
+<title>Tidymodels Machine Learning: Diabetes Classification</title>
+
+<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Start</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="Covid_19_Germany.html">Mortality 20/21: Germany</a>
+</li>
+<li>
+  <a href="Scale.html">Scale</a>
+</li>
+<li>
+  <a href="Trends.html">Trends</a>
+</li>
+<li>
+  <a href="Histories.html">Histories</a>
+</li>
+<li>
+  <a href="BartLabor.html">What if..?</a>
+</li>
+<li>
+  <a href="ClassificationDiabetes.html">Classification</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/boiled-data">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://de.linkedin.com/in/florian-klohn-a3a87562">
+    <span class="fa fa-linkedin"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="mailto:&lt;boiled.data@gmail.com&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="feed.xml">
+    <span class="fa fa-rss"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Tidymodels Machine Learning: Diabetes
+Classification</h1>
+<h4 class="date">9 July 2023</h4>
+
+</div>
+
+
+<pre class="r"><code>#Preliminaries:
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, eval = FALSE) #set eval = TRUE when run first
+
+rm(list=ls())
+
+library(tidyverse)
+library(tidymodels)
+library(themis)
+library(doParallel)
+library(gtsummary) 
+library(gt)
+library(bonsai) 
+library(discrim)
+library(finetune)
+library(patchwork)
+library(vip)
+library(DALEXtra) 
+
+dir.create(&quot;cl_diabetes&quot;, showWarnings = FALSE)
+
+tidymodels_prefer() </code></pre>
+<div id="motivation" class="section level2">
+<h2>Motivation</h2>
+<p>Diabetes is a leading cause of death and disability worldwide,
+affecting people regardless of country, age, and sex. Type 2 diabetes,
+which makes up most of the diabetes cases, is largely preventable and
+sometimes potentially reversible if identified and managed early in the
+disease course. <span class="citation">(Ong et al. 2023)</span> Hence,
+diagnostic routines play an important role in diabetes healthcare
+management. In order to be able to reliably predict the disease we first
+need to learn the association between risk factors and diabetes from
+data, and secondly, we need to provide out-of-sample predictions using
+new patient data. But how can we learn about the association between
+available features (risk factors) and diabetes? We use the
+<a href="https://www.tidymodels.org/" target="_blank"> tidymodels
+framework </a> and apply different machine learning methods to the
+<a href="https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset" target="_blank">
+Kaggle diabetes data set </a>. The data contains 100.000 instances, the
+binary label <em>diabetes</em>, and 8 potential risk factors.</p>
+</div>
+<div id="data-modeling" class="section level2">
+<h2>Data &amp; Modeling</h2>
+<pre class="r"><code>#download data from Kaggle and include into folder cl_diabetes
+#read the data:
+diabetes_df &lt;- read_csv(&#39;cl_diabetes/diabetes_prediction_dataset.csv&#39;) %&gt;%
+  mutate(diabetes = as.factor(diabetes)) %&gt;%
+  mutate(bmi=as.numeric(case_when(bmi!=&#39;N/A&#39; ~ bmi,
+                                  TRUE ~ NA_real_))) %&gt;%
+  mutate_if(is.character, as.factor) 
+
+
+#create summary statistics:
+hd_tab1 &lt;- diabetes_df %&gt;% 
+  tbl_summary(by=diabetes,
+              statistic = list(all_continuous() ~ &quot;{mean} ({sd})&quot;,
+                              all_categorical() ~ &quot;{n} ({p}%)&quot;),
+              digits = all_continuous() ~ 2) %&gt;%
+    add_p(test=list(all_continuous() ~ &quot;t.test&quot;, 
+                    all_categorical() ~ &quot;chisq.test.no.correct&quot;)) %&gt;%
+  add_overall() %&gt;%
+  modify_spanning_header(c(&quot;stat_1&quot;, &quot;stat_2&quot;) ~ &quot;**diabetes**&quot;) %&gt;%
+  modify_caption(&quot;**Table 1. Descriptive Statistics**&quot;) 
+
+#save summary statistics:
+hd_tab1 %&gt;%
+  as_gt() %&gt;%
+  gtsave(&quot;cl_diabetes/diabetes_tab1.png&quot;, expand = 10)</code></pre>
+<center>
+<p><img src="cl_diabetes/diabetes_tab1.png" style="width:50.0%" /></p>
+</center>
+<p>A first look at the dataset shows that all explanatory variables are
+associated with diabetes, as the p-values &lt; 0.001 suggest. As
+expected aging and morbidities hypertension and heart disease are
+positively correlated with diabetes. We also see that our outcome of
+interest - diabetes - is very unbalanced, which we should keep in mind
+when selecting our evaluation metrics. The
+<a href="http://www.feat.engineering/" target="_blank"> feature
+engineering </a>-steps are pretty straightforward. We split the data
+into training and test partitions (75/25), normalize all numeric
+predictors, and create dummy variables for the categorical ones.
+Furthermore, we down-sample the data toward the minority class.</p>
+<pre class="r"><code># Reproducibility 
+set.seed(1005)
+
+# Divide data into training and test: 
+diabetes_split &lt;- diabetes_df %&gt;%
+                initial_split(prop = 0.75, strata=diabetes)
+
+diabetes_train_df &lt;- training(diabetes_split)
+diabetes_test_df  &lt;-  testing(diabetes_split)
+
+# data preparation before training:
+diabetes_recipe &lt;-
+  recipe(diabetes ~ ., data=diabetes_train_df) %&gt;%
+  step_normalize(all_numeric_predictors()) %&gt;%
+  step_dummy(all_nominal_predictors()) %&gt;%
+  step_zv(all_predictors()) %&gt;%
+  step_downsample(diabetes) </code></pre>
+<p>We compare different model types in our analysis because we want to
+select the model which predicts diabetes best. As <span
+class="citation">Domingos (2012)</span> points out, the best model
+depends on the use case and cannot be known in advance. Henceforth, we
+use XGBoost, naive Bayes, a support vector machine, a decision tree
+model, and logistic regression in our workflow. On the one hand, we
+consider logistic regression as our baseline model because it is simple
+and needs no additional hyperparameter tuning. On the other hand, simple
+decision trees have the advantage that they a highly interpretable and
+are therefore part of the human decision-making toolkit <span
+class="citation">(eg. Wang, Luan, and Gigerenzer 2022)</span>.</p>
+<pre class="r"><code># try out different ml-approaches: 
+lr_mod &lt;- logistic_reg() %&gt;%
+  set_engine(&quot;glm&quot;) %&gt;% 
+  set_mode(&quot;classification&quot;)
+
+
+svm_mod &lt;- svm_linear(cost = tune(), margin = tune()) %&gt;% 
+  set_engine(&quot;kernlab&quot;) %&gt;% 
+  set_mode(&quot;classification&quot;)
+
+xgb_mod &lt;- boost_tree(tree_depth = tune(), learn_rate = tune(), loss_reduction = tune(), 
+             min_n = tune(), sample_size = tune(), trees = tune()) %&gt;% #, mtry = tune()
+  set_engine(&quot;xgboost&quot;) %&gt;% 
+  set_mode(&quot;classification&quot;)
+
+nb_mod &lt;- naive_Bayes(smoothness = tune(), Laplace = tune()) %&gt;% 
+  set_engine(&quot;naivebayes&quot;) %&gt;% 
+  set_mode(&quot;classification&quot;)
+
+cit_mod &lt;- decision_tree(tree_depth=tune(), min_n=tune()) %&gt;%
+  set_engine(engine = &quot;partykit&quot;) %&gt;%
+  set_mode(mode = &quot;classification&quot;) </code></pre>
+</div>
+<div id="hyperparameter-tuning" class="section level2">
+<h2>Hyperparameter Tuning</h2>
+<p>To manage the
+<a href="https://www.bradyneal.com/bias-variance-tradeoff-textbooks-update" target="_blank">
+bias-variance tradeoff </a> the model’s hyperparameters are selected by
+combining cross-validation using a space-filling grid search design. We
+consider ROC-AUC as our evaluation metric of interest. The AUC is
+threshold-independent and therefore often a good choice in situations
+when the outcome variable is relatively unbalanced. <span
+class="citation">(See for example Fawcett 2006)</span>. Finally,
+parallelization helps speed up the whole process.</p>
+<pre class="r"><code># prepare cross validation 
+set.seed(1001)
+diabetes_train_folds &lt;- vfold_cv(diabetes_train_df, v=8, strata = diabetes)
+
+# prepare workflow
+wf_set &lt;- workflow_set(
+    preproc = list(mod = diabetes_recipe), 
+    models = list(log_reg=lr_mod, svm_linear = svm_mod, xgboost=xgb_mod, naiveBayes=nb_mod, tree=cit_mod)) 
+
+# prepare grid: 
+grid_ctrl &lt;-
+  control_grid(
+    save_pred = TRUE,
+    parallel_over = &quot;everything&quot;,
+    save_workflow = TRUE , 
+    event_level = &quot;second&quot;
+  )
+
+
+# prepare parallel processing: 
+cores &lt;- parallel::detectCores(logical = TRUE)
+
+
+# Create a cluster object and then register: 
+cl &lt;- makePSOCKcluster(cores) 
+registerDoParallel(cl)
+
+# Start hyperparameter tuning:
+train_results &lt;- wf_set %&gt;%
+  workflow_map(
+    fn = &#39;tune_grid&#39;, 
+    metrics = metric_set(roc_auc), 
+    seed = 1503,
+    resamples = diabetes_train_folds, 
+    grid = 25, 
+    control = grid_ctrl 
+  )
+
+stopCluster(cl)
+
+#plot results of hyperparameter tuning:
+p1_diab &lt;- train_results %&gt;%
+  autoplot() +
+  theme_minimal() +
+  labs(title=&#39;Figure 1: Results Hyperparameter Tuning&#39;)
+
+ggsave(p1_diab, file=&quot;cl_diabetes/p1_diab.png&quot;)</code></pre>
+<center>
+<img src="cl_diabetes/p1_diab.png" style="width:60.0%" />
+</center>
+<p>Figure 1 shows performance metrics for all experiments ranked by AUC.
+We find that XGBoost gives the best results concerning AUC followed by
+the decision tree, naive Bayes, and logistic regression.</p>
+</div>
+<div id="further-optimization" class="section level2">
+<h2>Further Optimization</h2>
+<p>Can we still improve on the current result? Although we considered a
+space-filling grid search design when tuning hyperparameters, there may
+be room for further improvement. Hence, we apply
+<a href="https://www.tmwr.org/iterative-search.html" target="_blank">
+simulated annealing </a>, iteratively trying out little hyperparameter
+changes, starting from the current best model.</p>
+<pre class="r"><code>xgb_results &lt;- train_results %&gt;% 
+            extract_workflow_set_result(&quot;mod_xgboost&quot;) 
+
+xgb_wf &lt;- train_results %&gt;% 
+  extract_workflow(&quot;mod_xgboost&quot;)
+
+
+cl &lt;- makePSOCKcluster(cores) 
+registerDoParallel(cl)
+
+#Increase performance with simulated annealing
+
+set.seed(1005)
+xgb_sa &lt;- xgb_wf %&gt;%
+    tune_sim_anneal(
+    resamples =diabetes_train_folds,
+    metrics = metric_set(roc_auc), 
+    initial = xgb_results,
+    iter = 40, 
+    control = control_sim_anneal(verbose = TRUE, 
+                                 no_improve = 10L, event_level = &quot;second&quot;, cooling_coef = 0.1))
+
+stopCluster(cl)
+
+# save max auc:
+auc_out &lt;- xgb_sa  %&gt;% 
+  collect_metrics() %&gt;% 
+  slice_max(mean) %&gt;%
+  pull(mean)
+
+
+# visualize sim annealing:
+p2_diab &lt;- autoplot(xgb_sa, type = &quot;performance&quot;, metric = &#39;roc_auc&#39;) +
+  geom_hline(yintercept=auc_out, linetype=&quot;dashed&quot;, color = &#39;red&#39;) +
+  labs(title=&#39;Figure 2: Performance Improvement by Simulated Annealing &#39;) +
+  theme_minimal()
+
+ggsave(p2_diab, file=&quot;cl_diabetes/p2_diab.png&quot;)</code></pre>
+<center>
+<img src="cl_diabetes/p2_diab.png" style="width:60.0%" />
+</center>
+<p>The results in Figure 2 show that we only did achieve minimal
+improvements compared to the current best model (AUC of 0.978).</p>
+</div>
+<div id="interpretable-machine-learning" class="section level2">
+<h2>Interpretable Machine Learning</h2>
+<p>One important aspect of ML classifiers is that models with high
+predictive power do not necessarily have good explanatory power <span
+class="citation">(eg. Shmueli 2010)</span>. In order to generate
+actionable insights it may nevertheless be very helpful to understand
+how the classifier comes to a certain conclusion. This is especially
+important in the medical field. Hence,
+<a href="https://christophm.github.io/interpretable-ml-book/" target="_blank">
+interpretable machine learning </a> can be an important driver for
+building trust in data-driven technologies. For example, the variable
+importance plot in Figure 3 shows that the variables HbA1c-level, blood
+glucose, age, and BMI are major factors that contribute to the
+diabetes-model fit.</p>
+<pre class="r"><code># extract model fit after simulated annealing: 
+xgb_fit &lt;- xgb_sa %&gt;% 
+  extract_workflow() %&gt;%
+  finalize_workflow(xgb_sa %&gt;% select_best())  %&gt;%
+  fit(data = diabetes_train_df) %&gt;%
+  extract_fit_parsnip()
+
+# Variable importance plot:
+p3_diab &lt;- xgb_fit %&gt;%
+  vip() +
+  theme_minimal() +
+  labs(title=&quot;Figure 3: Variable Importance&quot;)
+
+ggsave(p3_diab, file=&quot;cl_diabetes/p3_diab.png&quot;)</code></pre>
+<center>
+<img src="cl_diabetes/p3_diab.png" style="width:60.0%" />
+</center>
+<p>A look at partial dependence plots reveals the conditional impact of
+our explanatory variables on the predictions:</p>
+<pre class="r"><code>#prepare training data for pdp:
+xgb_df &lt;- xgb_sa %&gt;% 
+  extract_workflow() %&gt;%
+  finalize_workflow(xgb_sa %&gt;% select_best())  %&gt;%
+  fit(data = diabetes_train_df) %&gt;%
+  extract_recipe() %&gt;%
+  bake(new_data=diabetes_train_df)
+
+explain_xgb &lt;- explain_tidymodels(
+                model=xgb_fit, 
+                data = (xgb_df %&gt;% dplyr::select(-diabetes)), #data without target column
+                y = xgb_df$diabetes,
+                label = &quot;xgboost&quot;,
+                verbose = FALSE
+              )
+
+# create model profile:
+pdp_diab  &lt;- model_profile(explain_xgb, N=1000, variables = &quot;HbA1c_level&quot;, groups=&#39;hypertension&#39;) 
+
+#Create ggplot manually for HbA1c, grouped by hypertension:
+p4_diab &lt;- pdp_diab$agr_profiles %&gt;% 
+  as_tibble() %&gt;%
+  mutate(RiskFactor=paste0(&#39;hypertension=&#39;, ifelse(stringr::str_sub(`_label_`, 9, 9)==&#39;-&#39;, &#39;0&#39;, &#39;1&#39;))) %&gt;%
+  ggplot(aes(x=`_x_`, y=`_yhat_`, color=RiskFactor)) +
+  geom_line(linewidth=2) +
+  labs(y=&#39;Diabetes Risk Score&#39;, x=&#39;HbA1c_level&#39;, title=&#39;Figure 4: Partial Dependence Plot&#39;) +
+  theme_minimal() 
+
+ggsave(p4_diab, file=&quot;cl_diabetes/p4_diab.png&quot;)</code></pre>
+<center>
+<img src="cl_diabetes/p4_diab.png" style="width:60.0%" />
+</center>
+<p>For example, in Figure 4 we see that the conditional association
+between HbA1c level and diabetes is positive, and even more pronounced
+for people with hypertension, which makes sense as hypertension is
+another known risk factor for diabetes. At this point, we should also
+remember that our predictions cannot be interpreted as probabilities
+<span class="citation">(Van Calster et al. 2019)</span>. If we would
+like the predicted values to equal expected probabilities we would need
+to
+<a href="https://www.unofficialgoogledatascience.com/2021/04/why-model-calibration-matters-and-how.html" target="_blank">
+recalibrate </a> the risk scores or use another modeling strategy.</p>
+</div>
+<div id="testing" class="section level2">
+<h2>Testing</h2>
+<p>Now, as we have developed a final model, we will test whether our
+predictions do also perform well on new unseen data. Hence we will test
+the model performance on our hold-out data partition. As usual, the
+confusion matrix is based on a risk-score cutoff of 0.5. The AUC of 0.98
+on the test data confirms that the model generalizes well on unseen
+data.</p>
+<pre class="r"><code># Fit new best model once on test data at the final end of the process: 
+test_results &lt;- xgb_sa %&gt;%
+  extract_workflow() %&gt;%
+  finalize_workflow(xgb_sa %&gt;% select_best()) %&gt;% 
+  last_fit(split = diabetes_split)
+
+# create predictions:
+test_p &lt;- collect_predictions(test_results)
+
+# confusion matrix:
+conf_mat &lt;- conf_mat(test_p, diabetes, .pred_class) 
+
+p5a_diab &lt;- conf_mat %&gt;%
+  autoplot(type = &quot;heatmap&quot;) +
+  theme(legend.position = &quot;none&quot;) +
+  labs(title=&#39;Confusion Matrix&#39;)
+
+#AUC overall
+auc &lt;- test_p %&gt;%
+  roc_auc(diabetes, .pred_1, event_level = &quot;second&quot;) %&gt;%
+  mutate(.estimate=round(.estimate, 3)) %&gt;%
+  pull(.estimate)
+
+#ROC-curve
+roc_curve &lt;- roc_curve(test_p, diabetes, .pred_1, event_level = &quot;second&quot;) 
+
+p5b_diab &lt;- roc_curve %&gt;%
+  autoplot() +
+  annotate(&#39;text&#39;, x = 0.3, y = 0.75, label = auc) +
+  theme_minimal() +
+  labs(title=&#39;ROC-AUC&#39;)
+  
+#combine both plots:
+p5_diab &lt;- p5a_diab + p5b_diab + plot_annotation(&#39;Figure 5: Evaluation on Test Data&#39;)
+
+ggsave(p5_diab, file=&quot;cl_diabetes/p5_diab.png&quot;)</code></pre>
+<center>
+<img src="cl_diabetes/p5_diab.png" style="width:60.0%" />
+</center>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>We did a comparative analysis of different machine learning
+classifiers to predict diabetes with some medical risk factors using the
+tidymodels framework. Then we showed how to further improve the best
+model (in our case XGBoost) using iterative grid search before
+validating the model on test data. In addition, we applied visualization
+methods to better understand how the predictions are generated. Overall,
+we see that machine learning methods can fruitfully support medical
+decision-making, if the model is well developed, validated, and
+<a href="https://vetiver.rstudio.com/" target="_blank"> integrated
+carefully </a> into the application of interest.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-domingos2012few" class="csl-entry">
+Domingos, Pedro. 2012. <span>“A Few Useful Things to Know about Machine
+Learning.”</span> <em>Communications of the ACM</em> 55 (10): 78–87.
+</div>
+<div id="ref-fawcett2006introduction" class="csl-entry">
+Fawcett, Tom. 2006. <span>“An Introduction to ROC Analysis.”</span>
+<em>Pattern Recognition Letters</em> 27 (8): 861–74.
+</div>
+<div id="ref-kuhn2022tidy" class="csl-entry">
+Kuhn, Max, and Julia Silge. 2022. <em>Tidy Modeling with r</em>. "
+O’Reilly Media, Inc.".
+</div>
+<div id="ref-tidymodels" class="csl-entry">
+Kuhn, Max, and Hadley Wickham. 2020. <em>Tidymodels: A Collection of
+Packages for Modeling and Machine Learning Using Tidyverse
+Principles.</em> <a
+href="https://www.tidymodels.org">https://www.tidymodels.org</a>.
+</div>
+<div id="ref-dalex" class="csl-entry">
+Maksymiuk, Szymon, Alicja Gosiewska, and Przemyslaw Biecek. 2020.
+<span>“Landscape of r Packages for eXplainable Artificial
+Intelligence.”</span> <em>arXiv</em>. <a
+href="https://arxiv.org/abs/2009.13248">https://arxiv.org/abs/2009.13248</a>.
+</div>
+<div id="ref-ong2023global" class="csl-entry">
+Ong, Kanyin Liane, Lauryn K Stafford, Susan A McLaughlin, Edward J
+Boyko, Stein Emil Vollset, Amanda E Smith, Bronte E Dalton, et al. 2023.
+<span>“Global, Regional, and National Burden of Diabetes from 1990 to
+2021, with Projections of Prevalence to 2050: A Systematic Analysis for
+the Global Burden of Disease Study 2021.”</span> <em>The Lancet</em>.
+</div>
+<div id="ref-shmueli2010explain" class="csl-entry">
+Shmueli, Galit. 2010. <span>“To Explain or to Predict?”</span>
+<em>Statistical Science</em> 25 (3): 289–310.
+</div>
+<div id="ref-van2019calibration" class="csl-entry">
+Van Calster, Ben, David J McLernon, Maarten Van Smeden, Laure Wynants,
+and Ewout W Steyerberg. 2019. <span>“Calibration: The Achilles Heel of
+Predictive Analytics.”</span> <em>BMC Medicine</em> 17 (1): 1–7.
+</div>
+<div id="ref-wang2022modeling" class="csl-entry">
+Wang, Yuhui, Shenghua Luan, and Gerd Gigerenzer. 2022. <span>“Modeling
+Fast-and-Frugal Heuristics.”</span> <em>PsyCh Journal</em> 11 (4):
+600–611.
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

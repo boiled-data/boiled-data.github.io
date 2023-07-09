@@ -13,7 +13,7 @@
 
 <title>Trends in Back Pain</title>
 
-<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/readable.min.css" rel="stylesheet" />
@@ -33,8 +33,8 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -285,6 +285,9 @@ $(document).ready(function () {
 <li>
   <a href="BartLabor.html">What if..?</a>
 </li>
+<li>
+  <a href="ClassificationDiabetes.html">Classification</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -451,7 +454,7 @@ pain, as discussed above. The autocorrelated residuals are accounted for
 by using Newey-West standard errors.</p>
 <pre class="r"><code>data_impact &lt;- trends$interest_over_time %&gt;%
   arrange(date) %&gt;%
-  mutate(time=row_number()-1, month=as.factor(month(date)), hits_l1=lag(hits),     
+  mutate(time=row_number()-1, month=as.factor(month(date)), hits_l1=dplyr::lag(hits),     
          policy=if_else(date&gt;=as.Date(&#39;2020-03-16&#39;), 1, 0),
          min_time_2=min(if_else(policy==1, row_number(), NA_integer_), na.rm=TRUE)-1
          , time_2=ifelse(policy==1, row_number()-min_time_2, 0))
