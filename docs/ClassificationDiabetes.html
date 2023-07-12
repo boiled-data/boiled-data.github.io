@@ -376,11 +376,13 @@ available features (risk factors) and diabetes? We use the
 <a href="https://www.tidymodels.org/" target="_blank"> tidymodels
 framework </a> and apply different machine learning methods to the
 <a href="https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset" target="_blank">
-Kaggle diabetes data set </a>. The data contains 100.000 instances, the
-binary label <em>diabetes</em>, and 8 potential risk factors.</p>
+Kaggle diabetes data set. </a></p>
 </div>
-<div id="data-modeling" class="section level2">
-<h2>Data &amp; Modeling</h2>
+<div id="data-modeling-strategy" class="section level2">
+<h2>Data &amp; Modeling Strategy</h2>
+<p>The data contains 100.000 instances, the binary label
+<em>diabetes</em>, and 8 potential risk factors. We split the data into
+training and test partitions (75/25) before further analysis.</p>
 <pre class="r"><code>#download data from Kaggle and include into folder cl_diabetes
 #read the data:
 diabetes_df &lt;- read_csv(&#39;cl_diabetes/diabetes_prediction_dataset.csv&#39;) %&gt;%
@@ -390,8 +392,19 @@ diabetes_df &lt;- read_csv(&#39;cl_diabetes/diabetes_prediction_dataset.csv&#39;
   mutate_if(is.character, as.factor) 
 
 
+# Reproducibility 
+set.seed(1005)
+
+# Divide data into training and test: 
+diabetes_split &lt;- diabetes_df %&gt;%
+                initial_split(prop = 0.75, strata=diabetes)
+
+diabetes_train_df &lt;- training(diabetes_split)
+diabetes_test_df  &lt;-  testing(diabetes_split)
+
+
 #create summary statistics:
-hd_tab1 &lt;- diabetes_df %&gt;% 
+hd_tab1 &lt;- diabetes_train_df %&gt;% 
   tbl_summary(by=diabetes,
               statistic = list(all_continuous() ~ &quot;{mean} ({sd})&quot;,
                               all_categorical() ~ &quot;{n} ({p}%)&quot;),
@@ -400,7 +413,7 @@ hd_tab1 &lt;- diabetes_df %&gt;%
                     all_categorical() ~ &quot;chisq.test.no.correct&quot;)) %&gt;%
   add_overall() %&gt;%
   modify_spanning_header(c(&quot;stat_1&quot;, &quot;stat_2&quot;) ~ &quot;**diabetes**&quot;) %&gt;%
-  modify_caption(&quot;**Table 1. Descriptive Statistics**&quot;) 
+  modify_caption(&quot;**Table 1: Descriptive Statistics Training Data**&quot;) 
 
 #save summary statistics:
 hd_tab1 %&gt;%
@@ -414,23 +427,13 @@ associated with diabetes, as the p-values &lt; 0.001 suggest. As
 expected aging and morbidities hypertension and heart disease are
 positively correlated with diabetes. We also see that our outcome of
 interest - diabetes - is very unbalanced, which we should keep in mind
-when selecting our evaluation metrics. The
+when selecting our evaluation metric. The
 <a href="http://www.feat.engineering/" target="_blank"> feature
-engineering </a>-steps are pretty straightforward. We split the data
-into training and test partitions (75/25), normalize all numeric
-predictors, and create dummy variables for the categorical ones.
-Furthermore, we down-sample the data toward the minority class.</p>
-<pre class="r"><code># Reproducibility 
-set.seed(1005)
-
-# Divide data into training and test: 
-diabetes_split &lt;- diabetes_df %&gt;%
-                initial_split(prop = 0.75, strata=diabetes)
-
-diabetes_train_df &lt;- training(diabetes_split)
-diabetes_test_df  &lt;-  testing(diabetes_split)
-
-# data preparation before training:
+engineering </a>-steps are pretty straightforward. After having created
+the training and test partitions we normalize all numeric predictors and
+create dummy variables for the categorical ones. Furthermore, we
+down-sample the data toward the minority class.</p>
+<pre class="r"><code># data preparation before training:
 diabetes_recipe &lt;-
   recipe(diabetes ~ ., data=diabetes_train_df) %&gt;%
   step_normalize(all_numeric_predictors()) %&gt;%
@@ -453,13 +456,12 @@ lr_mod &lt;- logistic_reg() %&gt;%
   set_engine(&quot;glm&quot;) %&gt;% 
   set_mode(&quot;classification&quot;)
 
-
 svm_mod &lt;- svm_linear(cost = tune(), margin = tune()) %&gt;% 
   set_engine(&quot;kernlab&quot;) %&gt;% 
   set_mode(&quot;classification&quot;)
 
 xgb_mod &lt;- boost_tree(tree_depth = tune(), learn_rate = tune(), loss_reduction = tune(), 
-             min_n = tune(), sample_size = tune(), trees = tune()) %&gt;% #, mtry = tune()
+             min_n = tune(), sample_size = tune(), trees = tune()) %&gt;% 
   set_engine(&quot;xgboost&quot;) %&gt;% 
   set_mode(&quot;classification&quot;)
 
@@ -542,7 +544,7 @@ the decision tree, naive Bayes, and logistic regression.</p>
 space-filling grid search design when tuning hyperparameters, there may
 be room for further improvement. Hence, we apply
 <a href="https://www.tmwr.org/iterative-search.html" target="_blank">
-simulated annealing </a>, iteratively trying out little hyperparameter
+simulated annealing, </a> iteratively trying out little hyperparameter
 changes, starting from the current best model.</p>
 <pre class="r"><code>xgb_results &lt;- train_results %&gt;% 
             extract_workflow_set_result(&quot;mod_xgboost&quot;) 

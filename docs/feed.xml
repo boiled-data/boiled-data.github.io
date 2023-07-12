@@ -43,6 +43,13 @@
      <pubDate> 1 Oct 2022 00:00:00 GMT</pubDate>
    </item>
    
+   <item>
+     <title>Tidymodels Machine Learning: Diabetes Classification</title>
+     <link>https://boiled-data.github.io/ClassificationDiabetes.html</link>
+     <guid>https://boiled-data.github.io/ClassificationDiabetes.html</guid>
+     <pubDate> 13 Jul 2023 00:00:00 GMT</pubDate>
+   </item>
+   
 </channel>
 
 </rss>
