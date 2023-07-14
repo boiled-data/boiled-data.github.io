@@ -1,4 +1,4 @@
-<?xml-stylesheet type="text/xsl" href="/sheet.xsl"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Boiled Data</title><description>From data to information</description><link>https://boiled-data.github.io</link><atom:link href="https://boiled-data.github.io/feed.xml" rel="self" type="application/rss+xml"/><item><title>COVID-19: Mortality in Germany, 2020/21</title><link>https://boiled-data.github.io/Covid_19_Germany.html</link><guid>https://boiled-data.github.io/Covid_19_Germany.html</guid><pubDate> 11 Dec 2021 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.7383820998278825" morss_score="14.922837762012497"&gt;
+<?xml-stylesheet type="text/xsl" href="/sheet.xsl"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Boiled Data</title><description>From data to information</description><link>https://boiled-data.github.io</link><atom:link href="https://boiled-data.github.io/feed.xml" rel="self" type="application/rss+xml"/><item><title>COVID-19: Mortality in Germany, 2020/21</title><link>https://boiled-data.github.io/Covid_19_Germany.html</link><guid>https://boiled-data.github.io/Covid_19_Germany.html</guid><pubDate> 11 Dec 2021 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.712820512820512" morss_score="14.897167744536166"&gt;
 
 
 
@@ -11,7 +11,8 @@
 
 
 
-&lt;h1&gt;Germany: Mortality in Times of COVID-19&lt;/h1&gt;
+&lt;h1&gt;Germany: Mortality in Times of
+COVID-19&lt;/h1&gt;
 &lt;h4&gt;15 May 2022 (first version 25 Nov 2020)&lt;/h4&gt;
 
 &lt;pre&gt;&lt;code&gt;#Preliminaries:
@@ -30,19 +31,33 @@ library(ggdag)
 theme_set(theme_light())&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;Since year 2019/2020 mankind has to deal with the communicable disease COVID-19. People across many countries and societies as a whole are affected from both an epidemiological and economic point of view. Data on mortality was regularly published across media, also to justify rigorous policy interventions. However, the numbers were rarely well explained. Hence, we close this gap by using public data from official statistics in order to visualize the mortality in Germany over time, also accounting for changes in population size. Following reproducible research paradigm, code is embedded within the document.&lt;/p&gt;
+&lt;p&gt;Since the year 2019/2020, mankind has had to deal with the
+communicable disease COVID-19. People across many countries and
+societies as a whole are affected from both an epidemiological and
+economic point of view. Data on mortality was regularly published across
+media, also to justify rigorous policy interventions. However, the
+numbers were rarely well explained. Hence, we close this gap by using
+public data from official statistics to visualize the mortality in
+Germany over time, also accounting for changes in population size.
+Following reproducible research paradigm, code is embedded within the
+document.&lt;/p&gt;
 
 &lt;div id="absolute-mortality" class="section level2" morss_own_score="3.0" morss_score="22.5"&gt;
 &lt;h2&gt;Absolute Mortality&lt;/h2&gt;
-&lt;p&gt;Figure 1 shows a simple relationship of total COVID-19 (C) and mortality (M) cases. If such a simple dependency holds then a comparison between then mortality in year 2020 with the preceding years may reveal the effect of COVID-19.&lt;/p&gt;
+&lt;p&gt;Figure 1 shows a simple relationship between total COVID-19 (C) and
+mortality (M) cases. If such a simple dependency holds then a comparison
+between the mortality in the year 2020 with mortality in preceding years
+may reveal the effect of COVID-19.&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://boiled-data.github.io/Covid_19_Germany_files/figure-html/unnamed-chunk-1-1.png"&gt;&lt;/p&gt;
-&lt;p&gt;Figure 2 shows the mortality of year 2020 (and 2021 up to November), in contrast to the mean-, minimum-, and maximum- mortality of the 4 preceding years.&lt;/p&gt;
+&lt;p&gt;Figure 2 shows the mortality of year 2020 (and 2021 up to November),
+in contrast to the mean-, minimum-, and maximum- mortality of the 4
+preceding years.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;#read data
 #source: https://www-genesis.destatis.de/
-pop &amp;lt;- read_csv2("PopulationGermany.csv")
+pop &amp;lt;- read_csv2("filesMortality/PopulationGermany.csv")
 
 #source: https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Sterbefaelle-Lebenserwartung/Tabellen/sonderauswertung-sterbefaelle.html?nn=209016
-deaths &amp;lt;- read_csv2("sonderauswertung_sterbefaelle_Tage_26Nov2021.csv")
+deaths &amp;lt;- read_csv2("filesMortality/sonderauswertung_sterbefaelle_Tage_26Nov2021.csv")
 
 pop_year &amp;lt;- pop %&amp;gt;%
   #gather(`31.12.2015`, `31.12.2016`,`31.12.2017`,`31.12.2018`,`31.12.2019`,
@@ -131,13 +146,26 @@ p2 &amp;lt;- pop_death_time_comp %&amp;gt;%
 title1=textGrob("Figure 2: Weekly mortality in Germany", gp=gpar(fontface="bold"))
 grid.arrange(p1,  p2, ncol=2, top=title1)          &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src="https://boiled-data.github.io/Covid_19_Germany_files/figure-html/unnamed-chunk-2-1.png"&gt;&lt;/p&gt;
-&lt;p&gt;When interpreting this figure we have to acknowledge that in 2018 there was a very high mortality due to a very severe influenza season in the first quarter. We see for 2020 three peaks of relatively high mortality in week 15, around week 32, and from week 42 onward. The first and the last peak was correlated with strong policy interventions (“lockdown”). We also see that the cumulative mortality in 2020 was relatively high, at the end of the year even maximum mortality of year 2018 was surpassed. For year 2021 the mortality remains high, with an increasing tendency from the middle of the year onward.&lt;/p&gt;
+&lt;p&gt;When interpreting this figure we have to acknowledge that in 2018
+there was very high mortality due to a very severe influenza season in
+the first quarter. We see in 2020 three peaks of relatively high
+mortality in week 15, around week 32, and from week 42 onward. The first
+and the last peak was correlated with strong policy interventions
+(“lockdown”). We also see that the cumulative mortality in 2020 was
+relatively high, at the end of the year even the maximum mortality of
+year 2018 was surpassed. For year 2021 the mortality remains high, with
+an increasing tendency from the middle of the year onward.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id="mortality-per-capita" class="section level2" morss_own_score="2.9430740037950667" morss_score="33.02202137221612"&gt;
+&lt;div id="mortality-per-capita" class="section level2" morss_own_score="2.9428571428571426" morss_score="33.0218045112782"&gt;
 &lt;h2&gt;Mortality per capita&lt;/h2&gt;
-&lt;p&gt;However these total number can provide wrong evidence about the mortality, if the population changes between the years: If the population number (P) increases we would expect that more people die (see Figure 3), also in absence of COVID-19.&lt;/p&gt;
+&lt;p&gt;However, these total numbers can provide wrong evidence about the
+mortality, if the population changes over the years: If the population
+number (P) increases we would expect that more people die (see Figure
+3), also in absence of COVID-19.&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://boiled-data.github.io/Covid_19_Germany_files/figure-html/unnamed-chunk-3-1.png"&gt;&lt;/p&gt;
-&lt;p&gt;Hence, we have to account for change in population size. Figure 4 shows the data from above but uses the population of the beginning of each year in order to calculate number of deceased per capita.&lt;/p&gt;
+&lt;p&gt;Hence, we have to account for changes in population size. Figure 4
+shows the data from above but uses the population at the beginning of
+each year to calculate the number of deceased per capita.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;#2 Calculate Mortality per capita (population at the beginning of year): 
 #plot absolute mortality per capita:
 p3 &amp;lt;- pop_death_time_comp %&amp;gt;%
@@ -160,40 +188,85 @@ p4 &amp;lt;- pop_death_time_comp %&amp;gt;%
 title2=textGrob("Figure 4: Weekly mortality per capita in Germany" , gp=gpar(fontface="bold"))
 grid.arrange(p3,  p4, ncol=2, top=title2)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src="https://boiled-data.github.io/Covid_19_Germany_files/figure-html/unnamed-chunk-4-1.png"&gt;&lt;/p&gt;
-&lt;p&gt;We find that changes of the number of citizens did not alter the found pattern from above. In the end of 2020 overall mortality increased strongly, probably driven by COVID-19. The same holds true for year 2021, although this data is still preliminary at the time of data analysis. However, other potential relevant variables are not included into to the analysis. If the relationship between COVID-19 cases and mortality is confounded by the important variable age (see Figure 5) we need to account for changes in the age structure over the years in our analysis, as suggested in Figure 5:&lt;/p&gt;
+&lt;p&gt;We find that changes in the number of citizens did not alter the
+found pattern from above. At the end of 2020 overall mortality increased
+strongly, probably driven by COVID-19. The same holds for the year 2021,
+although this data is still preliminary at the time of data analysis.
+However, other potentially relevant variables are not included in the
+analysis. If the relationship between COVID-19 cases and mortality is
+confounded by the important variable age (see Figure 5) we need to
+account for changes in the age structure over the years in our analysis,
+as suggested in Figure 5:&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://boiled-data.github.io/Covid_19_Germany_files/figure-html/unnamed-chunk-5-1.png"&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span&gt;Ragnitz (2022)&lt;/span&gt; emphasizes the role of ageing that needs to be accounted for when comparing expected mortality with actual mortality – otherwise ‘excess mortality’ would be overestimated. Contemporary literature discusses the size of COVID-19 associated excess mortality in Germany. &lt;span&gt;Stang et al. (2020)&lt;/span&gt; find an increased mortality for most age groups 60+ during the first wave of COVID-19. &lt;span&gt;De Nicola, Kauermann, and Höhle (2022)&lt;/span&gt; analyse age specific mortality during the year 2020. They distinguish between weekly and yearly mortality and also compare different methods. The authors find overall excess mortality was about 1 percent in 2020, mainly driven by fatalities in higher age groups at the end of the year. Another interesting enterprise is to consider further potential missing variables that might bias estimates of the COVID-19 impact on mortality. Findings of &lt;span&gt;Wollschläger et al. (2022)&lt;/span&gt; indicate excess mortality as well, after adjusting for air temperature, seasonal influenza-activity and socioeconomic deprivation as additional risk factors.&lt;/p&gt;
-&lt;p&gt;So far, &lt;a href="https://ourworldindata.org/covid-deaths"&gt;international comparisons&lt;/a&gt; suggest that some countries were more severely hit by the COVID-19 pandemic than others. The future may tell where this was due to better policies, and which other factors played an important role.&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;Ragnitz (2022)&lt;/span&gt; emphasizes the role of
+ageing that needs to be accounted for when comparing expected mortality
+with actual mortality – otherwise ‘excess mortality’ would be
+overestimated. Contemporary literature discusses the size of
+COVID-19-associated excess mortality in Germany. &lt;span&gt;Stang et al. (2020)&lt;/span&gt; find increased mortality for
+most age groups 60+ during the first wave of COVID-19. &lt;span&gt;De Nicola, Kauermann, and Höhle (2022)&lt;/span&gt; analyze
+age-specific mortality during the year 2020. They distinguish between
+weekly and yearly mortality and also compare different methods. The
+authors find overall excess mortality was about 1 percent in 2020,
+mainly driven by fatalities in higher age groups at the end of the year.
+Another interesting enterprise is to consider further potential missing
+variables that might bias estimates of the COVID-19 impact on mortality.
+The findings of &lt;span&gt;Wollschläger et al. (2022)&lt;/span&gt;
+indicate excess mortality as well, after adjusting for air temperature,
+seasonal influenza activity, and socioeconomic deprivation as additional
+risk factors.&lt;/p&gt;
+&lt;p&gt;So far, &lt;a href="https://ourworldindata.org/covid-deaths"&gt;international
+comparisons&lt;/a&gt; suggest that some countries were more severely hit by
+the COVID-19 pandemic than others. The future may tell where this was
+due to better policies, and which other factors played an important
+role.&lt;/p&gt;
 &lt;p&gt;Take care and stay healthy! :)&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;h2&gt;References&lt;/h2&gt;
 &lt;div id="refs" class="references csl-bib-body hanging-indent" morss_own_score="4.840579710144928" morss_score="17.30609695152424"&gt;
 &lt;div&gt;
-Auguie, Baptiste. 2017. &lt;em&gt;gridExtra: Miscellaneous Functions for "Grid" Graphics&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=gridExtra"&gt;https://CRAN.R-project.org/package=gridExtra&lt;/a&gt;.
+Auguie, Baptiste. 2017. &lt;em&gt;gridExtra: Miscellaneous Functions for
+"Grid" Graphics&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=gridExtra"&gt;https://CRAN.R-project.org/package=gridExtra&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Barrett, Malcolm. 2021. &lt;em&gt;Ggdag: Analyze and Create Elegant Directed Acyclic Graphs&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=ggdag"&gt;https://CRAN.R-project.org/package=ggdag&lt;/a&gt;.
+Barrett, Malcolm. 2021. &lt;em&gt;Ggdag: Analyze and Create Elegant Directed
+Acyclic Graphs&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=ggdag"&gt;https://CRAN.R-project.org/package=ggdag&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-De Nicola, Giacomo, Göran Kauermann, and Michael Höhle. 2022. &lt;span&gt;“On Assessing Excess Mortality in Germany During the COVID-19 Pandemic.”&lt;/span&gt; &lt;em&gt;AStA Wirtschafts-Und Sozialstatistisches Archiv&lt;/em&gt;, 1–16.
+De Nicola, Giacomo, Göran Kauermann, and Michael Höhle. 2022. &lt;span&gt;“On
+Assessing Excess Mortality in Germany During the COVID-19
+Pandemic.”&lt;/span&gt; &lt;em&gt;AStA Wirtschafts-Und Sozialstatistisches
+Archiv&lt;/em&gt;, 1–16.
 &lt;/div&gt;
 &lt;div&gt;
-Grolemund, Garrett, and Hadley Wickham. 2011. &lt;span&gt;“Dates and Times Made Easy with &lt;span&gt;lubridate&lt;/span&gt;.”&lt;/span&gt; &lt;em&gt;Journal of Statistical Software&lt;/em&gt; 40 (3): 1–25. &lt;a href="https://www.jstatsoft.org/v40/i03/"&gt;https://www.jstatsoft.org/v40/i03/&lt;/a&gt;.
+Grolemund, Garrett, and Hadley Wickham. 2011. &lt;span&gt;“Dates and Times
+Made Easy with &lt;span&gt;lubridate&lt;/span&gt;.”&lt;/span&gt;
+&lt;em&gt;Journal of Statistical Software&lt;/em&gt; 40 (3): 1–25. &lt;a href="https://www.jstatsoft.org/v40/i03/"&gt;https://www.jstatsoft.org/v40/i03/&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Ragnitz, Joachim. 2022. &lt;span&gt;“&lt;span&gt;Ü&lt;/span&gt;bersterblichkeit w&lt;span&gt;ä&lt;/span&gt;hrend Der Corona-Pandemie.”&lt;/span&gt; &lt;em&gt;Ifo Dresden Berichtet&lt;/em&gt; 29 (01): 29–35.
+Ragnitz, Joachim. 2022. &lt;span&gt;“&lt;span&gt;Ü&lt;/span&gt;bersterblichkeit
+w&lt;span&gt;ä&lt;/span&gt;hrend Der Corona-Pandemie.”&lt;/span&gt; &lt;em&gt;Ifo Dresden
+Berichtet&lt;/em&gt; 29 (01): 29–35.
 &lt;/div&gt;
 &lt;div&gt;
-Stang, Andreas, Fabian Standl, Bernd Kowall, Bastian Brune, Juliane Böttcher, Marcus Brinkmann, Ulf Dittmer, and Karl-Heinz Jöckel. 2020. &lt;span&gt;“Excess Mortality Due to COVID-19 in Germany.”&lt;/span&gt; &lt;em&gt;Journal of Infection&lt;/em&gt; 81 (5): 797–801.
+Stang, Andreas, Fabian Standl, Bernd Kowall, Bastian Brune, Juliane
+Böttcher, Marcus Brinkmann, Ulf Dittmer, and Karl-Heinz Jöckel. 2020.
+&lt;span&gt;“Excess Mortality Due to COVID-19 in Germany.”&lt;/span&gt; &lt;em&gt;Journal
+of Infection&lt;/em&gt; 81 (5): 797–801.
 &lt;/div&gt;
 &lt;div&gt;
-Wollschläger, Daniel, Irene Schmidtmann, Sebastian Fückel, Maria Blettner, and Emilio Gianicolo. 2022. &lt;span&gt;“Erkl&lt;span&gt;ä&lt;/span&gt;rbarkeit Der Altersadjustierten &lt;span&gt;Ü&lt;/span&gt;bersterblichkeit Mit Den COVID-19-Attribuierten Sterbef&lt;span&gt;ä&lt;/span&gt;llen von Januar 2020 Bis Juli 2021.”&lt;/span&gt; &lt;em&gt;Bundesgesundheitsblatt-Gesundheitsforschung-Gesundheitsschutz&lt;/em&gt; 65 (3): 378–87.
+Wollschläger, Daniel, Irene Schmidtmann, Sebastian Fückel, Maria
+Blettner, and Emilio Gianicolo. 2022. &lt;span&gt;“Erkl&lt;span&gt;ä&lt;/span&gt;rbarkeit
+Der Altersadjustierten &lt;span&gt;Ü&lt;/span&gt;bersterblichkeit Mit Den
+COVID-19-Attribuierten Sterbef&lt;span&gt;ä&lt;/span&gt;llen von Januar 2020 Bis
+Juli 2021.”&lt;/span&gt;
+&lt;em&gt;Bundesgesundheitsblatt-Gesundheitsforschung-Gesundheitsschutz&lt;/em&gt;
+65 (3): 378–87.
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
-</ns0:encoded></item><item><title>Scale: Organisms &amp; Organizations</title><link>https://boiled-data.github.io/Scale.html</link><guid>https://boiled-data.github.io/Scale.html</guid><pubDate> 20 Mar 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.964659381539177" morss_score="13.665854600662684"&gt;
+</ns0:encoded></item><item><title>Scale: Organisms &amp; Organizations</title><link>https://boiled-data.github.io/Scale.html</link><guid>https://boiled-data.github.io/Scale.html</guid><pubDate> 20 Mar 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.962477665276951" morss_score="13.663672884400455"&gt;
 
 
 
@@ -223,18 +296,38 @@ library(WDI)
 library(plotly)
 
 
-theme_set(theme_light())&lt;/code&gt;&lt;/pre&gt;
+theme_set(theme_light())
+
+dir.create("filesScale", showWarnings = FALSE)&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;Organisms &amp;amp; Organizations&lt;/h2&gt;
-&lt;p&gt;Size matters – in many situations the formula &lt;span&gt;\(Y=aX^\beta\)&lt;/span&gt; can describe the empirical association between observed outcomes (Y) and size (X), e.g. for living organisms life expectancy (Y) is found to scale as size (X) to the power of 1/4. Geoffrey West argues in his extraordinary book ‘Scale’ &lt;span&gt;(West 2017)&lt;/span&gt; that networks are a key aspect in such power laws in the biological domain, but also in cities and companies. Crucial for his analysis is that networks (such as vessels in animals, or pipelines in cities) are 1. invariant at their end points, 2. space filling and 3., optimization is taking place (evolution). For the biological domain nonlinear scaling is derived for a vast number of attributes based on these 3 assumptions, eg. there is a nonlinear association between between animal size and blood pressure. Furthermore, according to West the literature seems to suggest that, after taking the logarithms of variables, these correlations regularly involve number 4. West’s discussion of the role of scaling laws in the biological domain suggests that the magic number is rather 4 than 42, as suggested by &lt;span&gt;Adams (2017)&lt;/span&gt;. ;)&lt;/p&gt;
+&lt;p&gt;Size matters – in many situations the formula &lt;span&gt;\(Y=aX^\beta\)&lt;/span&gt; can describe the empirical
+association between observed outcomes (Y) and size (X), e.g. for living
+organisms life expectancy (Y) is found to scale as size (X) to the power
+of 1/4. Geoffrey West argues in his extraordinary book ‘Scale’ &lt;span&gt;(West 2017)&lt;/span&gt; that networks are a key aspect in
+such power laws in the biological domain, but also in cities and
+companies. Crucial for his analysis is that networks (such as vessels in
+animals, or pipelines in cities) are 1. invariant at their endpoints, 2.
+space-filling, and 3., optimization is taking place (evolution). For the
+biological domain nonlinear scaling is derived for a vast number of
+attributes based on these 3 assumptions, eg. there is a nonlinear
+association between animal size and blood pressure. Furthermore,
+according to West, the literature seems to suggest that, after taking
+the logarithms of variables, these correlations regularly involve the
+number 4. West’s discussion of the role of scaling laws in the
+biological domain suggests that the magic number is rather 4 than 42, as
+suggested by &lt;span&gt;Adams (2017)&lt;/span&gt;. ;)&lt;/p&gt;
 
 &lt;div id="scaling-laws-in-practice" class="section level2" morss_own_score="3.0" morss_score="58.0"&gt;
 &lt;h2&gt;Scaling Laws in Practice&lt;/h2&gt;
-&lt;p&gt;Lets have a look at data from the real world &lt;span&gt;(Allison and Cicchetti 1976)&lt;/span&gt;. According to West the double-log association between life span and body size should be about 1/4. When visualizing the correlation we apply the common logarithm (base 10) to both variables.&lt;/p&gt;
+&lt;p&gt;Let’s have a look at data from the real world &lt;span&gt;(Allison and Cicchetti 1976)&lt;/span&gt;. According to West,
+the double-log association between life span and body size should be
+about 1/4. When visualizing the correlation we apply the common
+logarithm (base 10) to both variables.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;#sleep.txt generated from http://lib.stat.cmu.edu/datasets/sleep
 #Data import and manipulation:
 sleep_raw &amp;lt;- read_lines(
-  "sleep.txt",
+  "filesScale/sleep.txt",
   skip = 50,
   n_max = 62
 )
@@ -279,7 +372,9 @@ sleep_df %&amp;gt;%
   theme_bw() +
   labs(title="Figure 1: Body weight and life-span", y="log(life span in years)", x="log(body weight in kg)")&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src="https://boiled-data.github.io/Scale_files/figure-html/unnamed-chunk-1-1.png"&gt;&lt;/p&gt;
-&lt;p&gt;There is a lot of variability in the data, the slope is 0.211. But we see an exponential association of 1/4 cannot be rejected statistically with the data at hand:&lt;/p&gt;
+&lt;p&gt;There is a lot of variability in the data, the slope is 0.211. But we
+see an exponential association of 1/4 cannot be rejected statistically
+with the data at hand:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;lm(log(maximum_life_span) ~ log(body_weight_kg), data=sleep_df) %&amp;gt;%
   stargazer(type="text", title="Table 2: Association between life-span &amp;amp; body weight", align=TRUE, ci=TRUE)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## 
@@ -303,8 +398,24 @@ sleep_df %&amp;gt;%
 ## F Statistic           57.002*** (df = 1; 56)   
 ## ===============================================
 ## Note:               *p&amp;lt;0.1; **p&amp;lt;0.05; ***p&amp;lt;0.01&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;According to West, similar to animals, cities and even companies can be described by their network structure (people are final leaves in a network). In the context cities, there is sublinear scaling (0.85) for the association between population and infrastructure and superlinear scaling (1.15) in the association between population and e.g. wages. However, other research suggests that such findings for cities may not solely be due to optimization by intra-city processes &lt;span&gt;(Ribeiro et al. 2021)&lt;/span&gt;.&lt;/p&gt;
-&lt;p&gt;Power laws are extremely relevant in many aspects of life, and they can emerge due to different mechanisms &lt;span&gt;(Andriani and McKelvey 2006)&lt;/span&gt;, but underlying mechanisms are not always known yet. The role of power laws in the success of companies, for example, can be explained with matching: a large and successful company can hire the best employees which leads to even higher economic outcomes &lt;span&gt;(Gabaix 2016)&lt;/span&gt;. Power laws even emerge on the country level as shown in the following. Let us use Worldbank data from 2019 to reveal the empirical association between countries’ income (GDP) and population size:&lt;/p&gt;
+&lt;p&gt;According to West, similar to animals, cities and even companies can
+be described by their network structure (people are the final leaves in
+such a network). In the context of cities, there is sublinear scaling
+(0.85) for the association between population and infrastructure and
+superlinear scaling (1.15) for the association between population and
+e.g. wages. However, other research suggests that such findings for
+cities may not solely be due to optimization by intra-city processes
+&lt;span&gt;(Ribeiro et al. 2021)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Power laws are extremely relevant in many aspects of life, and they
+can emerge due to different mechanisms &lt;span&gt;(Andriani
+and McKelvey 2006)&lt;/span&gt;, but underlying mechanisms are not always
+known yet. The role of power laws in the success of companies, for
+example, can be explained with matching: a large and successful company
+can hire the best employees which leads to even higher economic outcomes
+&lt;span&gt;(Gabaix 2016)&lt;/span&gt;. Power laws even emerge on
+the country level as shown in the following. Let us use Worldbank data
+from 2019 to reveal the empirical association between countries’ income
+(GDP) and population size:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# #read WB-Data from 2019:
 # wdi_in &amp;lt;- WDI(
 #   country = "all",
@@ -316,9 +427,9 @@ sleep_df %&amp;gt;%
 #   latest = NULL, #=1 
 #   language = "en"
 # )
-# saveRDS(wdi_in, "wdi_in.rds")
+# saveRDS(wdi_in, "filesScale/wdi_in.rds")
 
-wdi_in &amp;lt;- readRDS("wdi_in.rds")
+wdi_in &amp;lt;- readRDS("filesScale/wdi_in.rds")
 
 
 wdi_sel &amp;lt;- wdi_in %&amp;gt;%
@@ -341,7 +452,11 @@ p3 &amp;lt;- wdi_sel %&amp;gt;%
   facet_wrap(~sample, scales = "free") 
 
 ggplotly(p3)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;A visual inspection of data (Figure 2) shows as expected: GDP increases as population grows. However, whereas a lot of variability and extreme values are found in the left plot where total values are shown, the double-logarithmic scale again reveals a linear relationship of the 2 variables.&lt;/p&gt;
+&lt;p&gt;A visual inspection of data (Figure 2) shows as expected: GDP
+increases as a population grows. However, whereas a lot of variability
+and extreme values are found in the left plot where total values are
+shown, the double-logarithmic scale again reveals a linear relationship
+between the 2 variables.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;lm(log(NY.GDP.MKTP.CD) ~ log(SP.POP.TOTL), data=wdi_sel) %&amp;gt;%
   stargazer(type="text", title="Table 3: Association population size &amp;amp; GDP", align=TRUE, ci=TRUE)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## 
@@ -365,46 +480,76 @@ ggplotly(p3)&lt;/code&gt;&lt;/pre&gt;
 ## F Statistic          379.459*** (df = 1; 203)  
 ## ===============================================
 ## Note:               *p&amp;lt;0.1; **p&amp;lt;0.05; ***p&amp;lt;0.01&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The scaling exponent using country level data suggests sublinear scaling of about 0.8, ie. if the population doubles, GDP grows by 80 percent, on average. However, although interesting, it would again be helpful to understand the underlying mechanism, especially from a developmental perspective. Should the association of income and population always be analysed on a double-log scale? For example, the right hand side of Figure 2 is clearly helpful if one is interested in identifying single data points or if linear modeling is needed. But this representation also decreases variability and can potentially hide some important characteristics of the untransformed data.&lt;/p&gt;
-&lt;p&gt;We have seen that data from a lot of different domains can be described by power laws, ie. associations become linear after applying the log to the variables of interest. This holds true for living organisms, cities, other institutions and even global structures such as countries.&lt;/p&gt;
+&lt;p&gt;The scaling exponent using country-level data suggests sublinear
+scaling of about 0.8, ie. if the population doubles, GDP grows by 80
+percent, on average. However, although interesting, it would again be
+helpful to understand the underlying mechanism, especially from a
+developmental perspective. Should the association of income and
+population always be analyzed on a double-log scale? For example, the
+right-hand side of Figure 2 is clearly helpful if one is interested in
+identifying single data points or if linear modeling is needed. But this
+representation also decreases variability and can potentially hide some
+important characteristics of the untransformed data.&lt;/p&gt;
+&lt;p&gt;We have seen that data from a lot of different domains can be
+described by power laws, ie. associations become linear after applying
+the log to the variables of interest. This holds true for living
+organisms, cities, other institutions, and even global structures such
+as countries.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;h2&gt;References&lt;/h2&gt;
 &lt;div id="refs" class="references csl-bib-body hanging-indent" morss_own_score="4.7951807228915655" morss_score="23.514661242372085"&gt;
 &lt;div&gt;
-Adams, Douglas. 2017. &lt;em&gt;The Ultimate Hitchhiker’s Guide to the Galaxy: The Complete Trilogy in Five Parts&lt;/em&gt;. Vol. 6. Pan Macmillan.
+Adams, Douglas. 2017. &lt;em&gt;The Ultimate Hitchhiker’s Guide to the Galaxy:
+The Complete Trilogy in Five Parts&lt;/em&gt;. Vol. 6. Pan Macmillan.
 &lt;/div&gt;
 &lt;div&gt;
-Allison, Truett, and Domenic V Cicchetti. 1976. &lt;span&gt;“Sleep in Mammals: Ecological and Constitutional Correlates.”&lt;/span&gt; &lt;em&gt;Science&lt;/em&gt; 194 (4266): 732–34.
+Allison, Truett, and Domenic V Cicchetti. 1976. &lt;span&gt;“Sleep in Mammals:
+Ecological and Constitutional Correlates.”&lt;/span&gt; &lt;em&gt;Science&lt;/em&gt; 194
+(4266): 732–34.
 &lt;/div&gt;
 &lt;div&gt;
-Andriani, P, and B McKelvey. 2006. &lt;span&gt;“On the Relevance of Extremes Vs. Means in Organization Science: Some Theory, Research, Statistics, and Power Law Implications.”&lt;/span&gt; Working paper, Durham, UK.
+Andriani, P, and B McKelvey. 2006. &lt;span&gt;“On the Relevance of Extremes
+Vs. Means in Organization Science: Some Theory, Research, Statistics,
+and Power Law Implications.”&lt;/span&gt; Working paper, Durham, UK.
 &lt;/div&gt;
 &lt;div&gt;
-Arel-Bundock, Vincent. 2022. &lt;em&gt;WDI: World Development Indicators and Other World Bank Data&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=WDI"&gt;https://CRAN.R-project.org/package=WDI&lt;/a&gt;.
+Arel-Bundock, Vincent. 2022. &lt;em&gt;WDI: World Development Indicators and
+Other World Bank Data&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=WDI"&gt;https://CRAN.R-project.org/package=WDI&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Gabaix, Xavier. 2016. &lt;span&gt;“Power Laws in Economics: An Introduction.”&lt;/span&gt; &lt;em&gt;Journal of Economic Perspectives&lt;/em&gt; 30 (1): 185–206.
+Gabaix, Xavier. 2016. &lt;span&gt;“Power Laws in Economics: An
+Introduction.”&lt;/span&gt; &lt;em&gt;Journal of Economic Perspectives&lt;/em&gt; 30 (1):
+185–206.
 &lt;/div&gt;
 &lt;div&gt;
-Hlavac, Marek. 2018. &lt;em&gt;Stargazer: Well-Formatted Regression and Summary Statistics Tables&lt;/em&gt;. Bratislava, Slovakia: Central European Labour Studies Institute (CELSI). &lt;a href="https://CRAN.R-project.org/package=stargazer"&gt;https://CRAN.R-project.org/package=stargazer&lt;/a&gt;.
+Hlavac, Marek. 2018. &lt;em&gt;Stargazer: Well-Formatted Regression and
+Summary Statistics Tables&lt;/em&gt;. Bratislava, Slovakia: Central European
+Labour Studies Institute (CELSI). &lt;a href="https://CRAN.R-project.org/package=stargazer"&gt;https://CRAN.R-project.org/package=stargazer&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Ribeiro, Haroldo V, Milena Oehlers, Ana I Moreno-Monroy, Jürgen P Kropp, and Diego Rybski. 2021. &lt;span&gt;“Association Between Population Distribution and Urban GDP Scaling.”&lt;/span&gt; &lt;em&gt;Plos One&lt;/em&gt; 16 (1): e0245771.
+Ribeiro, Haroldo V, Milena Oehlers, Ana I Moreno-Monroy, Jürgen P Kropp,
+and Diego Rybski. 2021. &lt;span&gt;“Association Between Population
+Distribution and Urban GDP Scaling.”&lt;/span&gt; &lt;em&gt;Plos One&lt;/em&gt; 16 (1):
+e0245771.
 &lt;/div&gt;
 &lt;div&gt;
-Sievert, Carson. 2020. &lt;em&gt;Interactive Web-Based Data Visualization with r, Plotly, and Shiny&lt;/em&gt;. Chapman; Hall/CRC. &lt;a href="https://plotly-r.com"&gt;https://plotly-r.com&lt;/a&gt;.
+Sievert, Carson. 2020. &lt;em&gt;Interactive Web-Based Data Visualization with
+r, Plotly, and Shiny&lt;/em&gt;. Chapman; Hall/CRC. &lt;a href="https://plotly-r.com"&gt;https://plotly-r.com&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-West, Geoffrey. 2017. &lt;span&gt;“Scale: The Universal Laws of Life, Growth, and Death in Organisms.”&lt;/span&gt; &lt;em&gt;Cities, and Companies. Penguin Publishing Group&lt;/em&gt;.
+West, Geoffrey. 2017. &lt;span&gt;“Scale: The Universal Laws of Life, Growth,
+and Death in Organisms.”&lt;/span&gt; &lt;em&gt;Cities, and Companies. Penguin
+Publishing Group&lt;/em&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Wickham, Hadley, and Dana Seidel. 2020. &lt;em&gt;Scales: Scale Functions for Visualization&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=scales"&gt;https://CRAN.R-project.org/package=scales&lt;/a&gt;.
+Wickham, Hadley, and Dana Seidel. 2020. &lt;em&gt;Scales: Scale Functions for
+Visualization&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=scales"&gt;https://CRAN.R-project.org/package=scales&lt;/a&gt;.
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
-</ns0:encoded></item><item><title>Trends in Back Pain</title><link>https://boiled-data.github.io/Trends.html</link><guid>https://boiled-data.github.io/Trends.html</guid><pubDate> 15 Apr 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.69023569023569" morss_score="14.930256535329832"&gt;
+</ns0:encoded></item><item><title>Trends in Back Pain</title><link>https://boiled-data.github.io/Trends.html</link><guid>https://boiled-data.github.io/Trends.html</guid><pubDate> 15 Apr 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.667221297836939" morss_score="14.907240266987905"&gt;
 
 
 
@@ -433,17 +578,40 @@ library(forecast)
 library(jtools)
 library(sandwich)
 
-theme_set(theme_light())&lt;/code&gt;&lt;/pre&gt;
+theme_set(theme_light())
+
+dir.create("filesTrends", showWarnings = FALSE)&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;Back pain is a common issue across the globe, increasing due to an ageing population and little physical exercise (the latter is usually considered a good ingredient to improve the situation). However, from 2020 onward, exercise decreased strongly due to policies to mitigate the COVID-19 pandemic. Hence, a natural question is whether political lockdown had a negative influence on the prevalence of back pain. One potential mechanism could be higher number of people working from home. But how to detect changes in back pain over time? One way to approach this is to use &lt;a href="https://trends.google.de/trends"&gt;Google Trends&lt;/a&gt;, as it provides quasi instant access to aggregated queries from Google users. &lt;span&gt;Hoerger et al. (2020)&lt;/span&gt;, &lt;span&gt;Knipe et al. (2020)&lt;/span&gt; and &lt;span&gt;Brodeur et al. (2021)&lt;/span&gt; use Google Trends to assess the impact of the pandemic on mental health/well being. &lt;span&gt;Szilagyi et al. (2021)&lt;/span&gt; compare queries for back pain, before and after the pandemic. Seasonality of back pain in Italy was analyzed by &lt;span&gt;Ciaffi et al. (2021)&lt;/span&gt;. But can health issues really be traced back to the COVID-19 pandemic, and how?&lt;/p&gt;
+&lt;p&gt;Back pain is a common issue across the globe, increasing due to an
+ageing population and little physical exercise (the latter is usually
+considered a good ingredient to improve the situation). However, from
+2020 onward, exercise decreased strongly due to policies to mitigate the
+COVID-19 pandemic. Hence, a natural question is whether political
+lockdown had a negative influence on the prevalence of back pain. One
+potential mechanism could be a higher number of people working from
+home. But how to detect changes in back pain over time? One way to
+approach this is to use &lt;a href="https://trends.google.de/trends"&gt;Google
+Trends&lt;/a&gt;, as it provides quasi-instant access to aggregated queries
+from Google users. &lt;span&gt;Hoerger et al. (2020)&lt;/span&gt;,
+&lt;span&gt;Knipe et al. (2020)&lt;/span&gt; and &lt;span&gt;Brodeur et al. (2021)&lt;/span&gt; use Google Trends to
+assess the impact of the pandemic on mental health/well-being. &lt;span&gt;Szilagyi et al. (2021)&lt;/span&gt; compare queries for back
+pain, before and after the pandemic. The seasonality of back pain in
+Italy was analyzed by &lt;span&gt;Ciaffi et al.
+(2021)&lt;/span&gt;. But can health issues really be traced back to the
+COVID-19 pandemic, and how?&lt;/p&gt;
 
 &lt;div id="data-analysis" class="section level2" morss_own_score="3.0" morss_score="46.5"&gt;
 &lt;h2&gt;Data Analysis&lt;/h2&gt;
-&lt;p&gt;Lets figure out the relative amount internet users were looking for back pain related keywords from 2016 onward. We focus on queries from Germany, and assume that the back pain synonyms ‘Rückenschmerzen,’ ‘Rücken Schmerzen,’ ‘Rückenschmerz,’ ‘Rücken Schmerz,’ reflect overall interest in this topic, as a proxy for the associated burden of disease over time. Data is provided on a monthly level.&lt;/p&gt;
+&lt;p&gt;Let us figure out the relative amount of internet queries for back
+pain-related keywords from 2016 onward. We focus on queries from Germany
+and assume that the back pain synonyms ‘Rückenschmerzen’, ‘Rücken
+Schmerzen’, ‘Rückenschmerz’, ‘Rücken Schmerz’, reflect the overall
+interest in this topic, as a proxy for the associated burden of disease
+over time. Data is provided on a monthly level.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;#trends &amp;lt;- gtrends(keyword = c("Schmerz Rücken + Rückenschmerz + Schmerzen Rücken + Rückenschmerzen"), time = #'2016-01-01 2022-03-31', geo="DE")
-#write_rds(trends, "trends_ruecken20220415.rds")
-trends &amp;lt;- read_rds("trends_ruecken20220415.rds")
+#write_rds(trends, "filesTrends/trends_ruecken20220415.rds")
+trends &amp;lt;- read_rds("filesTrends/trends_ruecken20220415.rds")
 
 #transform important variables 
 trends$interest_over_time  &amp;lt;- trends$interest_over_time %&amp;gt;%
@@ -458,7 +626,10 @@ trends$interest_over_time %&amp;gt;%
   scale_colour_viridis_d(option="viridis") +
   labs(y="relative amount of queries", x="year", title="Figure 1: Queries for back pain over time")&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src="https://boiled-data.github.io/Trends_files/figure-html/unnamed-chunk-1-1.png"&gt;&lt;/p&gt;
-&lt;p&gt;We see in Figure 1 that the relative number of queries is increasing steadily over time, ie there is a positive time trend. In order to better understand the data structure let us now decompose, trend, seasonality and error (using just complete 12 year periods):&lt;/p&gt;
+&lt;p&gt;We see in Figure 1 that the relative number of queries is increasing
+steadily over time, ie there is a positive time trend. In order to
+better understand the data structure let us now decompose, trend,
+seasonality and error (using just complete 12-year periods):&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;#create time series:
 ts_in &amp;lt;- trends$interest_over_time %&amp;gt;%
   filter(date&amp;gt;= '2016-01-01' &amp;amp; date&amp;lt;= '2020-12-31') %&amp;gt;%
@@ -472,17 +643,41 @@ dcp &amp;lt;- mstl(back_ts, s.window="periodic")
 autoplot(dcp) +
   labs(title="Figure 2: Multiple seasonal decomposition of back pain queries")&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src="https://boiled-data.github.io/Trends_files/figure-html/unnamed-chunk-2-1.png"&gt;&lt;/p&gt;
-&lt;p&gt;A monthly seasonal pattern can be seen which we should keep in mind when analyzing the relation of the pandemic with back pain. Due to the time structure of our data also autocorrelation is a potential issue we should we aware of.&lt;/p&gt;
+&lt;p&gt;A monthly seasonal pattern can be seen which we should keep in mind
+when analyzing the relationship between the pandemic with back pain. Due
+to the time structure of our data also autocorrelation is a potential
+issue we should be aware of.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;ggPacf(back_ts, main="Figure 3: Partial autocorrelation plot (back pain queries)")&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src="https://boiled-data.github.io/Trends_files/figure-html/unnamed-chunk-3-1.png"&gt;&lt;/p&gt;
-&lt;p&gt;A strong partial autocorrelation with monthly lags can be seen which should be taken into account as well. Let us put together what we have learned so far, in order to assess whether the COVID-19 period is statistically associated with Google-queries for back pain: We do so by applying &lt;em&gt;segmented regression analysis&lt;/em&gt; &lt;span&gt;(e.g. Wagner et al. 2002; Jebb et al. 2015)&lt;/span&gt; assuming an interrupted linear time trend in our model. The dependent variable &lt;span&gt;\(hits_t\)&lt;/span&gt; reflects the relative amount of queries for back pain over months &lt;span&gt;\(t\)&lt;/span&gt;, and is considered in logarithmic form. Explanatory variable &lt;span&gt;\(time_t\)&lt;/span&gt; is added to account for an assumed (partly &lt;em&gt;counterfactual&lt;/em&gt;) linear time trend. Since lockdown policies began in Germany at 2020-3-16, we test for a level change at the beginning of treatment by adding a dummy variable &lt;span&gt;\(P_t\)&lt;/span&gt; to the specification. As the back pain-trend may change during the lockdown, we add another time variable &lt;span&gt;\(time\:since\:treatment_t\)&lt;/span&gt; to the specification – capturing time since treatment, zero before. This leads to the following regression:&lt;/p&gt;
+&lt;p&gt;A strong partial autocorrelation with monthly lags can be seen which
+should be taken into account as well. Let us put together what we have
+learned so far, in order to assess whether the COVID-19 period is
+statistically associated with Google queries for back pain: We do so by
+applying &lt;em&gt;segmented regression analysis&lt;/em&gt; &lt;span&gt;(e.g. Wagner et al. 2002; Jebb et al. 2015)&lt;/span&gt;
+assuming an interrupted linear time trend in our model. The dependent
+variable &lt;span&gt;\(hits_t\)&lt;/span&gt; reflects the
+relative amount of queries for back pain over months &lt;span&gt;\(t\)&lt;/span&gt; and is considered in logarithmic form.
+Explanatory variable &lt;span&gt;\(time_t\)&lt;/span&gt; is
+added to account for an assumed (partly &lt;em&gt;counterfactual&lt;/em&gt;) linear
+time trend. Since lockdown policies began in Germany on 2020-3-16, we
+test for a level change at the beginning of treatment by adding a dummy
+variable &lt;span&gt;\(P_t\)&lt;/span&gt; to the specification.
+As the back pain trend may change during the lockdown, we add another
+time variable &lt;span&gt;\(time\:since\:treatment_t\)&lt;/span&gt; to the
+specification – capturing time since treatment, zero before. This leads
+to the following regression:&lt;/p&gt;
 &lt;center&gt;
-&lt;p&gt;&lt;span&gt;\(log(hits_t) = \beta_0 + \beta_1\,time_t + \beta_2\,P_t + \beta_3\:time\,since\:treatment_t + \epsilon_t\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span&gt;\(log(hits_t) = \beta_0 + \beta_1\,time_t +
+\beta_2\,P_t + \beta_3\:time\,since\:treatment_t +
+\epsilon_t\)&lt;/span&gt;&lt;/p&gt;
 &lt;/center&gt;
-&lt;p&gt;Finally, dummy variables for each month are added to our specification in order to capture the seasonality of queries for back pain, as discussed above. The autocorrelated residuals are accounted for by using Newey-West standard errors.&lt;/p&gt;
+&lt;p&gt;Finally, dummy variables for each month are added to our
+specification in order to capture the seasonality of queries for back
+pain, as discussed above. The autocorrelated residuals are accounted for
+by using Newey-West standard errors.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;data_impact &amp;lt;- trends$interest_over_time %&amp;gt;%
   arrange(date) %&amp;gt;%
-  mutate(time=row_number()-1, month=as.factor(month(date)), hits_l1=lag(hits),     
+  mutate(time=row_number()-1, month=as.factor(month(date)), hits_l1=dplyr::lag(hits),     
          policy=if_else(date&amp;gt;=as.Date('2020-03-16'), 1, 0),
          min_time_2=min(if_else(policy==1, row_number(), NA_integer_), na.rm=TRUE)-1
          , time_2=ifelse(policy==1, row_number()-min_time_2, 0))
@@ -823,57 +1018,117 @@ time_2
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;Our regression shows that the COVID-19 time period is indeed associated with a higher share of queries for back pain, given a linear time trend and month-flags. However, although positive, the level change after treatment lacks statistical significance (p&amp;gt;0.05). Instead, compared to baseline, we find a steady increase of relative queries from the beginning of lockdown onward. From this point queries increased around &lt;span&gt;\((e^{\hat{\beta}_3}-1)\cdot100=\)&lt;/span&gt;&lt;code&gt;0.518&lt;/code&gt; percent each month – in addition to the assumed counterfactual time trend &lt;span&gt;\(\beta_1\)&lt;/span&gt;. This suggests that although people were saved concerning a COVID-19 infection, there seem to be a negative external effect on other health outcomes in Germany (in addition to the psychological and economic burden).&lt;/p&gt;
+&lt;p&gt;Our regression shows that the COVID-19 time period is indeed
+associated with a higher share of queries for back pain, given a linear
+time trend and month-flags. However, although positive, the level change
+after treatment lacks statistical significance (p&amp;gt;0.05). Instead,
+compared to the baseline, we find a steady increase in relative queries
+from the beginning of the lockdown onward. From this point queries
+increased around &lt;span&gt;\((e^{\hat{\beta}_3}-1)\cdot100=\)&lt;/span&gt;&lt;code&gt;0.518&lt;/code&gt;
+percent each month – in addition to the assumed counterfactual time
+trend &lt;span&gt;\(\beta_1\)&lt;/span&gt;. This suggests that
+although people were saved concerning a COVID-19 infection, there seems
+to be a negative external effect on other health outcomes in Germany (in
+addition to the psychological and economic burden).&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id="conclusion" class="section level2" morss_own_score="2.9150943396226414" morss_score="15.225905150433451"&gt;
+&lt;div id="conclusion" class="section level2" morss_own_score="2.9146919431279623" morss_score="15.223782852218871"&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Overall we have found a substantial increase in the relative interest in back pain based on online queries using Google Trends. What can be done? From a policy perspective it is clear that there need to be enough supply of health care provision in order for sufficient treatment, mitigate pain and avoidance of chronic disease. Another important aspect of back pain-treatment often is a person’s self awareness, to successfully figure out what he or she needs and when and what exercise to do. Here, in addition to professional help, &lt;a href="https://letmegooglethat.com/?q=back+pain+help"&gt;digital services&lt;/a&gt; can support to easily access information and provide tools in order to relieve pain – given high quality information is provided.&lt;/p&gt;
-&lt;p&gt;One thing we have to keep in mind, is that Google Trends reflect the importance of queries, relative to all queries at a point in time at a specific location. It is obvious that the overall internet queries increased strongly in 2020. So our results from above suggest that back pain queries increased even more strongly.&lt;/p&gt;
-&lt;p&gt;Generally, we can imagine that process data from internet companies allow to address a lot interesting questions. Indeed, &lt;span&gt;Stephens-Davidowitz (2018)&lt;/span&gt; argues that people’s thoughts/motivations are much more honestly reflected in their internet searches, as compared to answering survey questions.&lt;/p&gt;
+&lt;p&gt;Overall we have found a substantial increase in the relative interest
+in back pain based on online queries using Google Trends. What can be
+done? From a policy perspective, it is clear that there needs to be
+enough supply of health care provision for sufficient treatment,
+mitigation of pain, and avoidance of chronic disease. Another important
+aspect of back pain treatment often is a person’s self-awareness, to
+successfully figure out what he or she needs and when and what exercises
+to do. Here, in addition to professional help, &lt;a href="https://letmegooglethat.com/?q=back+pain+help"&gt;digital
+services&lt;/a&gt; can support to access information easily and provide tools
+in order to relieve pain – given high-quality information is
+provided.&lt;/p&gt;
+&lt;p&gt;One thing we have to keep in mind is that Google Trends reflect the
+importance of queries, relative to all queries at a point in time at a
+specific location. It is obvious that overall internet queries increased
+strongly in 2020. So our results from above suggest that back pain
+queries increased even more strongly.&lt;/p&gt;
+&lt;p&gt;Generally, we can imagine that process-data from internet companies
+allows to address a lot of interesting questions. Indeed, &lt;span&gt;Stephens-Davidowitz (2018)&lt;/span&gt; argues that people’s
+thoughts/motivations are much more honestly reflected in their internet
+searches, as compared to answering survey questions.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;h2&gt;References&lt;/h2&gt;
 &lt;div id="refs" class="references csl-bib-body hanging-indent" morss_own_score="5.26530612244898" morss_score="32.294766024249306"&gt;
 &lt;div&gt;
-Brodeur, Abel, Andrew E Clark, Sarah Fleche, and Nattavudh Powdthavee. 2021. &lt;span&gt;“COVID-19, Lockdowns and Well-Being: Evidence from Google Trends.”&lt;/span&gt; &lt;em&gt;Journal of Public Economics&lt;/em&gt; 193: 104346.
+Brodeur, Abel, Andrew E Clark, Sarah Fleche, and Nattavudh Powdthavee.
+2021. &lt;span&gt;“COVID-19, Lockdowns and Well-Being: Evidence from Google
+Trends.”&lt;/span&gt; &lt;em&gt;Journal of Public Economics&lt;/em&gt; 193: 104346.
 &lt;/div&gt;
 &lt;div&gt;
-Ciaffi, Jacopo, Riccardo Meliconi, Maria Paola Landini, Luana Mancarella, Veronica Brusi, Cesare Faldini, and Francesco Ursini. 2021. &lt;span&gt;“Seasonality of Back Pain in Italy: An Infodemiology Study.”&lt;/span&gt; &lt;em&gt;International Journal of Environmental Research and Public Health&lt;/em&gt; 18 (3): 1325.
+Ciaffi, Jacopo, Riccardo Meliconi, Maria Paola Landini, Luana
+Mancarella, Veronica Brusi, Cesare Faldini, and Francesco Ursini. 2021.
+&lt;span&gt;“Seasonality of Back Pain in Italy: An Infodemiology
+Study.”&lt;/span&gt; &lt;em&gt;International Journal of Environmental Research and
+Public Health&lt;/em&gt; 18 (3): 1325.
 &lt;/div&gt;
 &lt;div&gt;
-Hoerger, Michael, Sarah Alonzi, Laura M Perry, Hallie M Voss, Sanjana Easwar, and James I Gerhart. 2020. &lt;span&gt;“Impact of the COVID-19 Pandemic on Mental Health: Real-Time Surveillance Using Google Trends.”&lt;/span&gt; &lt;em&gt;Psychological Trauma: Theory, Research, Practice, and Policy&lt;/em&gt; 12 (6): 567.
+Hoerger, Michael, Sarah Alonzi, Laura M Perry, Hallie M Voss, Sanjana
+Easwar, and James I Gerhart. 2020. &lt;span&gt;“Impact of the COVID-19
+Pandemic on Mental Health: Real-Time Surveillance Using Google
+Trends.”&lt;/span&gt; &lt;em&gt;Psychological Trauma: Theory, Research, Practice,
+and Policy&lt;/em&gt; 12 (6): 567.
 &lt;/div&gt;
 &lt;div&gt;
-Hyndman, Rob, George Athanasopoulos, Christoph Bergmeir, Gabriel Caceres, Leanne Chhay, Mitchell O’Hara-Wild, Fotios Petropoulos, Slava Razbash, Earo Wang, and Farah Yasmeen. 2021. &lt;em&gt;&lt;span&gt;forecast&lt;/span&gt;: Forecasting Functions for Time Series and Linear Models&lt;/em&gt;. &lt;a href="https://pkg.robjhyndman.com/forecast/"&gt;https://pkg.robjhyndman.com/forecast/&lt;/a&gt;.
+Hyndman, Rob, George Athanasopoulos, Christoph Bergmeir, Gabriel
+Caceres, Leanne Chhay, Mitchell O’Hara-Wild, Fotios Petropoulos, Slava
+Razbash, Earo Wang, and Farah Yasmeen. 2021. &lt;em&gt;&lt;span&gt;forecast&lt;/span&gt;: Forecasting Functions for Time Series
+and Linear Models&lt;/em&gt;. &lt;a href="https://pkg.robjhyndman.com/forecast/"&gt;https://pkg.robjhyndman.com/forecast/&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Jebb, Andrew T, Louis Tay, Wei Wang, and Qiming Huang. 2015. &lt;span&gt;“Time Series Analysis for Psychological Research: Examining and Forecasting Change.”&lt;/span&gt; &lt;em&gt;Frontiers in Psychology&lt;/em&gt; 6: 727.
+Jebb, Andrew T, Louis Tay, Wei Wang, and Qiming Huang. 2015. &lt;span&gt;“Time
+Series Analysis for Psychological Research: Examining and Forecasting
+Change.”&lt;/span&gt; &lt;em&gt;Frontiers in Psychology&lt;/em&gt; 6: 727.
 &lt;/div&gt;
 &lt;div&gt;
-Knipe, Duleeka, Hannah Evans, Amanda Marchant, David Gunnell, and Ann John. 2020. &lt;span&gt;“Mapping Population Mental Health Concerns Related to COVID-19 and the Consequences of Physical Distancing: A Google Trends Analysis.”&lt;/span&gt; &lt;em&gt;Wellcome Open Research&lt;/em&gt; 5.
+Knipe, Duleeka, Hannah Evans, Amanda Marchant, David Gunnell, and Ann
+John. 2020. &lt;span&gt;“Mapping Population Mental Health Concerns Related to
+COVID-19 and the Consequences of Physical Distancing: A Google Trends
+Analysis.”&lt;/span&gt; &lt;em&gt;Wellcome Open Research&lt;/em&gt; 5.
 &lt;/div&gt;
 &lt;div&gt;
-Long, Jacob A. 2020. &lt;em&gt;Jtools: Analysis and Presentation of Social Scientific Data&lt;/em&gt;. &lt;a href="https://cran.r-project.org/package=jtools"&gt;https://cran.r-project.org/package=jtools&lt;/a&gt;.
+Long, Jacob A. 2020. &lt;em&gt;Jtools: Analysis and Presentation of Social
+Scientific Data&lt;/em&gt;. &lt;a href="https://cran.r-project.org/package=jtools"&gt;https://cran.r-project.org/package=jtools&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Massicotte, Philippe, and Dirk Eddelbuettel. 2021. &lt;em&gt;gtrendsR: Perform and Display Google Trends Queries&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=gtrendsR"&gt;https://CRAN.R-project.org/package=gtrendsR&lt;/a&gt;.
+Massicotte, Philippe, and Dirk Eddelbuettel. 2021. &lt;em&gt;gtrendsR: Perform
+and Display Google Trends Queries&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=gtrendsR"&gt;https://CRAN.R-project.org/package=gtrendsR&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Stephens-Davidowitz, Seth. 2018. &lt;em&gt;Everybody Lies: What the Internet Can Tell Us about Who We Really Are&lt;/em&gt;. Bloomsbury Publishing.
+Stephens-Davidowitz, Seth. 2018. &lt;em&gt;Everybody Lies: What the Internet
+Can Tell Us about Who We Really Are&lt;/em&gt;. Bloomsbury Publishing.
 &lt;/div&gt;
 &lt;div&gt;
-Szilagyi, Istvan-Szilard, Torsten Ullrich, Kordula Lang-Illievich, Christoph Klivinyi, Gregor Alexander Schittek, Holger Simonis, and Helmar Bornemann-Cimenti. 2021. &lt;span&gt;“Google Trends for Pain Search Terms in the World’s Most Populated Regions Before and After the First Recorded COVID-19 Case: Infodemiological Study.”&lt;/span&gt; &lt;em&gt;Journal of Medical Internet Research&lt;/em&gt; 23 (4): e27214.
+Szilagyi, Istvan-Szilard, Torsten Ullrich, Kordula Lang-Illievich,
+Christoph Klivinyi, Gregor Alexander Schittek, Holger Simonis, and
+Helmar Bornemann-Cimenti. 2021. &lt;span&gt;“Google Trends for Pain Search
+Terms in the World’s Most Populated Regions Before and After the First
+Recorded COVID-19 Case: Infodemiological Study.”&lt;/span&gt; &lt;em&gt;Journal of
+Medical Internet Research&lt;/em&gt; 23 (4): e27214.
 &lt;/div&gt;
 &lt;div&gt;
-Wagner, Anita K, Stephen B Soumerai, Fang Zhang, and Dennis Ross-Degnan. 2002. &lt;span&gt;“Segmented Regression Analysis of Interrupted Time Series Studies in Medication Use Research.”&lt;/span&gt; &lt;em&gt;Journal of Clinical Pharmacy and Therapeutics&lt;/em&gt; 27 (4): 299–309.
+Wagner, Anita K, Stephen B Soumerai, Fang Zhang, and Dennis Ross-Degnan.
+2002. &lt;span&gt;“Segmented Regression Analysis of Interrupted Time Series
+Studies in Medication Use Research.”&lt;/span&gt; &lt;em&gt;Journal of Clinical
+Pharmacy and Therapeutics&lt;/em&gt; 27 (4): 299–309.
 &lt;/div&gt;
 &lt;div&gt;
-Zeileis, Achim, Susanne Köll, and Nathaniel Graham. 2020. &lt;span&gt;“Various Versatile Variances: An Object-Oriented Implementation of Clustered Covariances in &lt;span&gt;R&lt;/span&gt;.”&lt;/span&gt; &lt;em&gt;Journal of Statistical Software&lt;/em&gt; 95 (1): 1–36. &lt;a href="https://doi.org/10.18637/jss.v095.i01"&gt;https://doi.org/10.18637/jss.v095.i01&lt;/a&gt;.
+Zeileis, Achim, Susanne Köll, and Nathaniel Graham. 2020. &lt;span&gt;“Various
+Versatile Variances: An Object-Oriented Implementation of Clustered
+Covariances in &lt;span&gt;R&lt;/span&gt;.”&lt;/span&gt; &lt;em&gt;Journal of Statistical
+Software&lt;/em&gt; 95 (1): 1–36. &lt;a href="https://doi.org/10.18637/jss.v095.i01"&gt;https://doi.org/10.18637/jss.v095.i01&lt;/a&gt;.
 &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;/div&gt;
-</ns0:encoded></item><item><title>The Histories</title><link>https://boiled-data.github.io/Histories.html</link><guid>https://boiled-data.github.io/Histories.html</guid><pubDate> 21 May 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.647831800262812" morss_score="18.42141670592319"&gt;
+</ns0:encoded></item><item><title>The Histories</title><link>https://boiled-data.github.io/Histories.html</link><guid>https://boiled-data.github.io/Histories.html</guid><pubDate> 21 May 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.633074935400517" morss_score="18.42377260981912"&gt;
 
 
 
@@ -889,7 +1144,7 @@ Zeileis, Achim, Susanne Köll, and Nathaniel Graham. 2020. &lt;span&gt;“Variou
 &lt;h1&gt;Herodotus’ Histories&lt;/h1&gt;
 &lt;h4&gt;21 May 2022 (first version 13 May 2022)&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src="https://boiled-data.github.io/p0_hist_wordcloud.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/Histories/p0_hist_wordcloud.png"&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;#Preliminaries:
 knitr::opts_chunk$set(message=FALSE, warning=FALSE, eval = FALSE) #set eval = TRUE when run first
 
@@ -903,21 +1158,39 @@ library(topicmodels)
 library(ldatuning)
 library(ggsci)
 
-theme_set(theme_light())&lt;/code&gt;&lt;/pre&gt;
+theme_set(theme_light())
+
+dir.create("Histories", showWarnings = FALSE)&lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;&lt;em&gt;Herodotus&lt;/em&gt; (484 – 425 BC), the first known author doing systematic investigation of historical events, is famous for his important work on the Greco-Persian wars: &lt;em&gt;Histories&lt;/em&gt;, originally meaning ‘critical inquiry,’ is therefore foundational to the Western historian tradition. The text is so profound that it accompanied the well known journalist and author Ryszard Kapuściński on his journeys across the globe. The book is on my reading list for some time now.&lt;/p&gt;
-&lt;p&gt;However, probably due to its old age the book is not very easy to digest. How can we use data science to have a first impression of the book content? Fortunately, text mining tools are available for natural language processing that can help us doing the job. Interesting sources concerning text mining in R are eg. &lt;a href="https://slcladal.github.io/index.html"&gt;LADAL&lt;/a&gt; and &lt;a href="https://content-analysis-with-r.com/index.html"&gt;Automated Content Analysis with R&lt;/a&gt;. Data scientists interested in history may find &lt;a href="https://programminghistorian.org/en/lessons/"&gt;Programming Historian&lt;/a&gt; quite illuminating. But now let us play a little bit with the text using &lt;a href="https://www.tidytextmining.com"&gt;tidytext&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Herodotus&lt;/em&gt; (484 – 425 BC), the first known author to do a
+systematic investigation of historical events, is famous for his
+important work on the Greco-Persian wars: &lt;em&gt;Histories&lt;/em&gt;, originally
+meaning ‘critical inquiry’, is therefore foundational to the Western
+historian tradition. The text is so profound that it accompanied the
+well-known journalist and author Ryszard Kapuściński on his journeys
+across the globe. The book is on my reading list for some time now.&lt;/p&gt;
+&lt;p&gt;However, probably due to its old age, or maybe because there are
+other things on my reading list, I hesitate to start reading the book.
+How can we use data science methods to have a first impression of the
+book’s content? Fortunately, text mining tools are available for natural
+language processing that can help us do the job. Interesting sources
+concerning text mining in R are eg. &lt;a href="https://slcladal.github.io/index.html"&gt;LADAL&lt;/a&gt; and &lt;a href="https://content-analysis-with-r.com/index.html"&gt;Automated Content
+Analysis with R&lt;/a&gt;. Data scientists interested in history may find &lt;a href="https://programminghistorian.org/en/lessons/"&gt;Programming
+Historian&lt;/a&gt; quite illuminating. But now let us play a little bit with
+the text using &lt;a href="https://www.tidytextmining.com"&gt;tidytext&lt;/a&gt;.&lt;/p&gt;
 
 &lt;div id="word-count" class="section level2" morss_own_score="3.0" morss_score="29.5"&gt;
 &lt;h2&gt;Word Count&lt;/h2&gt;
-&lt;p&gt;One first way to look at the ‘Histories’ is by using the number of words. What are the most prevalent words in the book, after excluding stop word (ie. irrelevant words)?&lt;/p&gt;
+&lt;p&gt;One first way to look at the ‘Histories’ is by using the number of
+words. What are the most prevalent words in the book, after excluding
+stop words (ie. irrelevant words)?&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;#Download data:
 #gutenberg_metadata
 #gutenberg_works(str_detect(title, "Herodotus"))
 #hist_in &amp;lt;- gutenberg_download(c(2707, 2456))
-#saveRDS(hist_in, "hist_gut.rds")
-hist_in &amp;lt;- readRDS("hist_gut.rds")
+#saveRDS(hist_in, "Histories/hist_gut.rds")
+hist_in &amp;lt;- readRDS("Histories/hist_gut.rds")
 
 #preparation: add chapter-information to data:
 hist_df &amp;lt;- hist_in %&amp;gt;%
@@ -948,7 +1221,7 @@ hist_wordcloud &amp;lt;- hist_tidy %&amp;gt;%
   geom_text_wordcloud(shape="square") + #, ylim=c(0,1), xlim=c(0.25, 0.85)
   theme_minimal() +
   scale_size_area(max_size = 15)
-ggsave(hist_wordcloud, file="p0_hist_wordcloud.png") # import plot via markdown
+ggsave(hist_wordcloud, file="Histories/p0_hist_wordcloud.png") # import plot via markdown
 
 
 #plot word count as bar char:
@@ -959,10 +1232,16 @@ p1_hist_tidy &amp;lt;- hist_tidy %&amp;gt;%
   ggplot(aes(n, word)) +
   geom_col( fill='darkgreen') +
   labs(y = 'word', x='number occurrences', title='Figure 1: Most frequent words in Histories')
-ggsave(p1_hist_tidy, file="p1_hist_tidy.png")  # import via markdown&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="https://boiled-data.github.io/p1_hist_tidy.png"&gt;&lt;/p&gt;
-&lt;p morss_own_score="7.0" morss_score="21.0"&gt;We see that &lt;em&gt;time&lt;/em&gt;, &lt;em&gt;land&lt;/em&gt;, &lt;em&gt;son&lt;/em&gt; and &lt;em&gt;king&lt;/em&gt; are on the top of the list followed by the main cultural players of the story – the &lt;em&gt;Persians&lt;/em&gt; and the Greek, represented by &lt;em&gt;Hellenes&lt;/em&gt; and &lt;em&gt;Athenians&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;A more sophisticated approach of revealing representative document words, is to focus on important words that are most distinctive to each of the book’s 9 chapters. We do this by weighting the term frequency (tf) with the inverse document frequency (idf).&lt;/p&gt;
+ggsave(p1_hist_tidy, file="Histories/p1_hist_tidy.png")  # import via markdown&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/Histories/p1_hist_tidy.png"&gt;&lt;/p&gt;
+&lt;p morss_own_score="7.0" morss_score="21.0"&gt;We see that &lt;em&gt;time&lt;/em&gt;, &lt;em&gt;land&lt;/em&gt;, &lt;em&gt;son&lt;/em&gt;, and
+&lt;em&gt;king&lt;/em&gt; are on the top of the list followed by the main cultural
+players of the story – the &lt;em&gt;Persians&lt;/em&gt; and the Greeks, represented
+by &lt;em&gt;Hellenes&lt;/em&gt; and &lt;em&gt;Athenians&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;A more sophisticated approach for revealing representative document
+words is to focus on important words that are most distinctive to each
+of the book’s 9 chapters. We do this by weighting the term frequency
+(tf) with the inverse document frequency (idf).&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;hist_tf_idf &amp;lt;- hist_df %&amp;gt;%
   unnest_tokens(word, text) %&amp;gt;%
   group_by(chapter, word) %&amp;gt;%
@@ -982,13 +1261,26 @@ p2_hist_tf_idf &amp;lt;- hist_tf_idf %&amp;gt;%
   scale_fill_simpsons() +
   labs(x = "term frequency (in %) * inverse document frequency", y = 'words', title='Figure 2: Most distinctive words per chapter') 
 
-ggsave(p2_hist_tf_idf, file="p2_hist_tf_idf.png") &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="https://boiled-data.github.io/p2_hist_tf_idf.png"&gt;&lt;/p&gt;
-&lt;p&gt;These most distinctive words per chapter show a strong emphasis on geographical and biographical details, as expected in historical literature. For example, the second book deals to large extent with Egypt, which can easily seen by the top keywords.&lt;/p&gt;
+ggsave(p2_hist_tf_idf, file="Histories/p2_hist_tf_idf.png") &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/Histories/p2_hist_tf_idf.png"&gt;&lt;/p&gt;
+&lt;p&gt;These most distinctive words per chapter show a strong emphasis on
+geographical and biographical details, as expected in historical
+literature. For example, the second book deals to large extent with
+Egypt, which can easily be seen by the top keywords.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id="topic-modeling" class="section level2" morss_own_score="3.0" morss_score="46.0"&gt;
 &lt;h2&gt;Topic Modeling&lt;/h2&gt;
-&lt;p&gt;How can we access content of the book in a more meaningful way by using abstract topics? We do so by applying &lt;em&gt;topic modeling&lt;/em&gt;, a statistical framework for unsupervised classification that discovers topics occurring in a collection of documents (here: chapters). We use Latent Dirichlet Allocation (LDA), a typical approach for topic modeling, in order to automatically find both associations between words and the topics, and associations between topics and the book’s nine chapters. Although the number of topics are a priori unknown and serve as an input for the algorithm, there are different approaches to automatically determine the optimal number of topics. So let us first figure out the relevant topic number at first.&lt;/p&gt;
+&lt;p&gt;How can we access the content of the book in a more meaningful way by
+using abstract topics? We do so by applying &lt;em&gt;topic modeling&lt;/em&gt;, a
+statistical framework for unsupervised classification that discovers
+topics occurring in a collection of documents (here: chapters). We use
+Latent Dirichlet Allocation (LDA), a typical approach for topic
+modeling, in order to automatically find both associations between words
+and the topics, and associations between topics and the book’s nine
+chapters. Although the number of topics is a priori unknown and serves
+as an input for the algorithm, there are different approaches to
+automatically determine the optimal number of topics. So let us first
+figure out the relevant topic number at first.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;#prepare data fro LDA
 hist_dtm &amp;lt;- hist_tidy  %&amp;gt;%
   count(chapter, word) %&amp;gt;%
@@ -1014,9 +1306,12 @@ p3_top_num &amp;lt;- ldatuning.metriken %&amp;gt;%
   scale_color_simpsons() +
   facet_wrap(~ opt, ncol=1) +
   labs(y=NULL, x='number of topics', title="Figure 3: Metrics to choose topic number")
-ggsave(p3_top_num, file="p3_top_num.png") &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="https://boiled-data.github.io/p3_top_num.png"&gt;&lt;/p&gt;
-&lt;p&gt;Given criteria above we choose 8 as the number of topics in &lt;em&gt;Histories&lt;/em&gt; and use them as the input for our final LDA. The result will allow us to extract the most distinctive words for each of the generated topics.&lt;/p&gt;
+ggsave(p3_top_num, file="Histories/p3_top_num.png") &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/Histories/p3_top_num.png"&gt;&lt;/p&gt;
+&lt;p&gt;Given the criteria above we choose 8 as the number of topics in
+&lt;em&gt;Histories&lt;/em&gt; and use them as the input for our final LDA. The
+result will allow us to extract the most distinctive words for each of
+the generated topics.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;#LDA with 8 topics:
 hist_lda &amp;lt;- LDA(hist_dtm, k = 8, control = list(seed = 42), method="Gibbs") 
 
@@ -1036,9 +1331,12 @@ p4_topic_word &amp;lt;- topic_word %&amp;gt;%
   facet_wrap(~topic, ncol = 2, scales = "free") +
   labs(x = "beta (term frequency)", y = "term", title='Figure 4: Most important words per topic')
 
-ggsave(p4_topic_word, file="p4_topic_word.png") &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="https://boiled-data.github.io/p4_topic_word.png"&gt;&lt;/p&gt;
-&lt;p&gt;One approach to understand the 8 topics is to look at their most important words. We can see that topic 7 contains words such as ‘son,’ ‘time,’ ‘king’ – words that are also most prevalent overall as shown above. How are the 8 topics distributed over the nine chapters?&lt;/p&gt;
+ggsave(p4_topic_word, file="Histories/p4_topic_word.png") &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/Histories/p4_topic_word.png"&gt;&lt;/p&gt;
+&lt;p&gt;One approach to understand the 8 topics is to look at their most
+important words. We can see that topic 7 contains words such as ‘son’,
+‘time’, and ‘king’ – words that are also most prevalent overall as shown
+above. How are the 8 topics distributed over the nine chapters?&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;#Association between Documents &amp;amp; Themen: (gamma)
 doc_topic &amp;lt;- tidy(hist_lda, matrix = "gamma") %&amp;gt;% 
   mutate(document=as_factor(document))
@@ -1051,22 +1349,42 @@ p5_doc_topic &amp;lt;- doc_topic %&amp;gt;%
   theme_minimal(base_size = 8) +
   labs(title="Figure 5: Relationship between topics and chapters", fill="gamma", y="topic", x="chapter")  
 
-ggsave(p5_doc_topic, file="p5_doc_topic.png") &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="https://boiled-data.github.io/p5_doc_topic.png"&gt;&lt;/p&gt;
-&lt;p&gt;A visual inspection suggests all chapters are a mixture of topic 4 and 7 + some individual component. Whereas topic 7 captures ideas of ancestry, topic 4 also contains words that are associated with religion. We also see that the chapters 2-3 and 8-9 seem to have some overlap in their content.&lt;/p&gt;
-&lt;p&gt;So far, we have used tools to figure out what the &lt;em&gt;Histories&lt;/em&gt; are about. According to &lt;span&gt;Kapuściński (2007)&lt;/span&gt; the main theme of &lt;em&gt;Histories&lt;/em&gt; can be described by the form of following 3 rules, which governed antiquity, in comparison with the modern world:&lt;/p&gt;
+ggsave(p5_doc_topic, file="Histories/p5_doc_topic.png") &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/Histories/p5_doc_topic.png"&gt;&lt;/p&gt;
+&lt;p&gt;A visual inspection suggests all chapters are a mixture of topics 4
+and 7 + some individual component. Whereas topic 7 captures ideas of
+ancestry, topic 4 also contains words that are associated with religion.
+We also see that chapters 2-3 and 8-9 seem to have some overlap in their
+content.&lt;/p&gt;
+&lt;p&gt;So far, we have used tools to figure out what the &lt;em&gt;Histories&lt;/em&gt;
+are about. According to &lt;span&gt;Kapuściński
+(2007)&lt;/span&gt;, the main theme of &lt;em&gt;Histories&lt;/em&gt; can be described by
+the following 3 rules, which governed antiquity, in comparison with the
+modern world:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;The law of vengeance applies.&lt;/li&gt;
 &lt;li&gt;Human happiness is not permanent.&lt;/li&gt;
 &lt;li&gt;No one can escape fate, even not a god.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;From today’s perspective these rules, especially 1 and 3, seem very fatalistic, but they governed peoples life with cycles of crime and punishment over a long period of time. If you know how to derive such an interpretation with text mining methods, please let me know.&lt;/p&gt;
-&lt;p&gt;One last aspect worth discussing is the fact that Herodotus had a Hellenian background. Was his description of the Persian-Greek conflict culturally biased and how can data analytics support detecting this?&lt;/p&gt;
+&lt;p&gt;From today’s perspective these rules, especially 1 and 3, seem very
+fatalistic, but they governed people’s life with cycles of crime and
+punishment over a long period of time. If you know how to derive such an
+interpretation with text mining methods, please let me know.&lt;/p&gt;
+&lt;p&gt;One last aspect worth discussing is the fact that Herodotus had a
+Hellenian background. Was his description of the Persian-Greek conflict
+culturally biased and how can data analytics support detect this?&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id="sentiment-analysis" class="section level2" morss_own_score="3.0" morss_score="21.0"&gt;
 &lt;h2&gt;Sentiment Analysis&lt;/h2&gt;
-&lt;p&gt;In order to tackle this question we use a sentiment word lexicon in which words are classified as positively or negatively. Are the terms ‘Persian,’ ‘Hellenic’ and ‘Athenian’ to the same extent associated with positive/negative words in &lt;em&gt;Histories&lt;/em&gt;?&lt;/p&gt;
-&lt;p morss_own_score="7.0" morss_score="15.0"&gt;As a first step we generate &lt;em&gt;bi-grams&lt;/em&gt; (or word pairs), and extract neighboring words of the terms &lt;em&gt;Persia&lt;/em&gt;, &lt;em&gt;Hellen&lt;/em&gt;, &lt;em&gt;Athen&lt;/em&gt;, reflecting different cultures. Then these neighboring words are matched with the sentiment lexicon and the number of sentiments are summed up for each of the 3 cultures.&lt;/p&gt;
+&lt;p&gt;In order to tackle this question we use a sentiment word lexicon in
+which words are classified as positive or negative. Are the terms
+‘Persian’, ‘Hellenic’, and ‘Athenian’ to the same extent associated with
+positive/negative words in &lt;em&gt;Histories&lt;/em&gt;?&lt;/p&gt;
+&lt;p morss_own_score="7.0" morss_score="15.0"&gt;As a first step, we generate &lt;em&gt;bi-grams&lt;/em&gt; (or word pairs) and
+extract neighboring words of the terms &lt;em&gt;Persia&lt;/em&gt;, &lt;em&gt;Hellen&lt;/em&gt;,
+and &lt;em&gt;Athen&lt;/em&gt;, reflecting different cultures. Then these
+neighboring words are matched with the sentiment lexicon and the number
+of sentiments is summed up for each of the 3 cultures.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;#remove stop words before calculating bi-grams:
 bg_herod &amp;lt;- hist_df %&amp;gt;%
   unnest_tokens(word, text) %&amp;gt;% 
@@ -1118,43 +1436,871 @@ p6_comp_cult &amp;lt;- comp_cult %&amp;gt;%
   geom_bar(stat="identity", position = "dodge") +
   labs(x = "number sentiments", y = "culture", title='Figure 6: Total number of sentiments by culture')
 
-ggsave(p6_comp_cult, file="p6_comp_cult.png") &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src="https://boiled-data.github.io/p6_comp_cult.png"&gt;&lt;/p&gt;
-&lt;p&gt;The results show that negative sentiments dominate all 3 cultures, compared to positive ones. However, it is easy to see that in relation to the total number of sentiments in each culture, the negative sentiments are actually more pronounced for the terms &lt;em&gt;Hellenian&lt;/em&gt; and &lt;em&gt;Athenian&lt;/em&gt;. So our results do not suggest that Herodotus’ Histories are culturally biased in favor of the Greek culture.&lt;/p&gt;
+ggsave(p6_comp_cult, file="Histories/p6_comp_cult.png") &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/Histories/p6_comp_cult.png"&gt;&lt;/p&gt;
+&lt;p&gt;The results show that negative sentiments dominate all 3 cultures,
+compared to positive ones. However, it is easy to see that in relation
+to the total number of sentiments in each culture, the negative
+sentiments are actually more pronounced for the terms &lt;em&gt;Hellenian&lt;/em&gt;
+and &lt;em&gt;Athenian&lt;/em&gt;. So our results do not suggest that Herodotus’
+Histories are culturally biased in favor of the Greek culture.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;h2&gt;Wrap Up&lt;/h2&gt;
-&lt;p&gt;We have seen how to use text mining tools together with visualization in order to get a first impression of &lt;em&gt;The Histories&lt;/em&gt;. In addition to analyzing words, we have seen how to generate abstract topics from text data. Also sentiment analysis was applied to see whether Herodotus’ description was positively biased towards the Greek culture.&lt;/p&gt;
-&lt;p&gt;Is the book worth reading after all? After mining &lt;em&gt;Histories&lt;/em&gt; the book will certainly stay on my reading list.&lt;/p&gt;
+&lt;p&gt;We have seen how to use text mining tools together with visualization
+in order to get a first impression of &lt;em&gt;The Histories&lt;/em&gt;. In
+addition to analyzing words, we have seen how to generate abstract
+topics from text data. Also, sentiment analysis was applied to see
+whether Herodotus’ description was positively biased toward the Greek
+culture.&lt;/p&gt;
+&lt;p&gt;Is the book worth reading after all? After mining &lt;em&gt;Histories&lt;/em&gt;
+the book will certainly stay on my reading list.&lt;/p&gt;
 
 
 &lt;h2&gt;References&lt;/h2&gt;
 
 &lt;div&gt;
-Gentzkow, Matthew, Bryan Kelly, and Matt Taddy. 2019. &lt;span&gt;“Text as Data.”&lt;/span&gt; &lt;em&gt;Journal of Economic Literature&lt;/em&gt; 57 (3): 535–74.
+Gentzkow, Matthew, Bryan Kelly, and Matt Taddy. 2019. &lt;span&gt;“Text as
+Data.”&lt;/span&gt; &lt;em&gt;Journal of Economic Literature&lt;/em&gt; 57 (3): 535–74.
 &lt;/div&gt;
 &lt;div&gt;
-Grün, Bettina, and Kurt Hornik. 2011. &lt;span&gt;“&lt;span&gt;topicmodels&lt;/span&gt;: An &lt;span&gt;R&lt;/span&gt; Package for Fitting Topic Models.”&lt;/span&gt; &lt;em&gt;Journal of Statistical Software&lt;/em&gt; 40 (13): 1–30. &lt;a href="https://doi.org/10.18637/jss.v040.i13"&gt;https://doi.org/10.18637/jss.v040.i13&lt;/a&gt;.
+Grün, Bettina, and Kurt Hornik. 2011. &lt;span&gt;“&lt;span&gt;topicmodels&lt;/span&gt;: An &lt;span&gt;R&lt;/span&gt; Package for Fitting
+Topic Models.”&lt;/span&gt; &lt;em&gt;Journal of Statistical Software&lt;/em&gt; 40 (13):
+1–30. &lt;a href="https://doi.org/10.18637/jss.v040.i13"&gt;https://doi.org/10.18637/jss.v040.i13&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Kapuściński, Ryszard. 2007. &lt;em&gt;Travels with Herodotus&lt;/em&gt;. Random House.
+Kapuściński, Ryszard. 2007. &lt;em&gt;Travels with Herodotus&lt;/em&gt;. Random
+House.
 &lt;/div&gt;
 &lt;div&gt;
-Le Pennec, Erwan, and Kamil Slowikowski. 2019. &lt;em&gt;Ggwordcloud: A Word Cloud Geom for ’Ggplot2’&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=ggwordcloud"&gt;https://CRAN.R-project.org/package=ggwordcloud&lt;/a&gt;.
+Le Pennec, Erwan, and Kamil Slowikowski. 2019. &lt;em&gt;Ggwordcloud: A Word
+Cloud Geom for ’Ggplot2’&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=ggwordcloud"&gt;https://CRAN.R-project.org/package=ggwordcloud&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Nikita, Murzintcev. 2020. &lt;em&gt;Ldatuning: Tuning of the Latent Dirichlet Allocation Models Parameters&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=ldatuning"&gt;https://CRAN.R-project.org/package=ldatuning&lt;/a&gt;.
+Nikita, Murzintcev. 2020. &lt;em&gt;Ldatuning: Tuning of the Latent Dirichlet
+Allocation Models Parameters&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=ldatuning"&gt;https://CRAN.R-project.org/package=ldatuning&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Robinson, David. 2021. &lt;em&gt;Gutenbergr: Download and Process Public Domain Works from Project Gutenberg&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=gutenbergr"&gt;https://CRAN.R-project.org/package=gutenbergr&lt;/a&gt;.
+Robinson, David. 2021. &lt;em&gt;Gutenbergr: Download and Process Public
+Domain Works from Project Gutenberg&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=gutenbergr"&gt;https://CRAN.R-project.org/package=gutenbergr&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Silge, Julia, and David Robinson. 2016. &lt;span&gt;“Tidytext: Text Mining and Analysis Using Tidy Data Principles in r.”&lt;/span&gt; &lt;em&gt;JOSS&lt;/em&gt; 1 (3). &lt;a href="https://doi.org/10.21105/joss.00037"&gt;https://doi.org/10.21105/joss.00037&lt;/a&gt;.
+Silge, Julia, and David Robinson. 2016. &lt;span&gt;“Tidytext: Text Mining and
+Analysis Using Tidy Data Principles in r.”&lt;/span&gt; &lt;em&gt;JOSS&lt;/em&gt; 1 (3).
+&lt;a href="https://doi.org/10.21105/joss.00037"&gt;https://doi.org/10.21105/joss.00037&lt;/a&gt;.
 &lt;/div&gt;
 &lt;div&gt;
-Xiao, Nan. 2018. &lt;em&gt;Ggsci: Scientific Journal and Sci-Fi Themed Color Palettes for ’Ggplot2’&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=ggsci"&gt;https://CRAN.R-project.org/package=ggsci&lt;/a&gt;.
+Xiao, Nan. 2018. &lt;em&gt;Ggsci: Scientific Journal and Sci-Fi Themed Color
+Palettes for ’Ggplot2’&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=ggsci"&gt;https://CRAN.R-project.org/package=ggsci&lt;/a&gt;.
 &lt;/div&gt;
 
+
+&lt;/div&gt;
+</ns0:encoded></item><item><title>What if..? Program Evaluation in the Labor Market.</title><link>https://boiled-data.github.io/BartLabor.html</link><guid>https://boiled-data.github.io/BartLabor.html</guid><pubDate> 1 Oct 2022 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.806938159879336" morss_score="16.67762781505175"&gt;
+
+
+
+&lt;a href="https://boiled-data.github.io/index.html"&gt;Start&lt;/a&gt;
+
+
+
+
+
+
+
+
+&lt;h1&gt;Program Evaluation in the Labor Market:
+Linear Regression and Bayesian Additive Regression Trees&lt;/h1&gt;
+&lt;h4&gt;1 Oct 2022&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;#Preliminaries:
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, eval = FALSE) #set eval = TRUE when run first
+
+rm(list=ls())
+
+library(tidyverse)
+library(haven)
+library(bartCause)
+library(kableExtra)
+library(tableone)
+library(gridExtra)
+library(grid)
+
+theme_set(theme_light())
+
+dir.create("BartLabor", showWarnings = FALSE)&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Evaluation of labor market programs is of great importance in order
+to learn how to better design programs and provide support effectively.
+Consequently, there is a huge literature on the evaluation of labor
+market training and we add to this by allowing for heterogeneous
+treatment effects. We will evaluate the effectiveness of a
+federally-funded labor treatment program &lt;span&gt;(LaLonde
+1986)&lt;/span&gt; which was implemented in the mid-1970s (US) with the
+objective of providing work experience. The male subsample we use
+consists of experimental treatment units and non-experimental comparison
+units &lt;span&gt;(Dehejia and Wahba 1999)&lt;/span&gt;. Let us
+assess whether the treatment had an impact on earnings given available
+pre-treatment variables.&lt;/p&gt;
+
+
+&lt;h2&gt;The Data&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;#download the data:
+#lalonde &amp;lt;- haven::read_dta("http://www.nber.org/~rdehejia/data/nsw.dta") 
+#saveRDS(lalonde, file="BartLabor/lalonde1986.rds")
+lalonde_in &amp;lt;- readRDS("BartLabor/lalonde1986.rds") 
+
+lalonde &amp;lt;- lalonde_in %&amp;gt;%
+            mutate(race=as_factor(case_when(black==1 ~ 'black',
+                                  hispanic==1 ~ 'hispanic',
+                                  TRUE ~ 'other'))) %&amp;gt;%
+           select(-c(black, hispanic, data_id)) %&amp;gt;%
+           relocate(re78, .before = 1)
+
+
+allvars &amp;lt;- colnames(lalonde)
+allvars &amp;lt;- allvars[allvars!='treat'] 
+catvars &amp;lt;- c("race", "married", "nodegree")
+
+
+#Descriptive Statistics:
+tab1 &amp;lt;- CreateTableOne(vars = allvars, strata="treat", data = lalonde, factorVars = catvars) 
+
+kableone(tab1, caption = "Table 1: Descriptive Statistics", col.names=c("Treat=0", "Treat=1", "p", ""))  %&amp;gt;%
+  remove_column(5) %&amp;gt;%
+  kable_classic(full_width = F) %&amp;gt;%
+  save_kable("BartLabor/bart_tab1_out.png", zoom = 3)&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/BartLabor/bart_tab1_out.png"&gt;&lt;/p&gt;
+&lt;/center&gt;
+&lt;p&gt;Table 1 shows that the mean of our variable of interest, the outcome
+&lt;em&gt;re78&lt;/em&gt; (income in 1978) is higher in our treatment group. Despite
+the observational character of our data, we see that the sample is
+relatively homogeneous concerning the pre-treatment variables: only the
+indicator variable &lt;em&gt;nodegree&lt;/em&gt;, on whether a person has a high
+school diploma, seems to vary between the treatment and control group
+significantly.&lt;/p&gt;
+
+&lt;div id="strategy-empirical-analysis" class="section level2" morss_own_score="3.0" morss_score="49.5"&gt;
+&lt;h2&gt;Strategy &amp;amp; Empirical Analysis&lt;/h2&gt;
+&lt;p&gt;In the potential outcome framework &lt;span&gt;(Rubin
+2005)&lt;/span&gt; the average treatment effect (ATE) can be written as the
+expectation &lt;span&gt;\(E(\delta)=E[y^1-y^0]\)&lt;/span&gt;,
+where &lt;span&gt;\(y^1\)&lt;/span&gt; and &lt;span&gt;\(y^0\)&lt;/span&gt; are potential outcomes of income in
+1978. Under conditional independence assumption &lt;span&gt;\((y^1,y^0)\bot T|X\)&lt;/span&gt; these outcomes are
+independent of treatment &lt;span&gt;\(T\)&lt;/span&gt; given
+covariates &lt;span&gt;\(X\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;We use 2 methods to estimate the average treatment effect (ATE).
+Firstly, we apply the well-known linear regression for estimation and
+risk adjustment &lt;span&gt;(eg. Angrist and Pischke 2009;
+Pearl 2013)&lt;/span&gt;. Secondly, we consider Bayesian Additive Regression
+Trees (BART) &lt;span&gt;(Chipman, George, and McCulloch
+2010; J. L. Hill 2011)&lt;/span&gt;, a machine learning model recently
+becoming popular that allows detecting relevant interactions in the data
+generating process and can be used to estimate heterogeneous treatment
+effects as well &lt;span&gt;(Carnegie, Dorie, and Hill 2019;
+J. Hill, Linero, and Murray 2020)&lt;/span&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#Linear regression
+
+lm &amp;lt;- lm(re78 ~ treat + re75 + age + education + race + married + nodegree, data=lalonde)
+
+ate_lm &amp;lt;- as.data.frame(coef(lm)) %&amp;gt;%
+        bind_cols(confint(lm)) %&amp;gt;%
+        rownames_to_column() %&amp;gt;%
+        filter(rowname=='treat') %&amp;gt;%
+        rename(estimate=`coef(lm)`, ci.lower=`2.5 %`, ci.upper=`97.5 %`) %&amp;gt;%
+        mutate(model='LinReg') %&amp;gt;%
+        relocate(model, .before=1) %&amp;gt;%
+        select(-rowname)
+  
+#BART
+
+bc_fit &amp;lt;- bartc(lalonde[,'re78'], lalonde[,'treat'], lalonde[,3:8], n.samples = 1000L, estimand='ate',
+                method.rsp='bart', method.trt='glm', verbose = FALSE) 
+
+
+ate_bart &amp;lt;- summary(bc_fit)$estimates %&amp;gt;%
+            select(-sd) %&amp;gt;%
+            mutate(model='BART')  %&amp;gt;%
+            relocate(model, .before=1)
+
+#Prepare ATE-Output
+ate &amp;lt;- ate_lm %&amp;gt;%
+      bind_rows(ate_bart)
+
+rownames(ate) &amp;lt;- NULL
+
+kable(
+  ate,
+  format="html", 
+  digits = 2,
+  caption = "Table 2: Treatment effect on income"
+) %&amp;gt;%
+  kable_classic(full_width = F) %&amp;gt;% 
+  footnote(general = "ci: 95 % confidence intervals for linear regression, \n credible intervals for BART ") %&amp;gt;%
+  save_kable("BartLabor/bart_tab2_out.png", zoom = 3)&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/BartLabor/bart_tab2_out.png"&gt;&lt;/p&gt;
+&lt;/center&gt;
+&lt;p&gt;We recognize in Table 2 that the treatment effect of BART is very
+similar to linear regression. The ATE-point estimates are both positive,
+suggesting that program participation increases average income by about
+800 USD. However, both 95% confidence-, and credible intervals show that
+there is a lot of variability in the data – an effect of zero cannot be
+rejected.&lt;/p&gt;
+&lt;p&gt;In addition to a point estimate, we often would like to have
+information on treatment effects for specific subgroups. This could help
+us to redesign the program or allow for more effective enrollment.
+Obviously, these questions can be of interest also in other areas –
+imagine online marketing or personalized medicine for example.
+Thankfully, BART can also provide treatment effects for each observation
+in the data, which are called the individual conditional average
+treatment effects (iCATE): &lt;span&gt;\(\tau(X_i)=E[y^1_i-y^0_i|X_i]\)&lt;/span&gt;. Let us have
+a look at the distribution of individual CATE in Figure 1.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#Extract individual treatment effects
+i_cate &amp;lt;- fitted(bc_fit, type="icate", sample = c("all"))
+
+
+data_cate &amp;lt;- lalonde %&amp;gt;%
+  bind_cols(as.data.frame(i_cate))
+  
+
+#Histogram CATE
+bart_p1 &amp;lt;- data_cate %&amp;gt;%
+  ggplot(aes(x=i_cate)) +
+  geom_histogram(bins=20, color='black', fill='grey') + 
+  theme_minimal() + labs(y = 'Number of people', x='individual CATE', title='Figure 1: Distribution of iCATE')
+
+
+ggsave(bart_p1, file="BartLabor/bart_p1.png")  # import in markdown&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/BartLabor/bart_p1.png"&gt;&lt;/p&gt;
+&lt;p&gt;Interestingly, although the peak of the distribution is around 800
+similar to ATE from above, the treatment effects vary a lot. There are
+even individuals for which a negative effect can be seen. In order to
+better understand the data generating process, we want to check next
+whether the individual treatment effects vary with explanatory
+variables, that could moderate the treatment effect. Figure 2 visualizes
+the treatment effects dependent on numeric variables age, income, and
+years of education before treatment.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#Scatterplots:
+
+#age
+p2 &amp;lt;- data_cate %&amp;gt;%
+  mutate(treat=as_factor(treat)) %&amp;gt;%
+  ggplot(aes(y=i_cate, x=age)) +
+  geom_point(aes(color=treat)) +
+  scale_colour_manual(values=c("blue", "orange")) +
+  geom_smooth(color='black') +
+  theme_minimal() 
+
+
+#income
+p3 &amp;lt;- data_cate %&amp;gt;%
+   mutate(treat=as_factor(treat)) %&amp;gt;%
+  ggplot(aes(y=i_cate, x=re75)) +
+  geom_point(aes(color=treat)) +
+  scale_colour_manual(values=c("blue", "orange")) +
+  geom_smooth(color='black') +
+  theme_minimal() 
+
+
+#educ
+p4 &amp;lt;- data_cate %&amp;gt;%
+   mutate(treat=as_factor(treat)) %&amp;gt;%
+  ggplot(aes(y=i_cate, x=education)) +
+  geom_point(aes(color=treat)) +
+  geom_smooth(aes(y=i_cate, x=education)) +
+  scale_colour_manual(values=c("blue", "orange")) +
+  geom_smooth(color='black') +
+  scale_x_continuous(breaks = rep(1:8)*2) +
+  theme_minimal() 
+
+#combine  plots next to each other
+title1=textGrob("Figure 2: CATE by numeric variables", gp=gpar(fontface="bold"))
+bart_p2 &amp;lt;- arrangeGrob(p2,  p3, p4, ncol=2, top=title1) 
+
+ggsave(bart_p2, file="BartLabor/bart_p2.png")  # import in markdown&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/BartLabor/bart_p2.png"&gt;&lt;/p&gt;
+&lt;p&gt;We see that program effectiveness increased with age until a
+threshold of 30 years. The program seems to have been most effective for
+people between 5 and 10K USD whereas the relationship between years of
+education and iCATE is U-shaped. The scatterplots allow you to visually
+distinguish iCATE by treatment status – a very nice feature as discussed
+above. Next, let us assess the interaction of our treatment with the
+factor variables.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#Boxplots:
+#race
+p5 &amp;lt;- data_cate %&amp;gt;%
+  ggplot(aes(y=i_cate, x=race)) +
+  geom_boxplot()  +
+  theme_minimal() 
+
+#married 
+p6 &amp;lt;- data_cate %&amp;gt;%
+  mutate(married=as.factor(married)) %&amp;gt;%
+  ggplot(aes(y=i_cate, x=married)) +
+  geom_boxplot() +
+  theme_minimal() 
+
+p7 &amp;lt;- data_cate %&amp;gt;%
+  mutate(nodegree=as.factor(nodegree)) %&amp;gt;%
+  ggplot(aes(y=i_cate, x=nodegree)) +
+  geom_boxplot() +
+  theme_minimal() 
+
+title2=textGrob("Figure 2: CATE by factor variables", gp=gpar(fontface="bold"))
+bart_p3 &amp;lt;- arrangeGrob(p5,  p6, p7, ncol=2, top=title2) 
+
+ggsave(bart_p3, file="BartLabor/bart_p3.png")  # import in markdown&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/BartLabor/bart_p3.png"&gt;&lt;/p&gt;
+&lt;p&gt;Figure 3 reveals that black colored benefited most from the program
+whereas being Hispanic is associated with negative CATE. Married people
+benefited highly from program participation as well.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Discussion&lt;/h2&gt;
+&lt;p&gt;We analysed the impact of a labor market program by using linear
+regression and BART, a tree-based nonparametric Bayesian regression
+approach that very successfully recovers the underlying data generating
+process in the presence of interactions. Using data from male program
+participants we have found some evidence for effect moderation of the
+treatment, especially being married and black color is associated with a
+positive treatment effect. The relation between pre-treatment income and
+iCATE is nonlinear. Marital status and income were found to generate
+interaction effects by &lt;span&gt;Rolling (2014)&lt;/span&gt; as
+well.&lt;/p&gt;
+&lt;p&gt;Let us recall the assumption that all relevant control variables are
+accounted for in the analysis (ignorability). This does not necessarily
+hold true and is also emphasized by the seminal study of &lt;span&gt;LaLonde (1986)&lt;/span&gt;. See for example &lt;span&gt;VanderWeele and Shpitser (2011)&lt;/span&gt; for a discussion
+of confounder selection. Furthermore, when estimating ATE we mainly
+focused on modeling the outcome equation of our treatment, hence we
+implicitly assume no selection into treatment. Luckily, other treatment
+effects (ATT, ATC) can be generated by re-weighting towards the
+population of interest &lt;span&gt;(eg. Morgan and Todd
+2008)&lt;/span&gt;, both in the case of linear regression and BART.&lt;/p&gt;
+
+
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id="refs" class="references csl-bib-body hanging-indent" morss_own_score="5.479768786127168" morss_score="37.57976878612717"&gt;
+&lt;div&gt;
+Angrist, Joshua D, and Jörn-Steffen Pischke. 2009. &lt;em&gt;Mostly Harmless
+Econometrics: An Empiricist’s Companion&lt;/em&gt;. Princeton university
+press.
+&lt;/div&gt;
+&lt;div&gt;
+Carnegie, Nicole, Vincent Dorie, and Jennifer L Hill. 2019.
+&lt;span&gt;“Examining Treatment Effect Heterogeneity Using BART.”&lt;/span&gt;
+&lt;em&gt;Observational Studies&lt;/em&gt; 5 (2): 52–70.
+&lt;/div&gt;
+&lt;div&gt;
+Chipman, Hugh A, Edward I George, and Robert E McCulloch. 2010.
+&lt;span&gt;“BART: Bayesian Additive Regression Trees.”&lt;/span&gt; &lt;em&gt;The Annals
+of Applied Statistics&lt;/em&gt; 4 (1): 266–98.
+&lt;/div&gt;
+&lt;div&gt;
+Dehejia, Rajeev H, and Sadek Wahba. 1999. &lt;span&gt;“Causal Effects in
+Nonexperimental Studies: Reevaluating the Evaluation of Training
+Programs.”&lt;/span&gt; &lt;em&gt;Journal of the American Statistical
+Association&lt;/em&gt; 94 (448): 1053–62.
+&lt;/div&gt;
+&lt;div&gt;
+Hill, Jennifer L. 2011. &lt;span&gt;“Bayesian Nonparametric Modeling for
+Causal Inference.”&lt;/span&gt; &lt;em&gt;Journal of Computational and Graphical
+Statistics&lt;/em&gt; 20 (1): 217–40.
+&lt;/div&gt;
+&lt;div&gt;
+Hill, Jennifer, Antonio Linero, and Jared Murray. 2020. &lt;span&gt;“Bayesian
+Additive Regression Trees: A Review and Look Forward.”&lt;/span&gt; &lt;em&gt;Annual
+Review of Statistics and Its Application&lt;/em&gt; 7 (1).
+&lt;/div&gt;
+&lt;div&gt;
+LaLonde, Robert J. 1986. &lt;span&gt;“Evaluating the Econometric Evaluations
+of Training Programs with Experimental Data.”&lt;/span&gt; &lt;em&gt;The American
+Economic Review&lt;/em&gt;, 604–20.
+&lt;/div&gt;
+&lt;div&gt;
+Morgan, Stephen L, and Jennifer J Todd. 2008. &lt;span&gt;“6. A Diagnostic
+Routine for the Detection of Consequential Heterogeneity of Causal
+Effects.”&lt;/span&gt; &lt;em&gt;Sociological Methodology&lt;/em&gt; 38 (1): 231–82.
+&lt;/div&gt;
+&lt;div&gt;
+Pearl, Judea. 2013. &lt;span&gt;“Linear Models: A Useful
+&lt;span&gt;‘Microscope’&lt;/span&gt; for Causal Analysis.”&lt;/span&gt; &lt;em&gt;Journal of
+Causal Inference&lt;/em&gt; 1 (1): 155–70.
+&lt;/div&gt;
+&lt;div&gt;
+Rolling, Craig Anthony. 2014. &lt;span&gt;“Estimation of Conditional Average
+Treatment Effects.”&lt;/span&gt; PhD thesis, University of Minnesota.
+&lt;/div&gt;
+&lt;div&gt;
+Rubin, Donald B. 2005. &lt;span&gt;“Causal Inference Using Potential Outcomes:
+Design, Modeling, Decisions.”&lt;/span&gt; &lt;em&gt;Journal of the American
+Statistical Association&lt;/em&gt; 100 (469): 322–31.
+&lt;/div&gt;
+&lt;div&gt;
+VanderWeele, Tyler J, and Ilya Shpitser. 2011. &lt;span&gt;“A New Criterion
+for Confounder Selection.”&lt;/span&gt; &lt;em&gt;Biometrics&lt;/em&gt; 67 (4): 1406–13.
+&lt;/div&gt;
+&lt;div&gt;
+Wickham, Hadley, Evan Miller, and Danny Smith. 2022. &lt;em&gt;Haven: Import
+and Export ’SPSS’, ’Stata’ and ’SAS’ Files&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=haven"&gt;https://CRAN.R-project.org/package=haven&lt;/a&gt;.
+&lt;/div&gt;
+&lt;div&gt;
+Zhu, Hao. 2021. &lt;em&gt;kableExtra: Construct Complex Table with ’Kable’ and
+Pipe Syntax&lt;/em&gt;. &lt;a href="https://CRAN.R-project.org/package=kableExtra"&gt;https://CRAN.R-project.org/package=kableExtra&lt;/a&gt;.
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+</ns0:encoded></item><item><title>Tidymodels Machine Learning: Diabetes Classification</title><link>https://boiled-data.github.io/ClassificationDiabetes.html</link><guid>https://boiled-data.github.io/ClassificationDiabetes.html</guid><pubDate> 13 Jul 2023 00:00:00 GMT</pubDate><ns0:encoded xmlns:ns0="http://purl.org/rss/1.0/modules/content/">&lt;div class="container-fluid main-container" morss_own_score="5.699352051835853" morss_score="22.0641496679846"&gt;
+
+
+
+&lt;a href="https://boiled-data.github.io/index.html"&gt;Start&lt;/a&gt;
+
+
+
+
+
+
+
+
+&lt;h1&gt;Tidymodels Machine Learning: Diabetes
+Classification&lt;/h1&gt;
+&lt;h4&gt;9 July 2023&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code&gt;#Preliminaries:
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, eval = FALSE) #set eval = TRUE when run first
+
+rm(list=ls())
+
+library(tidyverse)
+library(tidymodels)
+library(themis)
+library(doParallel)
+library(gtsummary) 
+library(gt)
+library(bonsai) 
+library(discrim)
+library(finetune)
+library(patchwork)
+library(vip)
+library(DALEXtra) 
+
+dir.create("cl_diabetes", showWarnings = FALSE)
+
+tidymodels_prefer() &lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Motivation&lt;/h2&gt;
+&lt;p&gt;Diabetes is a leading cause of death and disability worldwide,
+affecting people regardless of country, age, and sex. Type 2 diabetes,
+which makes up most of the diabetes cases, is largely preventable and
+sometimes potentially reversible if identified and managed early in the
+disease course. &lt;span&gt;(Ong et al. 2023)&lt;/span&gt; Hence,
+diagnostic routines play an important role in diabetes healthcare
+management. In order to be able to reliably predict the disease we first
+need to learn the association between risk factors and diabetes from
+data, and secondly, we need to provide out-of-sample predictions using
+new patient data. But how can we learn about the association between
+available features (risk factors) and diabetes? We use the
+&lt;a href="https://www.tidymodels.org/"&gt; tidymodels
+framework &lt;/a&gt; and apply different machine learning methods to the
+&lt;a href="https://www.kaggle.com/datasets/iammustafatz/diabetes-prediction-dataset"&gt;
+Kaggle diabetes data set. &lt;/a&gt;&lt;/p&gt;
+
+&lt;div id="data-modeling-strategy" class="section level2" morss_own_score="2.9591836734693877" morss_score="25.18995290423862"&gt;
+&lt;h2&gt;Data &amp;amp; Modeling Strategy&lt;/h2&gt;
+&lt;p&gt;The data contains 100.000 instances, the binary label
+&lt;em&gt;diabetes&lt;/em&gt;, and 8 potential risk factors. We split the data into
+training and test partitions (75/25) before further analysis.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#download data from Kaggle and include into folder cl_diabetes
+#read the data:
+diabetes_df &amp;lt;- read_csv('cl_diabetes/diabetes_prediction_dataset.csv') %&amp;gt;%
+  mutate(diabetes = as.factor(diabetes)) %&amp;gt;%
+  mutate(bmi=as.numeric(case_when(bmi!='N/A' ~ bmi,
+                                  TRUE ~ NA_real_))) %&amp;gt;%
+  mutate_if(is.character, as.factor) 
+
+
+# Reproducibility 
+set.seed(1005)
+
+# Divide data into training and test: 
+diabetes_split &amp;lt;- diabetes_df %&amp;gt;%
+                initial_split(prop = 0.75, strata=diabetes)
+
+diabetes_train_df &amp;lt;- training(diabetes_split)
+diabetes_test_df  &amp;lt;-  testing(diabetes_split)
+
+
+#create summary statistics:
+hd_tab1 &amp;lt;- diabetes_train_df %&amp;gt;% 
+  tbl_summary(by=diabetes,
+              statistic = list(all_continuous() ~ "{mean} ({sd})",
+                              all_categorical() ~ "{n} ({p}%)"),
+              digits = all_continuous() ~ 2) %&amp;gt;%
+    add_p(test=list(all_continuous() ~ "t.test", 
+                    all_categorical() ~ "chisq.test.no.correct")) %&amp;gt;%
+  add_overall() %&amp;gt;%
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**diabetes**") %&amp;gt;%
+  modify_caption("**Table 1: Descriptive Statistics Training Data**") 
+
+#save summary statistics:
+hd_tab1 %&amp;gt;%
+  as_gt() %&amp;gt;%
+  gtsave("cl_diabetes/diabetes_tab1.png", expand = 10)&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;p&gt;&lt;img src="https://boiled-data.github.io/cl_diabetes/diabetes_tab1.png"&gt;&lt;/p&gt;
+&lt;/center&gt;
+&lt;p&gt;A first look at the dataset shows that all explanatory variables are
+associated with diabetes, as the p-values &amp;lt; 0.001 suggest. As
+expected aging and morbidities hypertension and heart disease are
+positively correlated with diabetes. We also see that our outcome of
+interest - diabetes - is very unbalanced, which we should keep in mind
+when selecting our evaluation metric. The
+&lt;a href="http://www.feat.engineering/"&gt; feature
+engineering &lt;/a&gt;-steps are pretty straightforward. After having created
+the training and test partitions we normalize all numeric predictors and
+create dummy variables for the categorical ones. Furthermore, we
+down-sample the data toward the minority class.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# data preparation before training:
+diabetes_recipe &amp;lt;-
+  recipe(diabetes ~ ., data=diabetes_train_df) %&amp;gt;%
+  step_normalize(all_numeric_predictors()) %&amp;gt;%
+  step_dummy(all_nominal_predictors()) %&amp;gt;%
+  step_zv(all_predictors()) %&amp;gt;%
+  step_downsample(diabetes) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We compare different model types in our analysis because we want to
+select the model which predicts diabetes best. As &lt;span&gt;Domingos (2012)&lt;/span&gt; points out, the best model
+depends on the use case and cannot be known in advance. Henceforth, we
+use XGBoost, naive Bayes, a support vector machine, a decision tree
+model, and logistic regression in our workflow. On the one hand, we
+consider logistic regression as our baseline model because it is simple
+and needs no additional hyperparameter tuning. On the other hand, simple
+decision trees have the advantage that they a highly interpretable and
+are therefore part of the human decision-making toolkit &lt;span&gt;(eg. Wang, Luan, and Gigerenzer 2022)&lt;/span&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# try out different ml-approaches: 
+lr_mod &amp;lt;- logistic_reg() %&amp;gt;%
+  set_engine("glm") %&amp;gt;% 
+  set_mode("classification")
+
+svm_mod &amp;lt;- svm_linear(cost = tune(), margin = tune()) %&amp;gt;% 
+  set_engine("kernlab") %&amp;gt;% 
+  set_mode("classification")
+
+xgb_mod &amp;lt;- boost_tree(tree_depth = tune(), learn_rate = tune(), loss_reduction = tune(), 
+             min_n = tune(), sample_size = tune(), trees = tune()) %&amp;gt;% 
+  set_engine("xgboost") %&amp;gt;% 
+  set_mode("classification")
+
+nb_mod &amp;lt;- naive_Bayes(smoothness = tune(), Laplace = tune()) %&amp;gt;% 
+  set_engine("naivebayes") %&amp;gt;% 
+  set_mode("classification")
+
+cit_mod &amp;lt;- decision_tree(tree_depth=tune(), min_n=tune()) %&amp;gt;%
+  set_engine(engine = "partykit") %&amp;gt;%
+  set_mode(mode = "classification") &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id="hyperparameter-tuning" class="section level2" morss_own_score="5.829787234042553" morss_score="17.929787234042553"&gt;
+&lt;h2&gt;Hyperparameter Tuning&lt;/h2&gt;
+&lt;p&gt;To manage the
+&lt;a href="https://www.bradyneal.com/bias-variance-tradeoff-textbooks-update"&gt;
+bias-variance tradeoff &lt;/a&gt; the model’s hyperparameters are selected by
+combining cross-validation using a space-filling grid search design. We
+consider ROC-AUC as our evaluation metric of interest. The AUC is
+threshold-independent and therefore often a good choice in situations
+when the outcome variable is relatively unbalanced. &lt;span&gt;(See for example Fawcett 2006)&lt;/span&gt;. Finally,
+parallelization helps speed up the whole process.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# prepare cross validation 
+set.seed(1001)
+diabetes_train_folds &amp;lt;- vfold_cv(diabetes_train_df, v=8, strata = diabetes)
+
+# prepare workflow
+wf_set &amp;lt;- workflow_set(
+    preproc = list(mod = diabetes_recipe), 
+    models = list(log_reg=lr_mod, svm_linear = svm_mod, xgboost=xgb_mod, naiveBayes=nb_mod, tree=cit_mod)) 
+
+# prepare grid: 
+grid_ctrl &amp;lt;-
+  control_grid(
+    save_pred = TRUE,
+    parallel_over = "everything",
+    save_workflow = TRUE , 
+    event_level = "second"
+  )
+
+
+# prepare parallel processing: 
+cores &amp;lt;- parallel::detectCores(logical = TRUE)
+
+
+# Create a cluster object and then register: 
+cl &amp;lt;- makePSOCKcluster(cores) 
+registerDoParallel(cl)
+
+# Start hyperparameter tuning:
+train_results &amp;lt;- wf_set %&amp;gt;%
+  workflow_map(
+    fn = 'tune_grid', 
+    metrics = metric_set(roc_auc), 
+    seed = 1503,
+    resamples = diabetes_train_folds, 
+    grid = 25, 
+    control = grid_ctrl 
+  )
+
+stopCluster(cl)
+
+#plot results of hyperparameter tuning:
+p1_diab &amp;lt;- train_results %&amp;gt;%
+  autoplot() +
+  theme_minimal() +
+  labs(title='Figure 1: Results Hyperparameter Tuning')
+
+ggsave(p1_diab, file="cl_diabetes/p1_diab.png")&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;img src="https://boiled-data.github.io/cl_diabetes/p1_diab.png"&gt;
+&lt;/center&gt;
+&lt;p&gt;Figure 1 shows performance metrics for all experiments ranked by AUC.
+We find that XGBoost gives the best results concerning AUC followed by
+the decision tree, naive Bayes, and logistic regression.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Further Optimization&lt;/h2&gt;
+&lt;p&gt;Can we still improve on the current result? Although we considered a
+space-filling grid search design when tuning hyperparameters, there may
+be room for further improvement. Hence, we apply
+&lt;a href="https://www.tmwr.org/iterative-search.html"&gt;
+simulated annealing, &lt;/a&gt; iteratively trying out little hyperparameter
+changes, starting from the current best model.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;xgb_results &amp;lt;- train_results %&amp;gt;% 
+            extract_workflow_set_result("mod_xgboost") 
+
+xgb_wf &amp;lt;- train_results %&amp;gt;% 
+  extract_workflow("mod_xgboost")
+
+
+cl &amp;lt;- makePSOCKcluster(cores) 
+registerDoParallel(cl)
+
+#Increase performance with simulated annealing
+
+set.seed(1005)
+xgb_sa &amp;lt;- xgb_wf %&amp;gt;%
+    tune_sim_anneal(
+    resamples =diabetes_train_folds,
+    metrics = metric_set(roc_auc), 
+    initial = xgb_results,
+    iter = 40, 
+    control = control_sim_anneal(verbose = TRUE, 
+                                 no_improve = 10L, event_level = "second", cooling_coef = 0.1))
+
+stopCluster(cl)
+
+# save max auc:
+auc_out &amp;lt;- xgb_sa  %&amp;gt;% 
+  collect_metrics() %&amp;gt;% 
+  slice_max(mean) %&amp;gt;%
+  pull(mean)
+
+
+# visualize sim annealing:
+p2_diab &amp;lt;- autoplot(xgb_sa, type = "performance", metric = 'roc_auc') +
+  geom_hline(yintercept=auc_out, linetype="dashed", color = 'red') +
+  labs(title='Figure 2: Performance Improvement by Simulated Annealing ') +
+  theme_minimal()
+
+ggsave(p2_diab, file="cl_diabetes/p2_diab.png")&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;img src="https://boiled-data.github.io/cl_diabetes/p2_diab.png"&gt;
+&lt;/center&gt;
+&lt;p&gt;The results in Figure 2 show that we only did achieve minimal
+improvements compared to the current best model (AUC of 0.978).&lt;/p&gt;
+
+&lt;div id="interpretable-machine-learning" class="section level2" morss_own_score="2.904109589041096" morss_score="20.89763709713171"&gt;
+&lt;h2&gt;Interpretable Machine Learning&lt;/h2&gt;
+&lt;p&gt;One important aspect of ML classifiers is that models with high
+predictive power do not necessarily have good explanatory power &lt;span&gt;(eg. Shmueli 2010)&lt;/span&gt;. In order to generate
+actionable insights it may nevertheless be very helpful to understand
+how the classifier comes to a certain conclusion. This is especially
+important in the medical field. Hence,
+&lt;a href="https://christophm.github.io/interpretable-ml-book/"&gt;
+interpretable machine learning &lt;/a&gt; can be an important driver for
+building trust in data-driven technologies. For example, the variable
+importance plot in Figure 3 shows that the variables HbA1c-level, blood
+glucose, age, and BMI are major factors that contribute to the
+diabetes-model fit.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# extract model fit after simulated annealing: 
+xgb_fit &amp;lt;- xgb_sa %&amp;gt;% 
+  extract_workflow() %&amp;gt;%
+  finalize_workflow(xgb_sa %&amp;gt;% select_best())  %&amp;gt;%
+  fit(data = diabetes_train_df) %&amp;gt;%
+  extract_fit_parsnip()
+
+# Variable importance plot:
+p3_diab &amp;lt;- xgb_fit %&amp;gt;%
+  vip() +
+  theme_minimal() +
+  labs(title="Figure 3: Variable Importance")
+
+ggsave(p3_diab, file="cl_diabetes/p3_diab.png")&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;img src="https://boiled-data.github.io/cl_diabetes/p3_diab.png"&gt;
+&lt;/center&gt;
+&lt;p&gt;A look at partial dependence plots reveals the conditional impact of
+our explanatory variables on the predictions:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#prepare training data for pdp:
+xgb_df &amp;lt;- xgb_sa %&amp;gt;% 
+  extract_workflow() %&amp;gt;%
+  finalize_workflow(xgb_sa %&amp;gt;% select_best())  %&amp;gt;%
+  fit(data = diabetes_train_df) %&amp;gt;%
+  extract_recipe() %&amp;gt;%
+  bake(new_data=diabetes_train_df)
+
+explain_xgb &amp;lt;- explain_tidymodels(
+                model=xgb_fit, 
+                data = (xgb_df %&amp;gt;% dplyr::select(-diabetes)), #data without target column
+                y = xgb_df$diabetes,
+                label = "xgboost",
+                verbose = FALSE
+              )
+
+# create model profile:
+pdp_diab  &amp;lt;- model_profile(explain_xgb, N=1000, variables = "HbA1c_level", groups='hypertension') 
+
+#Create ggplot manually for HbA1c, grouped by hypertension:
+p4_diab &amp;lt;- pdp_diab$agr_profiles %&amp;gt;% 
+  as_tibble() %&amp;gt;%
+  mutate(RiskFactor=paste0('hypertension=', ifelse(stringr::str_sub(`_label_`, 9, 9)=='-', '0', '1'))) %&amp;gt;%
+  ggplot(aes(x=`_x_`, y=`_yhat_`, color=RiskFactor)) +
+  geom_line(linewidth=2) +
+  labs(y='Diabetes Risk Score', x='HbA1c_level', title='Figure 4: Partial Dependence Plot') +
+  theme_minimal() 
+
+ggsave(p4_diab, file="cl_diabetes/p4_diab.png")&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;img src="https://boiled-data.github.io/cl_diabetes/p4_diab.png"&gt;
+&lt;/center&gt;
+&lt;p&gt;For example, in Figure 4 we see that the conditional association
+between HbA1c level and diabetes is positive, and even more pronounced
+for people with hypertension, which makes sense as hypertension is
+another known risk factor for diabetes. At this point, we should also
+remember that our predictions cannot be interpreted as probabilities
+&lt;span&gt;(Van Calster et al. 2019)&lt;/span&gt;. If we would
+like the predicted values to equal expected probabilities we would need
+to
+&lt;a href="https://www.unofficialgoogledatascience.com/2021/04/why-model-calibration-matters-and-how.html"&gt;
+recalibrate &lt;/a&gt; the risk scores or use another modeling strategy.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;h2&gt;Testing&lt;/h2&gt;
+&lt;p&gt;Now, as we have developed a final model, we will test whether our
+predictions do also perform well on new unseen data. Hence we will test
+the model performance on our hold-out data partition. As usual, the
+confusion matrix is based on a risk-score cutoff of 0.5. The AUC of 0.98
+on the test data confirms that the model generalizes well on unseen
+data.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# Fit new best model once on test data at the final end of the process: 
+test_results &amp;lt;- xgb_sa %&amp;gt;%
+  extract_workflow() %&amp;gt;%
+  finalize_workflow(xgb_sa %&amp;gt;% select_best()) %&amp;gt;% 
+  last_fit(split = diabetes_split)
+
+# create predictions:
+test_p &amp;lt;- collect_predictions(test_results)
+
+# confusion matrix:
+conf_mat &amp;lt;- conf_mat(test_p, diabetes, .pred_class) 
+
+p5a_diab &amp;lt;- conf_mat %&amp;gt;%
+  autoplot(type = "heatmap") +
+  theme(legend.position = "none") +
+  labs(title='Confusion Matrix')
+
+#AUC overall
+auc &amp;lt;- test_p %&amp;gt;%
+  roc_auc(diabetes, .pred_1, event_level = "second") %&amp;gt;%
+  mutate(.estimate=round(.estimate, 3)) %&amp;gt;%
+  pull(.estimate)
+
+#ROC-curve
+roc_curve &amp;lt;- roc_curve(test_p, diabetes, .pred_1, event_level = "second") 
+
+p5b_diab &amp;lt;- roc_curve %&amp;gt;%
+  autoplot() +
+  annotate('text', x = 0.3, y = 0.75, label = auc) +
+  theme_minimal() +
+  labs(title='ROC-AUC')
+  
+#combine both plots:
+p5_diab &amp;lt;- p5a_diab + p5b_diab + plot_annotation('Figure 5: Evaluation on Test Data')
+
+ggsave(p5_diab, file="cl_diabetes/p5_diab.png")&lt;/code&gt;&lt;/pre&gt;
+&lt;center&gt;
+&lt;img src="https://boiled-data.github.io/cl_diabetes/p5_diab.png"&gt;
+&lt;/center&gt;
+
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;We did a comparative analysis of different machine learning
+classifiers to predict diabetes with some medical risk factors using the
+tidymodels framework. Then we showed how to further improve the best
+model (in our case XGBoost) using iterative grid search before
+validating the model on test data. In addition, we applied visualization
+methods to better understand how the predictions are generated. Overall,
+we see that machine learning methods can fruitfully support medical
+decision-making, if the model is well developed, validated, and
+&lt;a href="https://vetiver.rstudio.com/"&gt; integrated
+carefully &lt;/a&gt; into the application of interest.&lt;/p&gt;
+
+
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id="refs" class="references csl-bib-body hanging-indent" morss_own_score="5.45945945945946" morss_score="24.999050774912845"&gt;
+&lt;div&gt;
+Domingos, Pedro. 2012. &lt;span&gt;“A Few Useful Things to Know about Machine
+Learning.”&lt;/span&gt; &lt;em&gt;Communications of the ACM&lt;/em&gt; 55 (10): 78–87.
+&lt;/div&gt;
+&lt;div&gt;
+Fawcett, Tom. 2006. &lt;span&gt;“An Introduction to ROC Analysis.”&lt;/span&gt;
+&lt;em&gt;Pattern Recognition Letters&lt;/em&gt; 27 (8): 861–74.
+&lt;/div&gt;
+&lt;div&gt;
+Kuhn, Max, and Julia Silge. 2022. &lt;em&gt;Tidy Modeling with r&lt;/em&gt;. "
+O’Reilly Media, Inc.".
+&lt;/div&gt;
+&lt;div&gt;
+Kuhn, Max, and Hadley Wickham. 2020. &lt;em&gt;Tidymodels: A Collection of
+Packages for Modeling and Machine Learning Using Tidyverse
+Principles.&lt;/em&gt; &lt;a href="https://www.tidymodels.org"&gt;https://www.tidymodels.org&lt;/a&gt;.
+&lt;/div&gt;
+&lt;div&gt;
+Maksymiuk, Szymon, Alicja Gosiewska, and Przemyslaw Biecek. 2020.
+&lt;span&gt;“Landscape of r Packages for eXplainable Artificial
+Intelligence.”&lt;/span&gt; &lt;em&gt;arXiv&lt;/em&gt;. &lt;a href="https://arxiv.org/abs/2009.13248"&gt;https://arxiv.org/abs/2009.13248&lt;/a&gt;.
+&lt;/div&gt;
+&lt;div&gt;
+Ong, Kanyin Liane, Lauryn K Stafford, Susan A McLaughlin, Edward J
+Boyko, Stein Emil Vollset, Amanda E Smith, Bronte E Dalton, et al. 2023.
+&lt;span&gt;“Global, Regional, and National Burden of Diabetes from 1990 to
+2021, with Projections of Prevalence to 2050: A Systematic Analysis for
+the Global Burden of Disease Study 2021.”&lt;/span&gt; &lt;em&gt;The Lancet&lt;/em&gt;.
+&lt;/div&gt;
+&lt;div&gt;
+Shmueli, Galit. 2010. &lt;span&gt;“To Explain or to Predict?”&lt;/span&gt;
+&lt;em&gt;Statistical Science&lt;/em&gt; 25 (3): 289–310.
+&lt;/div&gt;
+&lt;div&gt;
+Van Calster, Ben, David J McLernon, Maarten Van Smeden, Laure Wynants,
+and Ewout W Steyerberg. 2019. &lt;span&gt;“Calibration: The Achilles Heel of
+Predictive Analytics.”&lt;/span&gt; &lt;em&gt;BMC Medicine&lt;/em&gt; 17 (1): 1–7.
+&lt;/div&gt;
+&lt;div&gt;
+Wang, Yuhui, Shenghua Luan, and Gerd Gigerenzer. 2022. &lt;span&gt;“Modeling
+Fast-and-Frugal Heuristics.”&lt;/span&gt; &lt;em&gt;PsyCh Journal&lt;/em&gt; 11 (4):
+600–611.
+&lt;/div&gt;
+&lt;/div&gt;
 
 &lt;/div&gt;
 </ns0:encoded></item></channel></rss>
