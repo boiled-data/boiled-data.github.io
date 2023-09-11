@@ -359,11 +359,14 @@ media strives heavily for our attention <span class="citation">(e.g.
 Zuboff 2019)</span> with pictures, facts, stories, and our resources for
 verification are usually very limited. The good news is that it is
 possible to come up with more evidence-based decisions, especially as
-data availability (see e.g. <a href="https://datahub.io/">DataHub</a> or
-<a href="https://datasetsearch.research.google.com/">Dataset
-Search</a>), software and hardware limitations become less of a problem.
-But how to separate the wheat from the chaff? One step in the right
-direction will certainly be proper data literacy and transparency.</p>
+data availability
+(e.g. <a href="https://www.rebeccabarter.com/blog/2023-03-28-data_sources.html" target="_blank">
+Rebacca Barter’s blog post </a> or
+<a href="https://www.data-is-plural.com/" target="_blank"> Data Is
+Plural </a>), software and hardware limitations become less of a
+problem. But how to separate the wheat from the chaff? One step in the
+right direction will certainly be proper data literacy and
+transparency.</p>
 </div>
 <div id="help" class="section level2">
 <h2>Help</h2>
@@ -373,32 +376,35 @@ class="citation">Spiegelhalter (2019)</span>. The work of <span
 class="citation">Kahneman (2011)</span> and <span
 class="citation">Mousavi and Gigerenzer (2014)</span> revolves around
 rational decision-making and people’s difficulties in probabilistic
-reasoning. Analytical tools such as statistics software <a
-href="https://www.r-project.org/">R</a> allow powerful data analysis
-and, in conjunction with <a
-href="https://rmarkdown.rstudio.com/">R-Markdown</a> or <a
-href="https://quarto.org/">Quarto</a>, present results together with the
-code used. Platforms like <a
-href="https://www.r-bloggers.com/">R-Bloggers</a> and <a
-href="https://rweekly.org/">R Weekly</a> facilitate developments in
-reproducible data analysis. Such possibilities, in parallel with
-adequate habits of communication <span class="citation">(eg. Watzlawick
-2018; Franconeri et al. 2021)</span> can enable cultivating sound
-(public) discussion of data-driven decision making. Being able to do the
-work provides you with a range of skills from exploring and <a
-href="https://www.r-graph-gallery.com/">visualizing data structures</a>,
-over predicting likely outcomes for new instances (eg. <span
-class="citation">Kuhn and Johnson (2013)</span>), to assessing causal
-relationships (eg. <span class="citation">Pearl and Mackenzie
-(2018)</span>).</p>
+reasoning. Analytical tools such as statistics software
+<a href="https://www.r-project.org/" target="_blank"> R </a> allow
+powerful data analysis and, in conjunction with
+<a href="https://rmarkdown.rstudio.com/" target="_blank"> R-Markdown
+</a> or <a href="https://quarto.org/" target="_blank"> Quarto </a>,
+present results together with the underlying code. Platforms like
+<a href="https://www.r-bloggers.com/" target="_blank"> R-Bloggers </a>
+and <a href="https://rweekly.org/" target="_blank"> R Weekly </a>
+facilitate developments in reproducible data analysis. Such
+possibilities, in parallel with adequate habits of communication <span
+class="citation">(eg. Watzlawick 2018; Franconeri et al. 2021)</span>,
+allow a data-enabled discussion and decision making. Knowledge on
+<a href="https://tellingstorieswithdata.com/" target="_blank">
+statistical communication, programming, and modeling </a> provides you
+with a range of skills from exploring and
+<a href="https://www.r-graph-gallery.com/" target="_blank"> visualizing
+data structures </a>, over predicting likely outcomes for new instances
+(eg. <span class="citation">Kuhn and Johnson (2013)</span>), to
+assessing causal relationships (eg. <span class="citation">Pearl and
+Mackenzie (2018)</span>).</p>
 </div>
 <div id="example" class="section level2">
 <h2>Example</h2>
 <p>As a start, let’s see how to transcend data into information with
-just a few lines of R-code: Data is provided by the <a
-href="https://worldhappiness.report/ed/2021/">worldhappiness report
-2021</a>. The publisher collects and summarizes data on individual
-“self-stated” happiness across a lot of countries. We read the data</p>
+just a few lines of R-code: Data is provided by the
+<a href="https://worldhappiness.report/ed/2021/" target="_blank">
+worldhappiness report 2021 </a>. The publisher collects and summarizes
+data on individual “self-stated” happiness across a lot of countries. We
+read the data</p>
 <pre class="r fold-show"><code>#data from https://worldhappiness.report/ed/2021/
 data_in &lt;- read_excel(&quot;DataPanelWHR2021C2.xls&quot;)
 
@@ -409,14 +415,15 @@ head(data_in)</code></pre>
 {"columns":[{"label":["Country name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["year"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Life Ladder"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Log GDP per capita"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Social support"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Healthy life expectancy at birth"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Freedom to make life choices"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Generosity"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Perceptions of corruption"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Positive affect"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["Negative affect"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"2008","3":"3.723590","4":"7.370100","5":"0.4506623","6":"50.80","7":"0.7181143","8":"0.16763999","9":"0.8816863","10":"0.5176372","11":"0.2581955"},{"1":"Afghanistan","2":"2009","3":"4.401778","4":"7.539972","5":"0.5523084","6":"51.20","7":"0.6788964","8":"0.19009919","9":"0.8500354","10":"0.5839256","11":"0.2370924"},{"1":"Afghanistan","2":"2010","3":"4.758381","4":"7.646709","5":"0.5390752","6":"51.60","7":"0.6001272","8":"0.12058964","9":"0.7067661","10":"0.6182655","11":"0.2753238"},{"1":"Afghanistan","2":"2011","3":"3.831719","4":"7.619532","5":"0.5211036","6":"51.92","7":"0.4959014","8":"0.16242748","9":"0.7311085","10":"0.6113873","11":"0.2671747"},{"1":"Afghanistan","2":"2012","3":"3.782938","4":"7.705479","5":"0.5206367","6":"52.24","7":"0.5309350","8":"0.23603241","9":"0.7756198","10":"0.7103847","11":"0.2679191"},{"1":"Afghanistan","2":"2013","3":"3.572100","4":"7.725029","5":"0.4835519","6":"52.56","7":"0.5779554","8":"0.06114766","9":"0.8232041","10":"0.6205848","11":"0.2733281"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<p>and manipulate it using the popular <a
-href="https://www.tidyverse.org/">R-tidyverse</a> framework in order to
-allow a regional as well as a developmental perspective on perceived
-happiness across the world. The resulting graph is inspired by <span
-class="citation">Healy (2018)</span>. We select data from 2010 to 2020
-and add the constraint that a country must be observable for at least 5
-years. The resulting graph, a map of the world’s happiness across space
-and time, is sorted with regard to a country’s average happiness:</p>
+<p>and manipulate it using the popular
+<a href="https://www.tidyverse.org/" target="_blank"> R-tidyverse </a>
+framework in order to allow a regional as well as a developmental
+perspective on perceived happiness across the world. The resulting graph
+is inspired by <span class="citation">Healy (2018)</span>. We select
+data from 2010 to 2020 and add the constraint that a country must be
+observable for at least 5 years. The resulting graph, a map of the
+world’s happiness across space and time, is sorted with regard to a
+country’s average happiness:</p>
 <pre class="r"><code>data_in %&gt;%
   filter(year %in% c(2010:2020)) %&gt;% #look at data from 2010 to 2020
   group_by(`Country name`) %&gt;%
@@ -446,23 +453,24 @@ potentially fruitful opportunity, when one is interested in addressing
 the welfare of nations, for both good and bad.</p>
 <p>What are the reasons that some countries are better off than others?
 Whereas dynamic geographical determinism is suggested by <span
-class="citation">Diamond (1997)</span>, <a
-href="https://www.econlib.org/econtalk/">economic theories</a> following
-Adam Smith emphasized the importance of technological progress,
-productivity, trade, and functioning and inclusive institutions <span
-class="citation">(Robinson and Acemoglu 2012)</span> as driving forces
-of long-lasting growth and development. According to <span
-class="citation">Harari (2014)</span> political and religious ideas can
-have a large impact on the organization and distribution of resources as
-well. In addition, a rather internal perspective of how complexes such
-as desire and fear can shape the development of mankind is formulated by
-<span class="citation">Nietzsche (1886)</span>. In contrast, <span
-class="citation">Seligman (2012)</span> suggests a model of growth based
-on positive psychology. These vast number of ideas show that a
-successful organization of human society is a demanding task. In the era
-of increased data availability, proper empirical analysis can help to do
-better-informed decisions, enhancing economic prosperity, allowing
-people to flourish, and to live a healthier and happy life.</p>
+class="citation">Diamond (1997)</span>,
+<a href="https://www.econlib.org/econtalk/" target="_blank"> economic
+theories </a> following Adam Smith emphasized the importance of
+technological progress, productivity, trade, and functioning and
+inclusive institutions <span class="citation">(Robinson and Acemoglu
+2012)</span> as driving forces of long-lasting growth and development.
+According to <span class="citation">Harari (2014)</span> political and
+religious ideas can have a large impact on the organization and
+distribution of resources as well. In addition, a rather internal
+perspective of how complexes such as desire and fear can shape the
+development of mankind is formulated by <span class="citation">Nietzsche
+(1886)</span>. In contrast, <span class="citation">Seligman
+(2012)</span> suggests a model of growth based on positive psychology.
+These vast number of ideas show that a successful organization of human
+society is a demanding task. In the era of increased data availability,
+proper empirical analysis can help to do better-informed decisions,
+enhancing economic prosperity, allowing people to flourish, and to live
+a healthier and happy life.</p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="unnumbered">References</h2>
