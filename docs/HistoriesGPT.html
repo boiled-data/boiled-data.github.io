@@ -11,7 +11,7 @@
 
 
 
-<title>Knowledge Retrieval and Task Automation: with GPT-x on Histories of Herodotus</title>
+<title>Knowledge Retrieval and Task Automation: with GPT on Histories of Herodotus</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -287,7 +287,7 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="Histories.html">Text Mining</a>
+      <a href="Histories.html">Text as Data</a>
     </li>
     <li>
       <a href="HistoriesGPT.html">Generative AI</a>
@@ -344,7 +344,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Knowledge Retrieval and Task Automation:
-with GPT-x on Histories of Herodotus</h1>
+with GPT on Histories of Herodotus</h1>
 <h4 class="date">5 Dec 2023</h4>
 
 </div>
@@ -376,24 +376,25 @@ if (file.exists(&quot;Histories_GPT/gpt_out.RDS&quot;)) {
 }</code></pre>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>With the rise of generative AI applications, automatic text and image
-generation is becoming increasingly popular. Generative AI, and
-especially Large Language Models, can be used in various areas to
-extract knowledge and automate tasks <span class="citation">(eg. Yang et
-al. 2023; Kaddour et al. 2023)</span>. Developments in this area are
-fast, making it challenging to <a href="https://huggingface.co/">keep
-track</a>, and efficiently querying the engines is a trending topic in
-the current discussion. We contribute to this by using R-code to
+<p>With the rise of generative AI, automatic text and image generation
+is becoming increasingly popular. Generative AI, and especially Large
+Language Models, can be used in various areas to extract knowledge and
+automate tasks <span class="citation">(eg. Yang et al. 2023; Kaddour et
+al. 2023)</span>. Rapid developments and the substantial volume of
+research in this area underscore the immense potential of the
+technology, making it key to <a href="https://huggingface.co/">keep
+track</a>. Efficiently querying the engines is a trending topic in the
+current discussion, and we contribute to this by using R-code to
 interact with both <em>GPT3.5</em> and <em>GPT4</em> using the <a
-href="https://platform.openai.com/">OpenAI-API</a> on the science of
-historiography.</p>
-<p>We start by catching up on a <a
+href="https://platform.openai.com/">OpenAI-API</a> on the <em>science of
+historiography</em>.</p>
+<p>We start by following up on a <a
 href="https://boiled-data.github.io/Histories.html">previous essay</a>
 on text mining the book <em>Histories</em> by the Greek author
 <em>Herodotus</em> (484 – 425 BC) and summarize the content of his book
 using the powerful capabilities of OpenAI’s <em>GPT3.5-turbo</em>.
 First, we let <em>GPT</em> summarize the text, setting the model’s
-<em>temperature</em> parameter to 0, which minimizes the random
+<em>temperature</em> parameter to zero, which minimizes the random
 component in the generated output.</p>
 <pre class="r"><code># 1 Query on OpenAI-API: GPT3.5 ---------------------------------------------------
 # helper function to query the openai-api:
@@ -422,12 +423,11 @@ if (length(gpt_out)&lt;2) {
 
 HTML(paste(&quot;Prompt:&lt;i&gt;&quot;, prompt_1), &quot;&lt;/i&gt;&quot;, &quot;&lt;p&gt;&lt;/p&gt;&quot;, &quot;GPT3.5:&lt;i&gt;&quot;, str_replace_all(gpt_out[[2]], &quot;\\\n&quot;, &quot;&lt;br&gt;&quot;), &quot;&lt;/i&gt;&quot;)</code></pre>
 Prompt:<i> Summarize the content of the book 'Histories' by the author Herodotus. Provide the corresponding references. </i> <p></p> GPT3.5:<i> "Histories" is a historical work written by the ancient Greek historian Herodotus in the 5th century BCE. The book is a compilation of Herodotus' extensive research and travels, aiming to document the causes and events of the Greco-Persian Wars. It covers a wide range of topics, including the rise of the Persian Empire, the conflicts between the Greeks and Persians, and the cultural differences between the two civilizations.<br><br>Herodotus begins by providing an account of the origins and rise of the Persian Empire, detailing the reigns of Cyrus the Great, Cambyses, and Darius I. He then delves into the causes of the Greco-Persian Wars, discussing the Ionian Revolt and the subsequent Persian invasions of Greece. The book extensively covers the major battles of the wars, such as the Battle of Marathon, the Battle of Thermopylae, and the Battle of Salamis.<br><br>Throughout "Histories," Herodotus also explores various cultural aspects of the Greeks and Persians, comparing their customs, traditions, and religious beliefs. He includes anecdotes and stories about notable individuals, such as Croesus, Xerxes, and Leonidas, providing insights into their characters and motivations.<br><br>The book is divided into nine books or volumes, each focusing on different aspects of the wars and the civilizations involved. Herodotus employs a narrative style, combining historical accounts with personal observations and interviews. His work is considered one of the earliest examples of historical writing and has had a significant influence on subsequent historians.<br><br>References:<br>- Herodotus. "Histories." Translated by Robin Waterfield, Oxford University Press, 1998. </i>
-<p><br> The resulting summary is well-written and looks plausible at
-first glance. The provided reference suggests that the summary is based
-on the original text. However, we should acknowledge that GPT was
-trained on a lot of data from many different resources and is not
-necessarily relying just on the <em>Histories</em> itself when answering
-our questions.</p>
+<p><br> The resulting text is well-written and looks plausible at first
+glance. The provided reference suggests that the summary is based on the
+original book. However, we should acknowledge that GPT was trained on a
+lot of data from many different resources and is not necessarily relying
+just on the <em>Histories</em> itself when answering our questions.</p>
 </div>
 <div id="adding-gpts-temperature" class="section level2">
 <h2>Adding GPT’s Temperature</h2>
@@ -685,8 +685,9 @@ well. Although there is some variability between the lists, a lot of
 arguments show up more than once in the table. Generated by GPT-4, the
 summarized list contains the 22 distinct answers of GPT3.5. These
 answers range from ‘The significance of cultural diversity and
-tolerance’ over ‘The consequences of excessive pride and hubris’ to ‘The
-impact of war and conflict on societies and individuals’ and more.</p>
+tolerance’ (4 times mentioned) to ‘The impact of war and conflict on
+societies and individuals’ (3 times) to ‘The consequences of excessive
+pride and hubris’ (2 times) and more.</p>
 </div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
