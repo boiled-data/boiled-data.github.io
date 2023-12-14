@@ -351,7 +351,7 @@ with GPT on Histories of Herodotus</h1>
 
 
 <pre class="r"><code>#Preliminaries:
-knitr::opts_chunk$set(message=FALSE, warning=FALSE, eval = TRUE) #set eval = TRUE when run first
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, eval = TRUE) 
 
 rm(list=ls())
 
@@ -403,7 +403,7 @@ get_completion &lt;- function(prompt, model=&#39;gpt-3.5-turbo&#39;, temperature
   response &lt;- create_chat_completion(model,
                                       messages = messages ,
                                       temperature = temperature,
-                                      openai_api_key = Sys.getenv(&quot;OPENAI_API_KEY&quot;), #you need to add openai key to global environment
+                                      openai_api_key = Sys.getenv(&quot;OPENAI_API_KEY&quot;), #add your openai key to the environment variables
                                       )
   return(response$choices$message.content)
   
