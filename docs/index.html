@@ -364,7 +364,7 @@ library(viridis)</code></pre>
 only believe in statistics that I doctored myself”, takes on new
 significance. As the amount and accessibility of data continue to
 expand, the challenge of transforming raw data into actionable insights
-becomes increasingly vital. This transformational journey is equally
+becomes increasingly vital. This informational revolution is equally
 relevant to business leaders, policymakers, and individuals navigating
 in an information-saturated world. The good news is that we can now make
 more evidence-based decisions, thanks to the decreasing barriers of data
@@ -382,26 +382,29 @@ literacy and transparency.</p>
 <div id="navigating-the-data-landscape" class="section level2">
 <h2>Navigating the Data Landscape</h2>
 <p>Embarking on this journey demands a blend of skills and knowledge. To
-guide you through the difficulties of statistical analysis, you can turn
+guide us through the difficulties of statistical analysis, we can turn
 to reputable resources like <span class="citation">Reinhart
 (2015)</span> and <span class="citation">Spiegelhalter (2019)</span>,
 who provide valuable insights on how (not) to approach statistical
 analysis. Delving into the realm of rational decision-making and the
 pitfalls of probabilistic reasoning, <span class="citation">Kahneman
 (2011)</span> and <span class="citation">Mousavi and Gigerenzer
-(2014)</span> illuminate the path forward. Tools like the
-<a href="https://www.r-project.org/" target="_blank"> R </a> statistical
-software empower you to conduct robust data analysis, and platforms such
-as <a href="https://www.r-bloggers.com/" target="_blank"> R-Bloggers
-</a> and <a href="https://rweekly.org/" target="_blank"> R Weekly </a>
-foster a community dedicated to data science using publishing systems
-such as <a href="https://rmarkdown.rstudio.com/" target="_blank">
-R-Markdown </a> or <a href="https://quarto.org/" target="_blank">
-Quarto.</a> The combination of these resources, coupled with effective
-communication skills (as explored by <span class="citation">Watzlawick
-(2018)</span> and <span class="citation">Franconeri et al.
-(2021)</span>), can enable informed discussions and sound
-decision-making based on data.</p>
+(2014)</span> illuminate the path forward. Tools like the statistical
+software <a href="https://www.r-project.org/" target="_blank"> R </a>
+and other freely available material on coding such as
+<a href="https://rstudio-education.github.io/hopr/" target="_blank">
+Hands-On Programming with R </a> or the
+<a href="https://rc2e.com/" target="_blank"> R Cookbook </a> empower us
+to conduct robust data analysis. In addition, platforms such as
+<a href="https://www.r-bloggers.com/" target="_blank"> R-Bloggers </a>
+and <a href="https://rweekly.org/" target="_blank"> R Weekly </a> foster
+a community dedicated to data science using publishing systems like
+<a href="https://rmarkdown.rstudio.com/" target="_blank"> R-Markdown
+</a> or <a href="https://quarto.org/" target="_blank"> Quarto.</a> The
+combination of these resources, coupled with effective communication
+skills (as explored by <span class="citation">Watzlawick (2018)</span>
+and <span class="citation">Franconeri et al. (2021)</span>), can enable
+informed discussions and sound decision-making based on data.</p>
 </div>
 <div id="data-exploration" class="section level2">
 <h2>Data Exploration</h2>
@@ -431,18 +434,24 @@ head(data_in)</code></pre>
   </script>
 </div>
 <p>and with the aid of the popular
-<a href="https://www.tidyverse.org/" target="_blank"> R-tidyverse </a>
+<a href="https://r4ds.hadley.nz/" target="_blank"> R-tidyverse </a>
 framework, we’ll manipulate the data to explore regional and
 developmental trends in average perceived happiness across the globe.
-Our analysis focuses on data from 2010 onward and we order the 163
-countries by their “happiness index”, averaged over time:</p>
-<pre class="r"><code>data_in %&gt;%
+Our analysis focuses on information from year 2010 onward and we order
+the 163 countries by their “happiness index”, averaged over time. For
+data visualization we use the library
+<a href="https://ggplot2-book.org/" target="_blank"> ggplot2. </a></p>
+<pre class="r"><code># prepare data:
+data_plot &lt;- data_in %&gt;%
   filter(year &gt;= 2010) %&gt;%
   group_by(`Country name`) %&gt;%
   mutate(happiness_mean=mean(`Life Ladder`), n=n()) %&gt;% #mean happiness by country
   ungroup() %&gt;%
   mutate(rank=rank(happiness_mean))  %&gt;% #create happiness rank across countries
-  mutate(year=as.factor(year), `Country name`=fct_reorder(factor(`Country name`), rank)) %&gt;% #order countries by average happiness
+  mutate(year=as.factor(year), `Country name`=fct_reorder(factor(`Country name`), rank)) #order countries by average happiness
+
+# create plot:
+data_plot %&gt;%
   ggplot(aes(y=`Country name`, x=year,  fill=`Life Ladder`)) + # graph
   scale_fill_viridis(option=&quot;inferno&quot;) + #colour
   geom_tile(colour=&quot;white&quot;) +            #background colors
@@ -451,20 +460,20 @@ countries by their “happiness index”, averaged over time:</p>
   labs(title=&quot;Hierarchy and Development of Happiness&quot;, fill=&quot;Happiness Score&quot;,
        y=&quot;Country&quot;, x=&quot;Year&quot;)  </code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>The resulting graphic, inspired by <span class="citation">Healy
-(2018)</span>, is a dynamic map showing the world’s happiness over time.
-Nordic countries consistently rank high, while many African and Oriental
-countries trend toward the bottom. We also see that from 2020 there are
-more white spaces across the world. Is this phenomenon linked to the
-COVID-19 pandemic? Examining differences, changes, extreme values, and
-missing values can be a rich source of insights when exploring a data
-set.</p>
+<p>The resulting heatmap, inspired by <span class="citation">Healy
+(2018)</span>, is showing the world’s happiness across countries and
+over time. Nordic countries consistently rank high, while many African
+and Oriental countries trend toward the bottom. We also see that from
+2020 there are more white spaces across the world. Is this phenomenon
+linked to the COVID-19 pandemic? Examining differences, changes, extreme
+values, and missing values can be a rich source of insights when
+exploring a data set.</p>
 </div>
 <div id="data-science-in-action" class="section level2">
 <h2>Data Science in Action</h2>
 <p>The data journey doesn’t stop at mere observation: Knowledge of
 <a href="https://tellingstorieswithdata.com/" target="_blank">
-statistical communication, </a> programming, and modeling provides you
+statistical communication, </a> programming, and modeling provides us
 with a range of skills from data wrangling and
 <a href="https://www.r-graph-gallery.com/" target="_blank">
 visualization </a> to predicting likely outcomes for new instances (eg.
