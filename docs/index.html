@@ -381,17 +381,16 @@ literacy and transparency.</p>
 </div>
 <div id="navigating-the-data-landscape" class="section level2">
 <h2>Navigating the Data Landscape</h2>
-<p>Embarking on this journey demands a blend of skills and knowledge. To
-guide us through the difficulties of statistical analysis, we can turn
-to reputable resources like <span class="citation">Spiegelhalter
+<p>Embarking on this journey demands a blend of skills and knowledge.
+Reputable resources like <span class="citation">Spiegelhalter
 (2019)</span> and
 <a href="https://avehtari.github.io/ROS-Examples/index.html" target="_blank">
-<span class="citation">Gelman, Hill, and Vehtari (2021)</span></a>, who
-provide valuable insights on how to approach statistical analysis.
-Delving into the realm of rational decision-making and the pitfalls of
-probabilistic reasoning, <span class="citation">Kahneman (2011)</span>
-and <span class="citation">Mousavi and Gigerenzer (2014)</span>
-illuminate the path forward. Tools like the statistical software
+<span class="citation">Gelman, Hill, and Vehtari (2021)</span></a> offer
+valuable guidance on how to approach statistical analysis. Delving into
+the realm of rational decision-making and the pitfalls of probabilistic
+reasoning, <span class="citation">Kahneman (2011)</span> and <span
+class="citation">Mousavi and Gigerenzer (2014)</span> illuminate the
+path forward. Tools like the statistical software
 <a href="https://www.r-project.org/" target="_blank"> R </a> and other
 freely available material on coding such as
 <a href="https://intro2r.com/" target="_blank"> Introduction to R </a>
@@ -402,7 +401,7 @@ as <a href="https://www.r-bloggers.com/" target="_blank"> R-Bloggers
 foster a community dedicated to data science using publishing systems
 like <a href="https://rmarkdown.rstudio.com/" target="_blank">
 R-Markdown </a> or <a href="https://quarto.org/" target="_blank">
-Quarto.</a> The combination of these resources, coupled with effective
+Quarto</a>. The combination of these resources, coupled with effective
 communication skills (as explored by <span class="citation">Watzlawick
 (2018)</span> and <span class="citation">Franconeri et al.
 (2021)</span>), can enable informed discussions and sound
@@ -414,7 +413,7 @@ decision-making based on data.</p>
 data into valuable insights using just a few lines of R code, to uncover
 intriguing patterns in global happiness. We’ll use data from the
 <a href="https://worldhappiness.report/ed/2023/" target="_blank"> World
-Happiness Report 2023,</a> which compiles self-reported happiness data
+Happiness Report 2023</a>, which compiles self-reported happiness data
 from various countries. We first download and read the data</p>
 <pre class="r fold-show"><code>if (file.exists(&quot;DataForTable2.1WHR2023.xls&quot;)) {
   
@@ -442,7 +441,7 @@ developmental trends in average perceived happiness across the globe.
 Our analysis focuses on information from year 2010 onward and we order
 the 163 countries by their “happiness index”, averaged over time. For
 data visualization we use the library
-<a href="https://ggplot2-book.org/" target="_blank"> ggplot2. </a></p>
+<a href="https://ggplot2-book.org/" target="_blank"> ggplot2</a>.</p>
 <pre class="r"><code># prepare data:
 data_plot &lt;- data_in %&gt;%
   filter(year &gt;= 2010) %&gt;%
