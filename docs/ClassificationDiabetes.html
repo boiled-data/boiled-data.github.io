@@ -690,8 +690,8 @@ recalibrate </a> the risk scores or use another modeling strategy.</p>
 <div id="testing" class="section level2">
 <h2>Testing</h2>
 <p>Now, as we have developed a final model, we will test whether our
-predictions do also perform well on new unseen data. Hence we will test
-the model performance on our hold-out data partition. As usual, the
+predictions do also perform well on new unseen data. Hence, we will test
+the model’s performance on our hold-out data partition. As usual, the
 confusion matrix is based on a risk-score cutoff of 0.5. The AUC of 0.98
 on the test data confirms that the model generalizes well on unseen
 data.</p>
@@ -734,6 +734,11 @@ ggsave(p5_diab, file=&quot;cl_diabetes/p5_diab.png&quot;)</code></pre>
 <center>
 <img src="cl_diabetes/p5_diab.png" style="width:60.0%" />
 </center>
+<p>However, it is important to note that, despite evaluating the model
+with hold-out data at the end of our pipeline, this toy example cannot
+completely rule out the possibility of data leakage <span
+class="citation">(eg. Kapoor and Narayanan 2023)</span>, which could
+bias our findings.</p>
 </div>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
@@ -758,6 +763,11 @@ Learning.”</span> <em>Communications of the ACM</em> 55 (10): 78–87.
 <div id="ref-fawcett2006introduction" class="csl-entry">
 Fawcett, Tom. 2006. <span>“An Introduction to ROC Analysis.”</span>
 <em>Pattern Recognition Letters</em> 27 (8): 861–74.
+</div>
+<div id="ref-kapoor2023leakage" class="csl-entry">
+Kapoor, Sayash, and Arvind Narayanan. 2023. <span>“Leakage and the
+Reproducibility Crisis in Machine-Learning-Based Science.”</span>
+<em>Patterns</em> 4 (9).
 </div>
 <div id="ref-kuhn2022tidy" class="csl-entry">
 Kuhn, Max, and Julia Silge. 2022. <em>Tidy Modeling with r</em>. "
