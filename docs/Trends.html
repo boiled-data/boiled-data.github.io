@@ -484,7 +484,8 @@ following regression equation:</p>
 <p>Finally, dummy variables for each month are added to our
 specification in order to capture the seasonality of queries for back
 pain, as discussed above. Autocorrelated residuals are addressed by
-applying Newey-West standard errors with a lag length of 3.</p>
+applying Newey-West standard errors with a lag length of 3. Using higher
+lags did not change the conclusions from this analysis.</p>
 <pre class="r"><code>data_impact &lt;- trends$interest_over_time |&gt;
   filter(date&lt;=&#39;2022-03-31&#39;) |&gt; # restrict data on relevant time period
   arrange(date) |&gt;
